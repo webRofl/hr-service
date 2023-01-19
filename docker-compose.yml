@@ -1,0 +1,34 @@
+x-env-postgres: &env-postgres
+  POSTGRES_NAME: ${POSTGRES_NAME}
+  POSTGRES_USER: ${POSTGRES_USER}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+x-env-django: &env-django
+  SECRET_KEY: ${SECRET_KEY}
+  DEBUG: ${DEBUG}
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+
+services:
+  db:
+    image: postgres
+    container_name: hr-postgres
+    volumes:
+      - ./backend/db:/var/lib/postgresql/data
+    environment:
+      <<: *env-postgres
+  django:
+    build: ./bin/django/
+    container_name: hr-django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/opt/app
+    ports:
+      - "8000:8000"
+    environment:
+      <<: *env-postgres
+      <<: *env-django
+    depends_on:
+      - db
+
+volumes:
+  db:
