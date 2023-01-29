@@ -1,0 +1,57 @@
+###########
+# BUILDER #
+###########
+
+FROM python:3.8.3-alpine as builder
+
+RUN mkrdir /opt/app/
+WORKDIR /opt/app/
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# установка зависимостей
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN pip install --upgrade pip
+
+# проверка кода через линтер
+RUN pip install flake8
+COPY . .
+RUN flake8 --extend-ignore E501 .
+
+# установка зависимостей
+COPY ./requirements.txt /opt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /opt/wheels -r /opt/requirements.txt
+
+#########
+# FINAL #
+#########
+
+FROM python:3.8.3-alpine
+
+# создаем отдельного пользователя
+RUN addgroup -S app && adduser -S app -G app
+
+# создание каталога для приложения
+ENV APP_HOME=/opt/app/
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/static
+RUN mkdir $APP_HOME/media
+WORKDIR $APP_HOME
+
+# установка зависимостей и копирование из builder
+RUN apk update && apk add libpq
+COPY --from=builder opt/wheels /wheels
+COPY --from=builder opt/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+# копирование проекта Django
+COPY . $APP_HOME
+
+# изменение прав для пользователя app
+RUN chown -R app:app $APP_HOME
+
+# изменение рабочего пользователя
+USER app

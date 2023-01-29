@@ -8,6 +8,9 @@ x-env-django: &env-django
   DEBUG: ${DEBUG}
   ALLOWED_HOSTS: ${ALLOWED_HOSTS}
 
+x-env-node: &env-node
+  NODE_ENV: ${NODE_ENV}
+
 services:
   db:
     image: postgres
@@ -19,16 +22,27 @@ services:
   django:
     build: ./bin/django/
     container_name: hr-django
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./backend:/opt/app
-    ports:
-      - "8000:8000"
+      - ./backend:/opt/app/
+    expose:
+      - 8000
     environment:
       <<: *env-postgres
       <<: *env-django
     depends_on:
       - db
+  node:
+    build: ./bin/node
+    container_name: hr-node
+    volumes:
+      - ./frontend:/opt/app
+    command: yarn start
+    expose:
+      - 3000
+    environment:
+      <<: *env-node
 
 volumes:
   db:
+  django:
+  frontend:

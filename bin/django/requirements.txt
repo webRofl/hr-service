@@ -5,3 +5,5 @@ Pillow==9.2.0
 sqlparse==0.4.2
 tzdata==2022.1
 psycopg2
+gunicorn
+flake8
