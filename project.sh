@@ -1,12 +1,6 @@
 #!/bin/bash
 COMMAND=${1}
 
-init() {
-    docker compose build
-    docker compose run --rm django python manage.py makemigrations
-    docker compose run --rm django python manage.py migrate --no-input
-}
-
 start() {
     docker compose up -d
 }
@@ -42,6 +36,17 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
+init() {
+    dublicate_front_dependency_files
+    docker compose build --no-cache
+    migrate
+}
+
+migrate() {
+    docker compose run --rm django python manage.py makemigrations
+    docker compose run --rm django python manage.py migrate --no-input
+}
+
 case $COMMAND in
     init)
         init
@@ -60,6 +65,9 @@ case $COMMAND in
         ;;
     dublicate_front_dependency_files)
         dublicate_front_dependency_files
+        ;;
+    migrate)
+        migrate
         ;;
     *)
         echo 'No action specified!'

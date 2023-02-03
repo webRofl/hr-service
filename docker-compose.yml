@@ -36,6 +36,7 @@ services:
     container_name: hr-node
     volumes:
       - ./frontend:/opt/app
+      - ./frontend/node_modules/:/opt/app/node_modules
     command: yarn start
     expose:
       - 3000
