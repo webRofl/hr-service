@@ -4,8 +4,11 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /opt/app/
 
-COPY ./requirements.txt /opt/app/requirements.txt
-RUN pip install -r /opt/app/requirements.txt
+COPY ./pyproject.toml /opt/app/pyproject.toml
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install
+RUN cd .. && echo $(pwd) && pre-commit install
 
 COPY . /opt/app/
 

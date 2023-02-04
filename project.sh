@@ -9,17 +9,6 @@ restart() {
     docker compose up -d --force-recreate --remove-orphans
 }
 
-lint() {
-    docker compose run --rm -exec django flake8 --extend-ignore E501 .
-}
-
-local_hard_reset() {
-    docker compose down -v
-    docker compose up -d --build
-    docker compose exec django python manage.py migrate --noinput
-    docker compose exec django python manage.py collectstatic --no-input --clear
-}
-
 dublicate_file() {
     MAINFILE=$1
     COPYFILE=$2
@@ -36,15 +25,27 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
+dublicate_back_dependency_files() {
+    dublicate_file ./backend/pyproject.toml ./bin/django/pyproject.toml
+}
+
 init() {
     dublicate_front_dependency_files
+    dublicate_back_dependency_files
     docker compose build --no-cache
     migrate
+    collectstatic
+    rm ./bin/node/package.json && rm ./bin/node/yarn.lock
+    rm ./bin/django/pyproject.toml
 }
 
 migrate() {
     docker compose run --rm django python manage.py makemigrations
     docker compose run --rm django python manage.py migrate --no-input
+}
+
+collectstatic() {
+    docker compose run --rm django python manage.py collectstatic --no-input --clear
 }
 
 case $COMMAND in
@@ -57,17 +58,14 @@ case $COMMAND in
     restart)
         restart
         ;;
-    lint)
-        lint
-        ;;
-    local_hard_reset)
-        local_hard_reset
-        ;;
     dublicate_front_dependency_files)
         dublicate_front_dependency_files
         ;;
     migrate)
         migrate
+        ;;
+    collectstatic)
+        collectstatic
         ;;
     *)
         echo 'No action specified!'
