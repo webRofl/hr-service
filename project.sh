@@ -64,6 +64,9 @@ case $COMMAND in
     migrate)
         migrate
         ;;
+    collectstatic)
+        collectstatic
+        ;;
     *)
         echo 'No action specified!'
         ;;
