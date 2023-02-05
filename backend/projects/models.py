@@ -1,18 +1,23 @@
 from django.db import models
 import uuid
+from django.utils.text import slugify
 
 class Tag(models.Model):
-  name = models.CharField(max_length=100)
-  slug = models.SlugField()
+  name = models.CharField(max_length=100, unique=True, default='')
+  slug = models.SlugField(unique=True, blank=True, null=True)
   created = models.DateTimeField(auto_now_add=True)
   id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+  def save(self, *args, **kwargs):
+    self.slug = slugify(self.name)
+    super(Tag, self).save(*args, **kwargs)
 
   def __str__(self):
     return self.name
 
 class Project(models.Model):
-  title = models.CharField(max_length=100)
-  slug = models.SlugField()
+  title = models.CharField(max_length=100, unique=True, default='')
+  slug = models.SlugField(unique=True, blank=True, null=True)
   description = models.TextField(null=True, blank=True)
   tags = models.ManyToManyField(Tag, blank=True)
   image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
@@ -22,6 +27,10 @@ class Project(models.Model):
   source_link = models.CharField(max_length=500, null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
   id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+  def save(self, *args, **kwargs):
+    self.slug = slugify(self.title)
+    super(Project, self).save(*args, **kwargs)
 
   def __str__(self):
     return self.title
