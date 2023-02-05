@@ -15,6 +15,7 @@ class Project(models.Model):
   slug = models.SlugField()
   description = models.TextField(null=True, blank=True)
   tags = models.ManyToManyField(Tag, blank=True)
+  image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
   total_votes = models.IntegerField(default=0, null=True, blank=True)
   votes_ratio = models.IntegerField(default=0, null=True, blank=True)
   demo_link = models.CharField(max_length=500, null=True, blank=True)
