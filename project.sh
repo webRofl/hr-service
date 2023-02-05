@@ -9,15 +9,13 @@ restart() {
     docker compose up -d --force-recreate --remove-orphans
 }
 
-lint() {
-    docker compose run --rm -exec django flake8 --extend-ignore E501 .
+collectstatic() {
+    docker compose run -exec --rm django python manage.py collectstatic --no-input --clear
 }
 
-local_hard_reset() {
-    docker compose down -v
-    docker compose up -d --build
-    docker compose exec django python manage.py migrate --noinput
-    docker compose exec django python manage.py collectstatic --no-input --clear
+migrate() {
+    docker compose run --rm django python manage.py makemigrations
+    docker compose run --rm django python manage.py migrate --no-input
 }
 
 dublicate_file() {
@@ -40,11 +38,8 @@ init() {
     dublicate_front_dependency_files
     docker compose build --no-cache
     migrate
-}
-
-migrate() {
-    docker compose run --rm django python manage.py makemigrations
-    docker compose run --rm django python manage.py migrate --no-input
+    collectstatic
+    rm ./bin/node/package.json && rm ./bin/node/yarn.lock
 }
 
 case $COMMAND in
