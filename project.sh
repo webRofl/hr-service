@@ -36,7 +36,7 @@ dublicate_front_dependency_files() {
 
 init() {
     dublicate_front_dependency_files
-    docker compose build --no-cache
+    docker compose build
     migrate
     collectstatic
     rm ./bin/node/package.json && rm ./bin/node/yarn.lock
