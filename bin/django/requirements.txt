@@ -8,3 +8,4 @@ psycopg2
 gunicorn
 flake8
 djangorestframework
+drf-yasg
