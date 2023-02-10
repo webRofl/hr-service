@@ -1,7 +1,7 @@
 import { Typography, Box } from '@mui/material';
 import React, { FC } from 'react';
-import { OAuth } from '../../atoms';
-import { Icon } from '../../common';
+import { OAuth } from 'components/atoms';
+import { Icon } from 'components/common';
 
 const OAuthContainer: FC = () => {
   return (

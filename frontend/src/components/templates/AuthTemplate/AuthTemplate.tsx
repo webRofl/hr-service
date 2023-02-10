@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { Auth } from '../../organisms';
+import { Auth } from 'components/organisms';
 
 const AuthTemplate = () => {
   return (

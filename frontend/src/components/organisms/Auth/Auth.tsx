@@ -2,8 +2,8 @@ import { Container, Grid, Typography, Stack } from '@mui/material';
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { AuthForm, OAuthContainer } from 'components/molecules';
 import * as SC from './Auth.style';
-import { AuthForm, OAuthContainer } from '../../molecules';
 
 export const LinkItem = styled(Link)`
   text-decoration: none;

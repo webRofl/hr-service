@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import React, { FC } from 'react';
-import { Menu, Content } from '../../organisms';
+import { Menu, Content } from 'components/organisms';
 
 const Main: FC = () => {
   return (
