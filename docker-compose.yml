@@ -37,7 +37,7 @@ services:
     volumes:
       - ./frontend:/opt/app
       - ./frontend/node_modules/:/opt/app/node_modules
-    command: yarn start
+    command: yarn start --host
     expose:
       - 3000
     environment:
