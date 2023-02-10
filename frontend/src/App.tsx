@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Main, AuthTemplate } from './components/templates';
 
-function App() {
-  return <div className="App">GET START TO WORK</div>;
-}
+const App: FC = () => {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Main />,
+    },
+    {
+      path: 'sign-in',
+      element: <AuthTemplate />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+};
 
 export default App;
