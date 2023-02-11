@@ -9,7 +9,9 @@ x-env-django: &env-django
   ALLOWED_HOSTS: ${ALLOWED_HOSTS}
 
 x-env-node: &env-node
-  NODE_ENV: ${NODE_ENV}
+  VITE_NODE_ENV: ${VITE_NODE_ENV}
+  VITE_FQDN_FRONTEND: ${VITE_FQDN_FRONTEND}
+  VITE_FQDN_API: ${VITE_FQDN_API}
 
 services:
   db:

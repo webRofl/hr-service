@@ -12,11 +12,13 @@
     "@mui/material": "^5.11.7",
     "@mui/styled-engine-sc": "^5.11.0",
     "@reduxjs/toolkit": "^1.9.2",
+    "@rtk-incubator/rtk-query-codegen-openapi": "^0.5.1",
+    "@rtk-query/codegen-openapi": "^1.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
+    "@types/node": "^18.13.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^3.1.0",
@@ -41,7 +43,8 @@
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src//**/*.{js,jsx,ts,tsx}",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "prepare": "cd .. && husky install frontend/.husky",
+    "generateAPI": "cd src/store && tsc open-api.config.ts && npx @rtk-query/codegen-openapi open-api.config.js && rm open-api.config.js && rm ../types/global.types.js"
   },
   "browserslist": {
     "production": [

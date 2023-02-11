@@ -40,6 +40,12 @@ init() {
     migrate
     collectstatic
     rm ./bin/node/package.json && rm ./bin/node/yarn.lock
+    generateAPI
+}
+
+generateAPI() {
+    start
+    cd frontend && yarn generateAPI
 }
 
 case $COMMAND in
@@ -66,6 +72,9 @@ case $COMMAND in
         ;;
     collectstatic)
         collectstatic
+        ;;
+    generateAPI)
+        generateAPI
         ;;
     *)
         echo 'No action specified!'

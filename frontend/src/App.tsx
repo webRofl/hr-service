@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Main, AuthTemplate } from 'components/templates';
+import { GlobalENV } from '@/types';
 
 const App: FC = () => {
   const router = createBrowserRouter([
@@ -13,6 +14,11 @@ const App: FC = () => {
       element: <AuthTemplate />,
     },
   ]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(GlobalENV.FQDN_API);
+  }, []);
 
   return <RouterProvider router={router} />;
 };
