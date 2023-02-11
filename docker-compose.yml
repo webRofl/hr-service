@@ -11,7 +11,7 @@ x-env-django: &env-django
 x-env-node: &env-node
   VITE_NODE_ENV: ${VITE_NODE_ENV}
   VITE_FQDN_FRONTEND: ${VITE_FQDN_FRONTEND}
-  VITE_FQDN_BACKEND: ${VITE_FQDN_BACKEND}
+  VITE_FQDN_API: ${VITE_FQDN_API}
 
 services:
   db:
