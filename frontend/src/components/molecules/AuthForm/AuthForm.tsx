@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { FormInput } from '../../atoms';
+import { FormInput } from 'components/atoms';
 import { ILogin, loginSchema } from './schema';
 
 const AuthContainer: FC = () => {

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Main, AuthTemplate } from './components/templates';
+import { Main, AuthTemplate } from 'components/templates';
 
 const App: FC = () => {
   const router = createBrowserRouter([
