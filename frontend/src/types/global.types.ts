@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 const getEnvValue = (key: string): string => {
   try {
     return process.env[key] || '';
