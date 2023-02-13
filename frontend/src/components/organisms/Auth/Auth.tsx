@@ -1,6 +1,5 @@
-import { Container, Grid, Typography, Stack } from '@mui/material';
+import { Container, Grid, Typography, Stack, styled } from '@mui/material';
 import React from 'react';
-import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { AuthForm, OAuthContainer } from 'components/molecules';
 import * as SC from './Auth.style';

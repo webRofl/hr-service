@@ -1,5 +1,4 @@
-import { Link } from '@mui/material';
-import styled from '@emotion/styled';
+import { Link, styled } from '@mui/material';
 
 export const OAuthLink = styled(Link)`
   display: flex;

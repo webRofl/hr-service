@@ -5,3 +5,4 @@ dist
 env.d.ts
 .prettierrc.js
 .eslintrc.js
+store/services/projects.service.generated.ts
