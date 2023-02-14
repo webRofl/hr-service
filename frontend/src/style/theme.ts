@@ -11,10 +11,13 @@ const customTheme = {
   },
   blue: {
     main: '#006AFF',
-    dark: '#656575',
+    dark: '#006AFF',
   },
   white: {
     main: '#fff',
+  },
+  gray: {
+    main: '#656575',
   },
 };
 

@@ -1,27 +1,25 @@
-import styled from 'styled-components';
-import { StyleUtils } from '@/utils';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 import { Icon } from '@/components/common';
+import { styleMixins } from '@/style';
 
-export const MenuItemContainer = styled('div')`
-  background-color: ${({ theme }) => theme.blue.main};
-  border-radius: 4px;
-  height: 48px;
-  width: 80%;
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-  color: red;
+const btnMixin = css`
+  ${styleMixins.btnMixin};
+`;
+
+export const MenuItemContainer = styled(Link)`
+  ${btnMixin};
+  width: 75%;
+`;
+
+export const MenuItemBtn = styled(Button)`
+  ${btnMixin};
+  width: 100%;
 `;
 
 export const MenuItemIcon = styled(Icon)`
   width: 24px;
   height: 24px;
   fill: ${({ theme }) => theme.white.main};
-`;
-
-export const MenuItemLabel = styled('span')`
-  color: ${({ theme }) => theme.white.main};
-  font-size: 16;
-  font-weight: 500;
-  line-height: 24px;
 `;

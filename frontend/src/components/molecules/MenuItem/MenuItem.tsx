@@ -1,20 +1,21 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { MenuItemContainer, MenuItemIcon, MenuItemLabel } from './MenuItem.style';
+import * as SC from './MenuItem.style';
 
 interface IMenuItemProps {
   label: string;
   iconName?: string;
+  isOpen: boolean;
 }
 
-const MenuItem: FC<IMenuItemProps> = ({ label, iconName }) => {
+const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isOpen }) => {
   return (
-    <Link to={`/${label.toLowerCase()}`}>
-      <MenuItemContainer>
-        {iconName && <MenuItemIcon name={iconName} />}
-        <MenuItemLabel>{label}</MenuItemLabel>
-      </MenuItemContainer>
-    </Link>
+    <SC.MenuItemContainer to={`/${label.toLowerCase()}`}>
+      <SC.MenuItemBtn
+        variant="contained"
+        startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
+        {isOpen && label}
+      </SC.MenuItemBtn>
+    </SC.MenuItemContainer>
   );
 };
 
