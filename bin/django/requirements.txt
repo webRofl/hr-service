@@ -9,3 +9,4 @@ gunicorn
 flake8
 djangorestframework
 drf-yasg
+django-cors-headers
