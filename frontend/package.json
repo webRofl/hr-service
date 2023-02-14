@@ -7,8 +7,7 @@
     "@mui/lab": "^5.0.0-alpha.119",
     "@mui/material": "^5.11.7",
     "@mui/styled-engine-sc": "npm:@mui/styled-engine-sc@latest",
-    "@reduxjs/toolkit": "^1.9.2",
-    "@rtk-query/codegen-openapi": "^1.0.0",
+    "@tanstack/react-query": "^4.24.6",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -21,7 +20,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",
-    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "styled-components": "^5.3.6",
     "typescript": "^4.4.2",
@@ -42,7 +40,7 @@
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src//**/*.{js,jsx,ts,tsx}",
     "prepare": "cd .. && husky install frontend/.husky",
-    "generateAPI": "cd src/store && tsc open-api.config.ts && npx @rtk-query/codegen-openapi open-api.config.js && rm open-api.config.js && rm ../types/global.types.js"
+    "generateAPI": "orval --config src/store/api/orval.config.ts"
   },
   "browserslist": {
     "production": [
@@ -78,6 +76,7 @@
     "husky": "^8.0.3",
     "jest": "^29.4.2",
     "lint-staged": "^13.1.0",
+    "orval": "^6.11.1",
     "prettier": "^2.8.3"
   }
 }
