@@ -129,4 +129,4 @@ packages/react-devtools-timeline/dist
 # Current Project
 backend/static/
 backend/media/
-frontend/**/projects.service.generated.ts
+frontend/**/orvalGeneration
