@@ -1,2 +1,2 @@
-export { default as GlobalStyles } from './global';
 export { getTheme } from './theme';
+export { styleMixins } from './mixins';
