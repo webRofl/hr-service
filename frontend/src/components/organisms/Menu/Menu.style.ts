@@ -2,8 +2,6 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { CSSObject, Divider, Stack, Theme, styled } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-import { styleMixins } from '@/style';
-import { MenuItem } from '@/components/molecules';
 import { IDrawerProps } from './Menu.types';
 
 export const MenuContainer = styled(Stack)`
@@ -11,14 +9,6 @@ export const MenuContainer = styled(Stack)`
   height: 100vh;
   padding-top: 10%;
   position: relative;
-`;
-
-export const AuthMenuButton = styled(MenuItem)`
-  ${styleMixins.btnMixin};
-  background-color: ${({ theme }) => theme.gray.main}; */
-  position: absolute;
-  bottom: 4%;
-  color: red;
 `;
 
 const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({

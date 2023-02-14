@@ -15,6 +15,7 @@ export const MenuItemContainer = styled(Link)`
 
 export const MenuItemBtn = styled(Button)`
   ${btnMixin};
+  background-color: inherit;
   width: 100%;
 `;
 

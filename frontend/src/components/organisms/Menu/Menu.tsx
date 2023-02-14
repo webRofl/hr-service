@@ -42,7 +42,12 @@ const Menu = () => {
         spacing={2}>
         <MenuItem label="Projects" iconName="menu_projects" isOpen={isOpen} />
         <MenuItem label="Candidates" iconName="menu_candidates" isOpen={isOpen} />
-        <SC.AuthMenuButton label="Sign-In" iconName="menu_sign-in" isOpen={isOpen} />
+        <MenuItem
+          label="Sign-In"
+          iconName="menu_sign-in"
+          isOpen={isOpen}
+          style={{ backgroundColor: theme.gray.main, position: 'absolute', bottom: '4%' }}
+        />
       </SC.MenuContainer>
     </SC.Drawer>
   );
