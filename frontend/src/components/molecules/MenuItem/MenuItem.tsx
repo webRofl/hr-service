@@ -4,17 +4,17 @@ import * as SC from './MenuItem.style';
 interface IMenuItemProps {
   label: string;
   iconName?: string;
-  isOpen: boolean;
+  isShowLabel: boolean;
   style?: CSSProperties | undefined;
 }
 
-const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isOpen, style }) => {
+const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isShowLabel, style }) => {
   return (
     <SC.MenuItemContainer to={`/${label.toLowerCase()}`} style={style}>
       <SC.MenuItemBtn
         variant="contained"
         startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
-        {isOpen && label}
+        {isShowLabel && label}
       </SC.MenuItemBtn>
     </SC.MenuItemContainer>
   );
