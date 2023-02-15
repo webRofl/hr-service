@@ -40,7 +40,6 @@ init() {
     migrate
     collectstatic
     rm ./bin/node/package.json && rm ./bin/node/yarn.lock
-    generateAPI
 }
 
 generateAPI() {

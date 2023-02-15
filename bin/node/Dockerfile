@@ -16,5 +16,3 @@ RUN yarn install
 
 # Copy app code
 COPY . .
-
-USER node
