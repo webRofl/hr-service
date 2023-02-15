@@ -17,6 +17,8 @@ const Projects: FC = () => {
             title={p.title || ''}
             description={p.description || ''}
             slug={p.slug || ''}
+            imgLink={p.image || ''}
+            tags={p.tags || []}
           />
         ))}
       </SC.ProjectCardContainer>

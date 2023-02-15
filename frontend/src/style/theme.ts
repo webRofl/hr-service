@@ -24,6 +24,10 @@ const customTheme = {
   skinColor: {
     main: '#F8F7F1',
   },
+  boxShadow: {
+    main: '0px 8px 24px rgba(69, 69, 80, 0.32)',
+    dark: '0px 8px 24px rgba(69, 69, 80, 0.59)',
+  },
 };
 
 export type CustomThemeType = typeof customTheme;

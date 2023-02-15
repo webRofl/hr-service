@@ -3,17 +3,22 @@ import { IconButton, useMediaQuery } from '@mui/material';
 import { useTheme } from 'styled-components';
 import { MenuItem } from '@/components/molecules';
 import { Icon } from '@/components/common';
+import { useLocalStorage } from '@/hooks';
 import * as SC from './Menu.style';
 
 const Menu = () => {
   const theme = useTheme();
+  const { LSGetter, LSSetter } = useLocalStorage();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [isOpen, setIsOpen] = useState<boolean>(!matches);
+  const [isOpen, setIsOpen] = useState<boolean>(!matches && LSGetter('isMenuOpen') === 'true');
   const [drawerWidth, setDrawerWidth] = useState<number>(window.innerWidth / 6);
 
   const toggleDrawerOpen = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => {
+      LSSetter('isMenuOpen', !prev);
+      return !prev;
+    });
   };
 
   useEffect(() => {
@@ -40,12 +45,12 @@ const Menu = () => {
         justifyContent="flex-start"
         alignItems="center"
         spacing={2}>
-        <MenuItem label="Projects" iconName="menu_projects" isOpen={isOpen} />
-        <MenuItem label="Candidates" iconName="menu_candidates" isOpen={isOpen} />
+        <MenuItem label="Projects" iconName="menu_projects" isShowLabel={isOpen} />
+        <MenuItem label="Candidates" iconName="menu_candidates" isShowLabel={isOpen} />
         <MenuItem
           label="Sign-In"
           iconName="menu_sign-in"
-          isOpen={isOpen}
+          isShowLabel={isOpen}
           style={{ backgroundColor: theme.gray.main, position: 'absolute', bottom: '4%' }}
         />
       </SC.MenuContainer>
