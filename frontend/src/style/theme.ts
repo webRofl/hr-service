@@ -18,6 +18,11 @@ const customTheme = {
   },
   gray: {
     main: '#656575',
+    dark: '#525256',
+    light: '#A3A3A3',
+  },
+  skinColor: {
+    main: '#F8F7F1',
   },
 };
 
