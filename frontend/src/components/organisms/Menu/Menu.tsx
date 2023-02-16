@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { IconButton, useMediaQuery } from '@mui/material';
 import { useTheme } from 'styled-components';
 import { MenuItem } from '@/components/molecules';
-import { Icon } from '@/components/common';
 import { useLocalStorage } from '@/hooks';
+import { IconComponent } from '@/components/common';
 import * as SC from './Menu.style';
 
 const Menu = () => {
@@ -33,8 +33,8 @@ const Menu = () => {
     <SC.Drawer variant="permanent" isOpen={isOpen} drawerWidth={drawerWidth}>
       <SC.DrawerHeader>
         <IconButton color="success" aria-label="open drawer" onClick={toggleDrawerOpen}>
-          <Icon
-            name={!isOpen ? 'menu_control_unwrap' : 'menu_control_wrap'}
+          <IconComponent
+            name={isOpen ? 'menu_control_unwrap' : 'menu_control_wrap'}
             style={{ width: 30 }}
           />
         </IconButton>

@@ -1,7 +1,8 @@
 import { Typography, Box } from '@mui/material';
 import React, { FC } from 'react';
 import { OAuth } from 'components/atoms';
-import { Icon } from 'components/common';
+import { ReactComponent as GoogleIcon } from 'assets/icons/google.svg';
+import { ReactComponent as GitHubIcon } from 'assets/icons/github.svg';
 
 const OAuthContainer: FC = () => {
   return (
@@ -21,11 +22,11 @@ const OAuthContainer: FC = () => {
         flexDirection="column"
         sx={{ paddingLeft: { sm: '3rem' }, rowGap: '1rem' }}>
         <OAuth href="">
-          <Icon name="google" style={{ height: '2rem' }} />
+          <GoogleIcon style={{ height: '2rem' }} />
           Google
         </OAuth>
         <OAuth href="">
-          <Icon name="github" style={{ height: '2rem' }} />
+          <GitHubIcon name="github" style={{ height: '2rem' }} />
           GitHub
         </OAuth>
       </Box>
