@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 import * as SC from './ProjectCard.style';
 
 interface IProjectCard {
