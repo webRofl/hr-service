@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { Icon } from '@/components/common';
 import { styleMixins } from '@/style';
+import { IconComponent } from '@/components/common';
 
 const btnMixin = css`
   ${styleMixins.btnMixin};
@@ -19,7 +19,7 @@ export const MenuItemBtn = styled(Button)`
   width: 100%;
 `;
 
-export const MenuItemIcon = styled(Icon)`
+export const MenuItemIcon = styled(IconComponent)`
   width: 24px;
   height: 24px;
   fill: ${({ theme }) => theme.white.main};
