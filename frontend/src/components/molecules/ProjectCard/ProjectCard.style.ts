@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { styleMixins } from '@/style';
 
 export const Container = styled(Link)`
   box-shadow: ${({ theme }) => theme.boxShadow.main};
@@ -21,14 +22,41 @@ export const Container = styled(Link)`
 
 export const InfoContainer = styled('div')`
   padding: 0 1rem;
+  position: relative;
 `;
 
 export const Title = styled('h2')`
   line-height: 10px;
+  ${styleMixins.firstLetterUp}
 `;
 
 export const Image = styled('img')`
   width: 300px;
   height: 214px;
   border-radius: 6px;
+`;
+
+export const Description = styled('div')`
+  ${styleMixins.firstLetterUp}
+  word-wrap: anywhere;
+`;
+
+export const TagsContainer = styled('div')`
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  height: 25px;
+`;
+
+export const Tag = styled('div')`
+  border-radius: 6px;
+  border: 1px solid black;
+  padding: 2px;
+  overflow-x: hidden;
+  margin-right: 6px;
+  width: max-content;
+`;
+
+export const FirstLetterUp = styled('div')`
+  ${styleMixins.firstLetterUp}
 `;

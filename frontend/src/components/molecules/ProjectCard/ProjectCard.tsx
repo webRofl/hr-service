@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 import * as SC from './ProjectCard.style';
 
 interface IProjectCard {
@@ -7,15 +8,35 @@ interface IProjectCard {
   slug: string;
   imgLink: string;
   tags: string[];
+  totalVotes: number;
+  votesRatio: number;
 }
 
-const ProjectCard: FC<IProjectCard> = ({ title, description, slug, imgLink, tags }) => {
+const ProjectCard: FC<IProjectCard> = ({
+  title,
+  description,
+  slug,
+  imgLink,
+  tags,
+  totalVotes,
+  votesRatio,
+}) => {
   return (
     <SC.Container to={slug}>
       <SC.Image src={imgLink} alt="project logo" />
       <SC.InfoContainer>
         <SC.Title>{title}</SC.Title>
-        {description}
+        <SC.Description>
+          {description.length > 180 ? `${description.slice(0, 180)}...` : description}
+        </SC.Description>
+        <SC.FirstLetterUp>Total Votes: {totalVotes}</SC.FirstLetterUp>
+        <SC.FirstLetterUp>Votes Ratio: {votesRatio}%</SC.FirstLetterUp>
+        <SC.TagsContainer>
+          {tags.map((t, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <SC.Tag key={index}>{t}</SC.Tag>
+          ))}
+        </SC.TagsContainer>
       </SC.InfoContainer>
     </SC.Container>
   );
