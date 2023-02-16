@@ -13,4 +13,4 @@ class ProjectSerializer(serializers.ModelSerializer):
   class Meta:
     model = Project
     fields = '__all__'
-
+    lookup_field = 'slug'
