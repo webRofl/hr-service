@@ -19,6 +19,8 @@ const Projects: FC = () => {
             slug={p.slug || ''}
             imgLink={p.image || ''}
             tags={p.tags || []}
+            totalVotes={p.total_votes || 0}
+            votesRatio={p.votes_ratio || 0}
           />
         ))}
       </SC.ProjectCardContainer>

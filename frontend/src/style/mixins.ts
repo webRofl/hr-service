@@ -6,6 +6,13 @@ const btnMixin = css`
   height: 48px;
 `;
 
+const firstLetterUp = css`
+  &:first-letter {
+    text-transform: capitalize;
+  }
+`;
+
 export const styleMixins = {
   btnMixin,
+  firstLetterUp,
 };

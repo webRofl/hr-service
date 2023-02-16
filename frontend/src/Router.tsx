@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { TemplateWithMenu, AuthTemplate } from 'components/templates';
-import { Candidates, Projects } from './components/organisms';
+import { Candidates, ProjectPage, Projects } from './components/organisms';
 import { Redirect } from './components/common';
 
 const Router: FC = () => {
@@ -16,11 +16,15 @@ const Router: FC = () => {
       element: <TemplateWithMenu children={<Projects />} />,
     },
     {
+      path: '/projects/:projectId',
+      element: <TemplateWithMenu children={<ProjectPage />} />,
+    },
+    {
       path: '/candidates',
       element: <TemplateWithMenu children={<Candidates />} />,
     },
     {
-      path: 'sign-in',
+      path: '/sign-in',
       element: <AuthTemplate />,
     },
   ]);
