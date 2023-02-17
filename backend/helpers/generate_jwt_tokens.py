@@ -6,7 +6,7 @@ from home import settings
 def generate_jwt_tokens(validated_data):
     access_payload = {
         "iss": "backend-api",
-        "email": validated_data["email"],
+        "id": str(validated_data["id"]),
         "exp": datetime.utcnow() + timedelta(seconds=settings.JWT_ACCESS_TTL),
         "type": "access",
     }
@@ -14,7 +14,7 @@ def generate_jwt_tokens(validated_data):
 
     refresh_payload = {
         "iss": "backend-api",
-        "email": validated_data["email"],
+        "id": str(validated_data["id"]),
         "exp": datetime.utcnow() + timedelta(seconds=settings.JWT_REFRESH_TTL),
         "type": "refresh",
     }

@@ -47,7 +47,7 @@ class LoginSerializer(serializers.Serializer):
         if not user.is_active:
             raise serializers.ValidationError("This user has been deactivated.")
 
-        return {"email": user.email, "username": user.username}
+        return {"email": user.email, "username": user.username, "id": user.id}
 
     def create(self, validated_data):
         response = {}
@@ -76,7 +76,13 @@ class RefreshSerializer(serializers.Serializer):
             raise serializers.ValidationError("Token is not correct.")
 
         try:
-            payload = jwt.decode(refresh_token, settings.SECRET_KEY)
+            payload = jwt.decode(
+                jwt=refresh_token,
+                key=settings.SECRET_KEY,
+                algorithms=[
+                    "HS256",
+                ],
+            )
 
             if payload["type"] != "refresh":
                 raise serializers.ValidationError("Token type is not refresh.")
@@ -90,7 +96,7 @@ class RefreshSerializer(serializers.Serializer):
         return data
 
     def create(self, validated_data):
-        tokens = generate_jwt_tokens(validated_data)
+        tokens = generate_jwt_tokens(validated_data["payload"])
 
         return tokens
 

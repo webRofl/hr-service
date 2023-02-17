@@ -1,6 +1,7 @@
 import jwt
 from django.conf import settings
 from rest_framework import authentication, exceptions
+from uuid import UUID
 
 from .models import User
 
@@ -45,7 +46,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
 
         try:
-            user = User.objects.get(pk=payload["id"])
+            user = User.objects.get(id=UUID(payload["id"]))
         except User.DoesNotExist:
             msg = "The user corresponding to this token was not found."
             raise exceptions.AuthenticationFailed(msg)
