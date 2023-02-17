@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
+    'authentication.apps.AuthenticationConfig',
 
     'rest_framework',
     'drf_yasg',
@@ -132,3 +133,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+# AUTHENTICATION
+
+AUTH_USER_MODEL = 'authentication.User'
+
+JWT_ACCESS_TTL = 60 * 5 # seconds
+JWT_REFRESH_TTL = 3600 * 24 * 7 # seconds
+
+# REST_FRAMEWORK
+
+REST_FRAMEWORK = {    
+    'EXCEPTION_HANDLER': 'home.exceptions.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'authentication.backends.JWTAuthentication',
+    ),
+}
