@@ -10,3 +10,4 @@ flake8
 djangorestframework
 drf-yasg
 django-cors-headers
+PyJWT
