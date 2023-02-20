@@ -4,10 +4,15 @@ import React, { FC } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInput } from 'components/atoms';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks';
 import { ILogin, loginSchema } from './schema';
 import * as SC from './AuthForm.style';
 
 const AuthContainer: FC = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const methods = useForm<ILogin>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -17,8 +22,14 @@ const AuthContainer: FC = () => {
   });
 
   const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
-    // eslint-disable-next-line no-console
-    console.log(values);
+    const loginData = {
+      email: values.email!,
+      password: values.password!,
+    };
+
+    login(loginData).then(() => {
+      navigate('/projects');
+    });
   };
 
   return (

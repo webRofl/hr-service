@@ -3,6 +3,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
 
 from .renderers import UserJSONRenderer
 from .serializers import (
@@ -17,7 +18,8 @@ class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
     renderer_classes = (UserJSONRenderer,)
-
+    
+    @swagger_auto_schema(request_body=RegistrationSerializer)
     def post(self, request):
         user = request.data.get("user", {})
 
@@ -33,6 +35,7 @@ class LoginAPIView(APIView):
     renderer_classes = (UserJSONRenderer,)
     serializer_class = LoginSerializer
 
+    @swagger_auto_schema(request_body=LoginSerializer)
     def post(self, request):
         user = request.data.get("user", {})
 
@@ -48,6 +51,7 @@ class RefreshView(APIView):
     renderer_classes = (UserJSONRenderer,)
     serializer_class = RefreshSerializer
 
+    @swagger_auto_schema(request_body=RefreshSerializer)
     def post(self, request, format=None):
 
         serializer = self.serializer_class(data=request.data)

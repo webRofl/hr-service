@@ -10,7 +10,7 @@ export const loginSchema = object({
   password: string()
     .min(8, BASE_VALIDATION_MESSAGES.PASSWORD)
     .max(32, BASE_VALIDATION_MESSAGES.PASSWORD)
-    .matches(/\d/, BASE_VALIDATION_MESSAGES.PASSWORD)
+    // .matches(/\d/, BASE_VALIDATION_MESSAGES.PASSWORD)
     .required(),
 });
 

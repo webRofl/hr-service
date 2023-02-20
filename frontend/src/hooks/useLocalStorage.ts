@@ -1,4 +1,4 @@
-type LSKeys = 'isMenuOpen';
+type LSKeys = 'isMenuOpen' | 'refreshToken';
 
 export const useLocalStorage = () => {
   const localStorage = window.localStorage;
@@ -14,12 +14,12 @@ export const useLocalStorage = () => {
     localStorage.setItem('hrServiceLS', jsonValue);
   };
 
-  const LSGetter = (key: LSKeys): string | undefined => {
+  const LSGetter = (key: LSKeys): string | null => {
     return storage[key];
   };
 
   const LSSetter = (key: LSKeys, value: unknown): void => {
-    storage[key] = JSON.stringify(value);
+    storage[key] = value instanceof String ? value : JSON.stringify(value);
     updateLocalStorage(storage);
   };
 
