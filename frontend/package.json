@@ -28,7 +28,8 @@
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.5",
     "web-vitals": "^2.1.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.3.3"
   },
   "resolutions": {
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"

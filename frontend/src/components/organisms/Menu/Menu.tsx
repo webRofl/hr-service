@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { IconButton, useMediaQuery } from '@mui/material';
 import { useTheme } from 'styled-components';
-import { MenuItem } from '@/components/molecules';
-import { useLocalStorage } from '@/hooks';
+import { MenuItem, MenuProfile } from '@/components/molecules';
 import { IconComponent } from '@/components/common';
+import { useLocalStorageState } from '@/store';
 import * as SC from './Menu.style';
 
 const Menu = () => {
   const theme = useTheme();
-  const { LSGetter, LSSetter } = useLocalStorage();
+  const { isMenuOpen, setIsMenuOpen } = useLocalStorageState(({ isMenuOpen, setIsMenuOpen }) => ({
+    isMenuOpen,
+    setIsMenuOpen,
+  }));
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [isOpen, setIsOpen] = useState<boolean>(!matches && LSGetter('isMenuOpen') === 'true');
+  const [isOpen, setIsOpen] = useState<boolean>(!matches && isMenuOpen);
   const [drawerWidth, setDrawerWidth] = useState<number>(window.innerWidth / 6);
 
   const toggleDrawerOpen = () => {
     setIsOpen((prev) => {
-      LSSetter('isMenuOpen', !prev);
+      setIsMenuOpen(!prev);
       return !prev;
     });
   };
@@ -47,12 +50,7 @@ const Menu = () => {
         spacing={2}>
         <MenuItem label="Projects" iconName="menu_projects" isShowLabel={isOpen} />
         <MenuItem label="Candidates" iconName="menu_candidates" isShowLabel={isOpen} />
-        <MenuItem
-          label="Sign-In"
-          iconName="menu_sign-in"
-          isShowLabel={isOpen}
-          style={{ backgroundColor: theme.gray.main, position: 'absolute', bottom: '4%' }}
-        />
+        <MenuProfile isOpen={isOpen} />
       </SC.MenuContainer>
     </SC.Drawer>
   );

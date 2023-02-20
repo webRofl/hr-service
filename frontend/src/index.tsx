@@ -7,22 +7,24 @@ import { ErrorBoundary } from 'react-error-boundary';
 import Router from './Router';
 import reportWebVitals from './reportWebVitals';
 import { getTheme } from './style';
-import { setSettings } from './utils';
-import { ErrorFallback } from './components/common';
+import { initSettings } from './utils';
+import { ErrorFallback, SettingsWrapper } from './components/common';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-const { queryClient } = setSettings();
+const { queryClient } = initSettings();
 
 root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={getTheme('light')}>
-          <Router />
-          <CssBaseline />
-        </ThemeProvider>
-      </QueryClientProvider>
+      <SettingsWrapper>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={getTheme('light')}>
+            <Router />
+            <CssBaseline />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </SettingsWrapper>
     </ErrorBoundary>
   </React.StrictMode>,
 );
