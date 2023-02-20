@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { GlobalENV } from '@/types';
 
-export const setSettings = () => {
+export const initSettings = () => {
   axios.defaults.baseURL = GlobalENV.FQDN_API;
 
   const queryClient = new QueryClient();

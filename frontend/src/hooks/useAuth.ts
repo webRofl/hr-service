@@ -1,36 +1,51 @@
-import { useLocalStorage } from '@/hooks';
 import { authLoginCreate, authRefreshCreate } from '@/store/api/orvalGeneration/auth/auth';
 import axios from 'axios';
 import { UserDataType } from '@/types';
+import { useAuthStore, useLocalStorageState } from '@/store';
 
 interface IUseAuthReturn {
   login: (data: UserDataType) => Promise<boolean>;
-  setAuthHeader: () => void;
+  setHeaders: () => void;
 }
 
 const useAuth = (): IUseAuthReturn => {
-  const { LSGetter, LSSetter } = useLocalStorage();
+  const { refreshToken, setRefreshToken, setUsername } = useLocalStorageState(
+    ({ refreshToken, setRefreshToken, setUsername }) => ({
+      refreshToken,
+      setRefreshToken,
+      setUsername,
+    }),
+  );
+  const { setIsAuth } = useAuthStore(({ setIsAuth }) => ({
+    setIsAuth,
+  }));
 
   const disableAuthHeader = () => {
     axios.defaults.headers.common.Authorization = '';
   };
 
-  const setAuthHeader = async () => {
+  const setHeaders = async () => {
     disableAuthHeader();
 
-    const prevToken = LSGetter('refreshToken');
-
-    if (!prevToken) {
+    if (!refreshToken) {
       return;
     }
-
-    const refreshToken = {
-      refresh_token: LSGetter('refreshToken')!,
-    };
-    const newAuthData = await authRefreshCreate(refreshToken);
-
-    axios.defaults.headers.common.Authorization = newAuthData.data.access;
-    LSSetter('refreshToken', newAuthData.data.refresh_token);
+    try {
+      const requestData = {
+        refresh_token: refreshToken,
+      };
+      const newAuthData = (await authRefreshCreate(requestData)).data.user;
+      // eslint-disable-next-line no-console
+      console.log(newAuthData);
+      axios.defaults.headers.common.Authorization = newAuthData.access;
+      setRefreshToken(newAuthData.refresh);
+      setIsAuth(true);
+    } catch (e) {
+      if (e instanceof Error) {
+        // eslint-disable-next-line no-console
+        console.log(e.message);
+      }
+    }
   };
 
   const login = async (data: UserDataType): Promise<boolean> => {
@@ -44,7 +59,9 @@ const useAuth = (): IUseAuthReturn => {
       };
       const loginData = (await authLoginCreate(newData)).data.user;
       axios.defaults.headers.common.Authorization = loginData.access;
-      LSSetter('refreshToken', loginData.refresh);
+      setRefreshToken(loginData.refresh);
+      setIsAuth(true);
+      setUsername(loginData.username);
 
       return true;
     } catch (e) {
@@ -57,8 +74,8 @@ const useAuth = (): IUseAuthReturn => {
   };
 
   return {
-    setAuthHeader,
     login,
+    setHeaders,
   };
 };
 
