@@ -1,21 +1,20 @@
+import { Button } from '@/components/atoms';
 import React, { CSSProperties, FC } from 'react';
 import * as SC from './MenuItem.style';
 
 interface IMenuItemProps {
   label: string;
-  iconName?: string;
   isShowLabel: boolean;
+  iconName?: string;
   style?: CSSProperties | undefined;
+
+  onClick?: () => void;
 }
 
-const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isShowLabel, style }) => {
+const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isShowLabel, style, onClick }) => {
   return (
-    <SC.MenuItemContainer to={`/${label.toLowerCase()}`} style={style}>
-      <SC.MenuItemBtn
-        variant="contained"
-        startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
-        {isShowLabel && label}
-      </SC.MenuItemBtn>
+    <SC.MenuItemContainer to={`/${label.toLowerCase()}`} style={style} onClick={onClick}>
+      <Button label={label} iconName={iconName} isShowLabel={isShowLabel} />
     </SC.MenuItemContainer>
   );
 };

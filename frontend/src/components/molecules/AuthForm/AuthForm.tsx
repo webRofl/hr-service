@@ -1,6 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography, Box } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInput } from 'components/atoms';
@@ -12,6 +12,8 @@ import * as SC from './AuthForm.style';
 const AuthContainer: FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const methods = useForm<ILogin>({
     resolver: yupResolver(loginSchema),
@@ -21,15 +23,23 @@ const AuthContainer: FC = () => {
     },
   });
 
-  const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
+  const onSubmitHandler: SubmitHandler<ILogin> = async (values: ILogin) => {
+    setIsLoading(true);
+
     const loginData = {
       email: values.email!,
       password: values.password!,
     };
 
-    login(loginData).then(() => {
+    const errorMsg = await login(loginData);
+
+    setIsLoading(false);
+
+    setError(errorMsg);
+
+    if (!errorMsg) {
       navigate('/projects');
-    });
+    }
   };
 
   return (
@@ -60,8 +70,9 @@ const AuthContainer: FC = () => {
           placeholder="Type your password"
           required
         />
+        <span>{error}</span>
 
-        <LoadingButton loading={false} type="submit" variant="contained" sx={SC.LoadingBtn}>
+        <LoadingButton loading={isLoading} type="submit" variant="contained" sx={SC.LoadingBtn}>
           Login
         </LoadingButton>
       </Box>

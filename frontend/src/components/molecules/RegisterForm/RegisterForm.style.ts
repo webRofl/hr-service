@@ -1,5 +1,3 @@
-import { CSSProperties } from 'react';
-
 export const LoginText: CSSProperties = {
   textAlign: 'center',
   marginBottom: '1.5rem',

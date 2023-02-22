@@ -6,11 +6,11 @@ interface IUseAuthStore {
   setIsAuth: (isAuth: boolean) => void;
 }
 
-const useAuthStore = create<IUseAuthStore>((set, get) => ({
+const useAuthState = create<IUseAuthStore>((set, get) => ({
   isAuth: false,
   setIsAuth: (isAuth: boolean) => {
     set({ isAuth });
   },
 }));
 
-export default useAuthStore;
+export default useAuthState;

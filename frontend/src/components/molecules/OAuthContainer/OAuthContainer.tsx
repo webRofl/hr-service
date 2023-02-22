@@ -4,7 +4,11 @@ import { OAuth } from 'components/atoms';
 import { ReactComponent as GoogleIcon } from 'assets/icons/google.svg';
 import { ReactComponent as GitHubIcon } from 'assets/icons/github.svg';
 
-const OAuthContainer: FC = () => {
+interface IOAuthContainerProps {
+  title?: string;
+}
+
+const OAuthContainer: FC<IOAuthContainerProps> = ({ title }) => {
   return (
     <>
       <Typography
@@ -15,7 +19,7 @@ const OAuthContainer: FC = () => {
           mb: '1.5rem',
           textAlign: 'center',
         }}>
-        Log in with another provider:
+        {title}
       </Typography>
       <Box
         display="flex"
