@@ -1,7 +1,8 @@
 import React, { CSSProperties, FC } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
-import { useAuthStore, useLocalStorageState } from '@/store';
+import { useAuthState, useLocalStorageState } from '@/store';
+import { Button } from '@mui/material';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -10,8 +11,11 @@ interface IMenuProfileProps {
 
 const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   const theme = useTheme();
-  const { isAuth } = useAuthStore(({ isAuth }) => ({ isAuth }));
-  const { username } = useLocalStorageState(({ username }) => ({ username }));
+  const { isAuth, setIsAuth } = useAuthState(({ isAuth, setIsAuth }) => ({ isAuth, setIsAuth }));
+  const { username, setRefreshToken } = useLocalStorageState(({ username, setRefreshToken }) => ({
+    username,
+    setRefreshToken,
+  }));
 
   const signInStyles: CSSProperties = {
     backgroundColor: theme.gray.main,
@@ -19,17 +23,29 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
     bottom: '4%',
   };
 
+  const logoutBtnStyles: CSSProperties = {
+    backgroundColor: theme.gray.main,
+    width: '100%',
+  };
+
+  const logoutHandler = () => {
+    setIsAuth(false);
+    setRefreshToken('');
+  };
+
   if (!isAuth) {
     return (
-      <MenuItem label="Sign-In" iconName="menu_sign-in" isShowLabel={isOpen} style={signInStyles} />
+      <MenuItem label="Login" iconName="menu_sign-in" isShowLabel={isOpen} style={signInStyles} />
     );
   }
 
   return (
-    <div style={signInStyles}>
+    <SC.ProfileContainer>
       <SC.Username>{username}</SC.Username>
-      <span>this should be user photo</span>
-    </div>
+      <Button variant="outlined" onClick={logoutHandler} sx={{ height: 48 }}>
+        Logout
+      </Button>
+    </SC.ProfileContainer>
   );
 };
 

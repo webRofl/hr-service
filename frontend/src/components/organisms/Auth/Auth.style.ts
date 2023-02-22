@@ -45,27 +45,3 @@ export const FormContainer = styled(Grid)`
     border-right: 1px solid #ddd;
   }
 `;
-
-export const SupportContainer = styled(Stack)`
-  justify-content: center;
-  margin-top: 3rem;
-  text-align: center;
-`;
-
-export const SignUpTypography = styled(Typography)`
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-`;
-
-export const ForgotPasswordTypography = styled(Typography)`
-  font-size: 0.9rem;
-`;
-
-export const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: #3683dc;
-  &:hover {
-    text-decoration: underline;
-    color: #5ea1b6;
-  }
-`;

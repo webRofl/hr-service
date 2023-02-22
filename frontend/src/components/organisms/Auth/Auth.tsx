@@ -1,29 +1,39 @@
 import { Grid } from '@mui/material';
-import React from 'react';
-import { AuthForm, OAuthContainer } from 'components/molecules';
+import React, { useEffect, useState } from 'react';
+import { AuthForm, AuthSupport, OAuthContainer } from 'components/molecules';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthState } from '@/store';
+import RegisterForm from '@/components/molecules/RegisterForm/RegisterForm';
 import * as SC from './Auth.style';
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLogin, setIsLogin] = useState(location.pathname === '/login');
+  const { isAuth } = useAuthState(({ isAuth }) => ({ isAuth }));
+
+  useEffect(() => {
+    setIsLogin(location.pathname === '/login');
+  }, [location]);
+
+  useEffect(() => {
+    if (location.pathname.match(/(login|register)/) && isAuth) {
+      navigate('/projects');
+    }
+  }, [location, isAuth]);
+
   return (
     <SC.FullSizeGrid container>
       <SC.ComponentContainer item>
         <SC.ContentGrid item container rowSpacing={5}>
           <SC.FormContainer item xs={12} sm={6}>
-            <AuthForm />
+            {isLogin ? <AuthForm /> : <RegisterForm />}
           </SC.FormContainer>
           <Grid item xs={12} sm={6}>
-            <OAuthContainer />
+            <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />
           </Grid>
         </SC.ContentGrid>
-        <SC.SupportContainer>
-          <SC.SignUpTypography>
-            Need an account?
-            <SC.LinkItem to="/sign-up"> Sign up here</SC.LinkItem>
-          </SC.SignUpTypography>
-          <SC.ForgotPasswordTypography>
-            <SC.LinkItem to="/forgot-password">Forgot your password?</SC.LinkItem>
-          </SC.ForgotPasswordTypography>
-        </SC.SupportContainer>
+        {isLogin && <AuthSupport />}
       </SC.ComponentContainer>
     </SC.FullSizeGrid>
   );

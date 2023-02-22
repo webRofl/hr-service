@@ -24,7 +24,11 @@ const Router: FC = () => {
       element: <TemplateWithMenu children={<Candidates />} />,
     },
     {
-      path: '/sign-in',
+      path: '/login',
+      element: <AuthTemplate />,
+    },
+    {
+      path: '/register',
       element: <AuthTemplate />,
     },
   ]);
