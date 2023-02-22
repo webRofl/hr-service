@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 
-from .renderers import UserJSONRenderer
 from .serializers import (
     LoginSerializer,
     RegistrationSerializer,
@@ -17,13 +16,10 @@ from .serializers import (
 class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
-    renderer_classes = (UserJSONRenderer,)
-    
+
     @swagger_auto_schema(request_body=RegistrationSerializer)
     def post(self, request):
-        user = request.data.get("user", {})
-
-        serializer = self.serializer_class(data=user)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -32,14 +28,11 @@ class RegistrationAPIView(APIView):
 
 class LoginAPIView(APIView):
     permission_classes = (AllowAny,)
-    renderer_classes = (UserJSONRenderer,)
     serializer_class = LoginSerializer
 
     @swagger_auto_schema(request_body=LoginSerializer)
     def post(self, request):
-        user = request.data.get("user", {})
-
-        serializer = self.serializer_class(data=user)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -48,7 +41,6 @@ class LoginAPIView(APIView):
 
 class RefreshView(APIView):
     permission_classes = (AllowAny,)
-    renderer_classes = (UserJSONRenderer,)
     serializer_class = RefreshSerializer
 
     @swagger_auto_schema(request_body=RefreshSerializer)
@@ -62,7 +54,6 @@ class RefreshView(APIView):
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
-    renderer_classes = (UserJSONRenderer,)
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
@@ -71,8 +62,6 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
-        serializer_data = request.data.get("user", {})
-
         serializer = self.serializer_class(
             request.user, data=serializer_data, partial=True
         )

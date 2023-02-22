@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
-    slug = models.SlugField(unique=True, blank=True, null=True)
+    slug = models.SlugField(unique=True, default='')
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -19,10 +19,10 @@ class Skill(models.Model):
     
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    second_name = models.CharField(max_length=50, blank=True, null=True)
-    email = models.EmailField(max_length=50, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, default='')
+    second_name = models.CharField(max_length=50, default='')
+    email = models.EmailField(max_length=50, default='')
     username = models.CharField(max_length=50, unique=True, default='')
     slug = models.SlugField(unique=True, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)

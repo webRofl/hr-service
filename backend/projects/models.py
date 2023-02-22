@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, unique=True, default='')
-  slug = models.SlugField(unique=True, blank=True, null=True)
+  slug = models.SlugField(unique=True, default='')
   created = models.DateTimeField(auto_now_add=True)
   id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
@@ -17,8 +17,8 @@ class Tag(models.Model):
 
 class Project(models.Model):
   title = models.CharField(max_length=100, unique=True, default='')
-  slug = models.SlugField(unique=True, blank=True, null=True)
-  description = models.TextField(null=True, blank=True)
+  slug = models.SlugField(unique=True, default='')
+  description = models.TextField(default='')
   tags = models.ManyToManyField(Tag, blank=True)
   image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
   total_votes = models.IntegerField(default=0, null=True, blank=True)
@@ -41,7 +41,7 @@ class Review(models.Model):
     ('up', 'Up Vote'),
     ('down', 'Down Vote'),
   )
-  review_text = models.TextField(null=True, blank=True)
+  review_text = models.TextField(default='')
   value = models.CharField(max_length=200, choices=VOTE_TYPE)
   created = models.DateTimeField(auto_now_add=True)
   id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
