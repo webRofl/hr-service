@@ -17,8 +17,9 @@ services:
   db:
     image: postgres
     container_name: hr-postgres
-    volumes:
-      - ./backend/db:/var/lib/postgresql/data
+    expose: 
+      - 5432
+    restart: unless-stopped
     environment:
       <<: *env-postgres
   django:
@@ -27,7 +28,7 @@ services:
     volumes:
       - ./backend:/opt/app/
     expose:
-      - 8000
+      - ${DJANGO_PORT}
     environment:
       <<: *env-postgres
       <<: *env-django
@@ -41,7 +42,7 @@ services:
       - ./frontend/node_modules/:/opt/app/node_modules
     command: yarn start --host
     expose:
-      - 3000
+      - ${NODE_PORT}
     environment:
       <<: *env-node
 
