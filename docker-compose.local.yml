@@ -1,10 +1,15 @@
 version: '3.8'
 
 services:
-  django:
-    command: python manage.py runserver 0.0.0.0:8000
+  db:
     ports:
-      - 8000:8000
+      - ${POSTGRES_PORT}:5432
+  django:
+    command: python manage.py runserver 0.0.0.0:${DJANGO_PORT}
+    ports:
+      - ${DJANGO_PORT}:${DJANGO_PORT}
+    depends_on:
+      - db
   node:
     ports:
-      - 3000:3000
+      - ${NODE_PORT}:${NODE_PORT}

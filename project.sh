@@ -47,6 +47,11 @@ generateAPI() {
     cd frontend && yarn generateAPI
 }
 
+local_init() {
+  cp .env.local .env
+  init
+}
+
 case $COMMAND in
     init)
         init
@@ -74,6 +79,9 @@ case $COMMAND in
         ;;
     generateAPI)
         generateAPI
+        ;;
+    local_init)
+        local_init
         ;;
     *)
         echo 'No action specified!'
