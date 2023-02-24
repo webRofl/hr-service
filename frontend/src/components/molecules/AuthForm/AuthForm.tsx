@@ -1,44 +1,44 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography, Box } from '@mui/material';
-import React, { FC, useState } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import React, { FC, useEffect, useState } from 'react';
+import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
 import { FormInput } from 'components/atoms';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks';
-import { ILogin, loginSchema } from './schema';
+import { AxiosErrorResponse } from '@/types';
+import { useLocation } from 'react-router-dom';
 import * as SC from './AuthForm.style';
 
-const AuthContainer: FC = () => {
-  const { login } = useAuth();
-  const navigate = useNavigate();
+interface IAuthFormProps {
+  onSuccessSubmitHandler: () => void;
+  methods: UseFormReturn<FieldValues, any>;
+  dataLoadCb: (values: unknown) => Promise<AxiosErrorResponse>;
+  btnText: string;
+  title?: string;
+}
+
+const AuthForm: FC<IAuthFormProps> = ({
+  onSuccessSubmitHandler,
+  methods,
+  title,
+  dataLoadCb,
+  btnText,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [errors, setErrors] = useState<AxiosErrorResponse>(undefined);
+  const location = useLocation();
 
-  const methods = useForm<ILogin>({
-    resolver: yupResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  useEffect(() => {
+    setErrors(undefined);
+  }, [location.pathname]);
 
-  const onSubmitHandler: SubmitHandler<ILogin> = async (values: ILogin) => {
+  const onSubmitHandler = async (values: unknown) => {
     setIsLoading(true);
 
-    const loginData = {
-      email: values.email!,
-      password: values.password!,
-    };
-
-    const errorMsg = await login(loginData);
-
+    const errors = await dataLoadCb(values);
     setIsLoading(false);
+    setErrors(errors);
 
-    setError(errorMsg);
-
-    if (!errorMsg) {
-      navigate('/projects');
+    if (!errors) {
+      onSuccessSubmitHandler();
     }
   };
 
@@ -53,31 +53,21 @@ const AuthContainer: FC = () => {
         sx={{ paddingRight: { sm: '3rem' } }}
         onSubmit={methods.handleSubmit(onSubmitHandler)}>
         <Typography variant="h6" component="h1" sx={SC.LoginText}>
-          Log into your account
+          {title}
         </Typography>
 
-        <FormInput
-          label="Enter your email"
-          type="email"
-          name="email"
-          placeholder="Type your login"
-          required
-        />
-        <FormInput
-          type="password"
-          label="Password"
-          name="password"
-          placeholder="Type your password"
-          required
-        />
-        <span>{error}</span>
+        {Object.keys(methods.getValues()).map((i) => (
+          <FormInput key={Math.random()} name={i} required />
+        ))}
+
+        {errors && Object.values(errors).map((e) => <span>{e}</span>)}
 
         <LoadingButton loading={isLoading} type="submit" variant="contained" sx={SC.LoadingBtn}>
-          Login
+          {btnText}
         </LoadingButton>
       </Box>
     </FormProvider>
   );
 };
 
-export default AuthContainer;
+export default AuthForm;

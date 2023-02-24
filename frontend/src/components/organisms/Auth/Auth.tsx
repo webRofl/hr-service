@@ -1,41 +1,57 @@
-import { Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { AuthForm, AuthSupport, OAuthContainer } from 'components/molecules';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuthState } from '@/store';
-import RegisterForm from '@/components/molecules/RegisterForm/RegisterForm';
-import * as SC from './Auth.style';
+/* eslint-disable indent */
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { FC } from 'react';
+import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
+import { AuthForm } from '@/components/molecules';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/hooks';
+import { loginSchema, registerSchema } from './Auth.schema';
 
-const Auth = () => {
+interface IAuthProps {
+  isLogin: boolean;
+}
+
+const Auth: FC<IAuthProps> = ({ isLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLogin, setIsLogin] = useState(location.pathname === '/login');
-  const { isAuth } = useAuthState(({ isAuth }) => ({ isAuth }));
+  const { login, register } = useAuth();
 
-  useEffect(() => {
-    setIsLogin(location.pathname === '/login');
-  }, [location]);
+  const getFields = (...fields: string[]) => {
+    return fields.reduce((acc, curr) => {
+      acc[curr] = '';
+      return acc;
+    }, {} as Record<string, string>);
+  };
 
-  useEffect(() => {
-    if (location.pathname.match(/(login|register)/) && isAuth) {
+  const getMethods = (resolver: any, ...fields: string[]) => {
+    return useForm<FieldValues>({
+      resolver: yupResolver(resolver),
+      defaultValues: getFields(...fields),
+    });
+  };
+
+  const methods: Record<string, UseFormReturn<FieldValues, any>> = {
+    login: getMethods(loginSchema, 'email', 'password'),
+    register: getMethods(registerSchema, 'email', 'password', 'username'),
+  };
+
+  const onSuccessSubmitHandler = () => {
+    if (isLogin) {
       navigate('/projects');
+      return;
     }
-  }, [location, isAuth]);
+
+    navigate('/login');
+  };
 
   return (
-    <SC.FullSizeGrid container>
-      <SC.ComponentContainer item>
-        <SC.ContentGrid item container rowSpacing={5}>
-          <SC.FormContainer item xs={12} sm={6}>
-            {isLogin ? <AuthForm /> : <RegisterForm />}
-          </SC.FormContainer>
-          <Grid item xs={12} sm={6}>
-            <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />
-          </Grid>
-        </SC.ContentGrid>
-        {isLogin && <AuthSupport />}
-      </SC.ComponentContainer>
-    </SC.FullSizeGrid>
+    <AuthForm
+      methods={methods[location.pathname.slice(1)]}
+      title={isLogin ? 'Log into your account' : 'Register new account'}
+      dataLoadCb={isLogin ? login : register}
+      btnText={isLogin ? 'Login' : 'Register'}
+      onSuccessSubmitHandler={onSuccessSubmitHandler}
+    />
   );
 };
 
