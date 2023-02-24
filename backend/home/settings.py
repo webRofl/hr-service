@@ -138,6 +138,7 @@ CORS_ALLOWED_ORIGINS = [
 
 AUTH_USER_MODEL = 'authentication.User'
 
+JWT_HEADER_PREFIX = environ.get('JWT_HEADER_PREFIX')
 JWT_ACCESS_TTL = 60 * 5 # seconds
 JWT_REFRESH_TTL = 3600 * 24 * 7 # seconds
 

@@ -13,6 +13,9 @@ x-env-node: &env-node
   VITE_FQDN_FRONTEND: ${VITE_FQDN_FRONTEND}
   VITE_FQDN_API: ${VITE_FQDN_API}
 
+x-env-global: &env-global
+  JWT_HEADER_PREFIX: ${JWT_HEADER_PREFIX}
+
 services:
   db:
     image: postgres
@@ -32,6 +35,7 @@ services:
     environment:
       <<: *env-postgres
       <<: *env-django
+      <<: *env-global
     depends_on:
       - db
   node:
@@ -45,6 +49,7 @@ services:
       - ${NODE_PORT}
     environment:
       <<: *env-node
+      <<: *env-global
 
 volumes:
   db:
