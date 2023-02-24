@@ -6,4 +6,10 @@ export const loginSchema = object({
   password,
 });
 
+export const registerSchema = object({
+  email,
+  password,
+  username: string().required(),
+});
+
 export type ILogin = TypeOf<typeof loginSchema>;

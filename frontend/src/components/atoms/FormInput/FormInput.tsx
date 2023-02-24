@@ -22,6 +22,9 @@ const FormInput: FC<IFormInputProps> = ({ name, ...otherProps }) => {
         <SC.TextField
           {...field}
           {...otherProps}
+          label={name[0].toUpperCase() + name.slice(1)}
+          type={name}
+          placeholder={`Type your ${name}`}
           variant="outlined"
           sx={{ mb: '1.5rem' }}
           error={!!errors[name]}

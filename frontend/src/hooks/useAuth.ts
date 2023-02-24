@@ -4,15 +4,13 @@ import {
   authRegisterCreate,
 } from '@/store/api/orvalGeneration/auth/auth';
 import axios, { AxiosError } from 'axios';
-import { UserDataType } from '@/types';
+import { AxiosErrorResponse, UserDataType } from '@/types';
 import { useAuthState, useLocalStorageState } from '@/store';
 
 interface IUseAuthReturn {
-  login: (data: UserDataType) => Promise<string | undefined>;
+  login: (data: UserDataType) => Promise<AxiosErrorResponse>;
   setHeaders: () => void;
-  register: (
-    data: UserDataType & { username: string },
-  ) => Promise<Record<string, string[]> | undefined>;
+  register: (data: UserDataType & { username: string }) => Promise<AxiosErrorResponse>;
 }
 
 const useAuth = (): IUseAuthReturn => {
@@ -41,9 +39,9 @@ const useAuth = (): IUseAuthReturn => {
       const requestData = {
         refresh_token: refreshToken,
       };
-      const newAuthData = (await authRefreshCreate(requestData)).data.user;
+      const newAuthData = (await authRefreshCreate(requestData)).data;
       axios.defaults.headers.common.Authorization = newAuthData.access;
-      setRefreshToken(newAuthData.refresh);
+      setRefreshToken(newAuthData.refresh!);
       setIsAuth(true);
     } catch (e) {
       if (e instanceof Error) {
@@ -54,23 +52,18 @@ const useAuth = (): IUseAuthReturn => {
   };
 
   // eslint-disable-next-line consistent-return
-  const login = async (data: UserDataType): Promise<string | undefined> => {
+  const login = async (data: UserDataType): Promise<AxiosErrorResponse> => {
     try {
       disableAuthHeader();
 
-      const newData = {
-        user: {
-          ...data,
-        },
-      };
-      const loginData = (await authLoginCreate(newData)).data.user;
+      const loginData = (await authLoginCreate(data)).data;
       axios.defaults.headers.common.Authorization = loginData.access;
-      setRefreshToken(loginData.refresh);
+      setRefreshToken(loginData.refresh!);
       setIsAuth(true);
-      setUsername(loginData.username);
+      setUsername(loginData.username!);
     } catch (e) {
       if (e instanceof AxiosError) {
-        const errorMessage = e.response?.data?.errors?.error[0];
+        const errorMessage = e.response?.data?.errors;
         // eslint-disable-next-line no-console
         console.log(errorMessage);
 
@@ -81,15 +74,9 @@ const useAuth = (): IUseAuthReturn => {
 
   const register = async (
     data: UserDataType & { username: string },
-  ): Promise<Record<string, string[]> | undefined> => {
+  ): Promise<AxiosErrorResponse> => {
     try {
-      const newData = {
-        user: {
-          ...data,
-        },
-      };
-
-      await authRegisterCreate(newData);
+      await authRegisterCreate(data);
       return;
     } catch (e) {
       if (e instanceof AxiosError) {
