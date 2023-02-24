@@ -4,10 +4,12 @@ from rest_framework import authentication, exceptions
 from uuid import UUID
 
 from .models import User
+from home.settings import JWT_HEADER_PREFIX
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
-    authentication_header_prefix = "Token"
+    print(JWT_HEADER_PREFIX)
+    authentication_header_prefix = JWT_HEADER_PREFIX
 
     def authenticate(self, request):
         request.user = None
