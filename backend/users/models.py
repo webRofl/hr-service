@@ -22,8 +22,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default='')
     second_name = models.CharField(max_length=50, default='')
-    email = models.EmailField(max_length=50, default='')
-    username = models.CharField(max_length=50, unique=True, default='')
+    email = models.EmailField(max_length=50, default='', blank=True)
+    username = models.CharField(max_length=50, unique=True, default='', blank=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
@@ -40,6 +40,7 @@ class Profile(models.Model):
     
     def save(self, *args, **kwargs):
         self.username = self.user.username
+        self.email = self.user.email
         self.slug = slugify(self.username)
         super(Profile, self).save(*args, **kwargs)
 
