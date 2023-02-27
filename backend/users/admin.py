@@ -1,7 +1,13 @@
 from django.contrib import admin
 
-from helpers.auto_slug_admin import AutoSlug
 from .models import Profile, Skill
 
-admin.site.register(Profile, AutoSlug.get('username'))
-admin.site.register(Skill, AutoSlug.get('name'))
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('username',)}
+    read_only_fields = ('slug', 'id',)
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    prepopulated_fields={'slug': ('name',)}
+

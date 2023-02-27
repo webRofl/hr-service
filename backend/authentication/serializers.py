@@ -26,6 +26,7 @@ class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=255, read_only=True)
     access = serializers.CharField(read_only=True)
     refresh = serializers.CharField(read_only=True)
+    id = serializers.CharField(read_only=True)
 
     def validate(self, data):
         email = data.get("email", None)
@@ -107,6 +108,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
+            "id",
             "email",
             "username",
             "password",
