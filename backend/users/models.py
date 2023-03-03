@@ -5,14 +5,8 @@ from django.utils.text import slugify
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
-    slug = models.SlugField(unique=True, default='')
-    description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Skill, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -36,12 +30,14 @@ class Profile(models.Model):
     youtube = models.CharField(max_length=100, blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     
     def save(self, *args, **kwargs):
         self.username = self.user.username
         self.email = self.user.email
         self.slug = slugify(self.username)
+        self.is_active = self.user.is_active
         super(Profile, self).save(*args, **kwargs)
 
     def __str__(self):

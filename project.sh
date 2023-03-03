@@ -44,7 +44,7 @@ init() {
 
 generateAPI() {
     start
-    cd frontend && yarn generateAPI
+    docker compose exec node yarn generateAPI
 }
 
 local_init() {

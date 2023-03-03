@@ -23,11 +23,6 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
     bottom: '4%',
   };
 
-  const logoutBtnStyles: CSSProperties = {
-    backgroundColor: theme.gray.main,
-    width: '100%',
-  };
-
   const logoutHandler = () => {
     setIsAuth(false);
     setRefreshToken('');
@@ -41,7 +36,12 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
 
   return (
     <SC.ProfileContainer>
-      <SC.Username>{username}</SC.Username>
+      <span style={{ color: '#fff' }}>{username}</span>
+      <MenuItem
+        label="Profile"
+        isShowLabel={isOpen}
+        style={{ marginBottom: '1rem', marginTop: '0.5rem' }}
+      />
       <Button variant="outlined" onClick={logoutHandler} sx={{ height: 48 }}>
         Logout
       </Button>

@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { TemplateWithMenu, AuthTemplate } from 'components/templates';
-import { Candidates, ProjectPage, Projects } from './components/organisms';
+import { Candidates, Profile, ProjectPage, Projects } from './components/organisms';
 import { Redirect } from './components/common';
 
 const Router: FC = () => {
@@ -30,6 +30,10 @@ const Router: FC = () => {
     {
       path: '/register',
       element: <AuthTemplate />,
+    },
+    {
+      path: '/profile/:profileId?',
+      element: <TemplateWithMenu children={<Profile />} />,
     },
   ]);
 

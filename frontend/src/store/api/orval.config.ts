@@ -8,7 +8,7 @@ const config = {
       mock: false,
     },
     input: {
-      target: 'http://localhost:8000/api/v1/swagger.json',
+      target: './swagger.json',
     },
     hooks: {
       afterAllFilesWrite: ['prettier --write src/**/orvalGeneration/**/*.{ts,tsx}'],
