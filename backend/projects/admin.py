@@ -4,11 +4,10 @@ from .models import Project, Review, Tag
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title',)}
-    readonly_fields = ('id',)
+    readonly_fields = ('id', 'slug',)
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
+    readonly_fields = ('id', 'slug',)
 
 admin.site.register(Review)

@@ -10,3 +10,4 @@ router.register(r'skills', SkillsCRUDViewSet)
 urlpatterns = [
     path('api/v1/', include(router.urls)),
 ]
+

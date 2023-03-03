@@ -14,11 +14,12 @@ interface IUseAuthReturn {
 }
 
 const useAuth = (): IUseAuthReturn => {
-  const { refreshToken, setRefreshToken, setUsername } = useLocalStorageState(
-    ({ refreshToken, setRefreshToken, setUsername }) => ({
+  const { refreshToken, setRefreshToken, setUsername, setUserId } = useLocalStorageState(
+    ({ refreshToken, setRefreshToken, setUsername, setUserId }) => ({
       refreshToken,
       setRefreshToken,
       setUsername,
+      setUserId,
     }),
   );
   const { setIsAuth } = useAuthState(({ setIsAuth }) => ({
@@ -40,7 +41,7 @@ const useAuth = (): IUseAuthReturn => {
         refresh_token: refreshToken,
       };
       const newAuthData = (await authRefreshCreate(requestData)).data;
-      axios.defaults.headers.common.Authorization = newAuthData.access;
+      axios.defaults.headers.common.Authorization = `Token ${newAuthData.access}`;
       setRefreshToken(newAuthData.refresh!);
       setIsAuth(true);
     } catch (e) {
@@ -61,6 +62,7 @@ const useAuth = (): IUseAuthReturn => {
       setRefreshToken(loginData.refresh!);
       setIsAuth(true);
       setUsername(loginData.username!);
+      setUserId(loginData.id!);
     } catch (e) {
       if (e instanceof AxiosError) {
         const errorMessage = e.response?.data?.errors;

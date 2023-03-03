@@ -12,7 +12,13 @@ const firstLetterUp = css`
   }
 `;
 
+export const blockStyle = css`
+  box-shadow: ${({ theme }) => theme.boxShadow.main};
+  border-radius: 8px;
+`;
+
 export const styleMixins = {
   btnMixin,
   firstLetterUp,
+  blockStyle,
 };
