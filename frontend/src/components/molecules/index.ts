@@ -6,3 +6,4 @@ export { default as MenuProfile } from './MenuProfile/MenuProfile';
 export { default as AuthSupport } from './AuthSupport/AuthSupport';
 export { default as ProfileMainData } from './ProfileMainData/ProfileMainData';
 export { default as ProfileLogo } from './ProfileLogo/ProfileLogo';
+export { default as ProfileSkills } from './ProfileSkills/ProfileSkills';

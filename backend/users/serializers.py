@@ -9,6 +9,8 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    skills = SkillSerializer(many=True)
+
     class Meta:
         model = Profile
         exclude = ('is_active', 'slug', 'id',)

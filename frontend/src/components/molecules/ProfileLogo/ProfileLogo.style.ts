@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import styled from 'styled-components';
 
 export const Container = styled('div')`
@@ -7,6 +8,7 @@ export const Container = styled('div')`
   gap: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  position: relative;
 `;
 
 export const Logo = styled('img')`
@@ -19,4 +21,10 @@ export const Name = styled('div')`
   font-size: 1.6rem;
   color: ${({ theme }) => theme.black.main};
   line-height: 30px;
+`;
+
+export const EditBtn = styled(Button)`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
 `;

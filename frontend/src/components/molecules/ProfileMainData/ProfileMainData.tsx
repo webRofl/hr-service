@@ -7,7 +7,7 @@ interface IProfileMainDataProps {
 }
 
 const ProfileMainData: FC<IProfileMainDataProps> = ({ data }) => {
-  const blackListKeys = ['image'];
+  const blackListKeys = ['image', 'skills', 'user'];
 
   const displayData = () => {
     const entriesArray = Object.entries(data);

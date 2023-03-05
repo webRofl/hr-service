@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler, useEffect } from 'react';
 import * as SC from './ProfileLogo.style';
 
 interface IProfileLogoProps {
@@ -7,11 +7,22 @@ interface IProfileLogoProps {
   area: string;
   name: string;
   secondName: string;
+  isEdit: boolean;
+  editClickHandler: MouseEventHandler<HTMLElement>;
 }
 
-const ProfileLogo: FC<IProfileLogoProps> = ({ image, position, area, name, secondName }) => {
+const ProfileLogo: FC<IProfileLogoProps> = ({
+  image,
+  position,
+  area,
+  name,
+  secondName,
+  editClickHandler,
+  isEdit,
+}) => {
   return (
     <SC.Container>
+      <SC.EditBtn onClick={editClickHandler}>edit: {isEdit}</SC.EditBtn>
       <SC.Logo src={`http://localhost:8000${image}`} alt={area} />
       <SC.Name>
         {name} {secondName}

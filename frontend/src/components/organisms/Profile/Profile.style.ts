@@ -1,5 +1,5 @@
 import { styleMixins } from '@/style';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import styled from 'styled-components';
 
 export const Container = styled(Grid)`
@@ -7,6 +7,7 @@ export const Container = styled(Grid)`
   padding-left: 2rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  position: relative;
 `;
 
 export const GridItem = styled('div')`
