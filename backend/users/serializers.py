@@ -9,7 +9,7 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(many=True)
+    skills = SkillSerializer(many=True, read_only=True)
 
     class Meta:
         model = Profile
@@ -18,19 +18,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        exclude = ('is_active', 'slug', 'id',)
-
-    def is_valid(self, raise_exception=False):
-        if hasattr(self, 'initial_data'):
-            try:
-                obj = Profile.objects.get(user=self.initial_data['user'])
-            except (ObjectDoesNotExist, MultipleObjectsReturned):
-                return super().is_valid()
-            else:
-                self.instance = obj
-                return super().is_valid()
-        else:
-            return super().is_valid()
-
-        return instance
+        exclude = ('is_active', 'slug', 'id', 'image', 'skills', 'created', 'email', 'username',)
 

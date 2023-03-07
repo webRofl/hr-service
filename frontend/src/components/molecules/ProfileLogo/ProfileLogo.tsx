@@ -1,4 +1,5 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import { IconComponent } from '@/components/common';
+import React, { FC, MouseEventHandler } from 'react';
 import * as SC from './ProfileLogo.style';
 
 interface IProfileLogoProps {
@@ -22,7 +23,9 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
 }) => {
   return (
     <SC.Container>
-      <SC.EditBtn onClick={editClickHandler}>edit: {isEdit}</SC.EditBtn>
+      <SC.EditBtn onClick={editClickHandler} data-isedit={isEdit}>
+        <IconComponent style={SC.editIconStyles} name="edit" />
+      </SC.EditBtn>
       <SC.Logo src={`http://localhost:8000${image}`} alt={area} />
       <SC.Name>
         {name} {secondName}
