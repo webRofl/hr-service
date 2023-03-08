@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
-import { ProjectCard } from '@/components/molecules';
+import { CatalogCard } from '@/components/molecules';
 import ProjectsDetails from '../DetailsSection/DetailsSection';
 import * as SC from './Projects.style';
 
@@ -12,7 +12,7 @@ const Projects: FC = () => {
       <ProjectsDetails />
       <SC.ProjectCardContainer>
         {data?.data.map((p) => (
-          <ProjectCard
+          <CatalogCard
             key={p.id}
             title={p.title || ''}
             description={p.description || ''}

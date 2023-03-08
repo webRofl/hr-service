@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import * as SC from './ProjectCard.style';
+import * as SC from './CatalogCard.style';
 
 interface IProjectCard {
   description: string;
@@ -11,7 +11,7 @@ interface IProjectCard {
   votesRatio: number;
 }
 
-const ProjectCard: FC<IProjectCard> = ({
+const CatalogCard: FC<IProjectCard> = ({
   title,
   description,
   slug,
@@ -41,4 +41,4 @@ const ProjectCard: FC<IProjectCard> = ({
   );
 };
 
-export default ProjectCard;
+export default CatalogCard;

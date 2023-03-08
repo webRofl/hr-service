@@ -1,6 +1,6 @@
 import { DivInput } from '@/components/common';
 import { Profile } from '@/store/api/orvalGeneration/models';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import * as SC from './ProfileMainData.style';
 
 interface IProfileMainDataProps {
