@@ -1,29 +1,34 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
-import { CatalogCard } from '@/components/molecules';
+import { Catalog } from '@/components/common';
+import { ICatalogCardData } from '@/types';
 import ProjectsDetails from '../DetailsSection/DetailsSection';
 import * as SC from './Projects.style';
 
 const Projects: FC = () => {
   const { data } = useProjectsList();
+  const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
+
+  useEffect(() => {
+    if (data?.data && Object.keys(data?.data).length) {
+      const cardList = data?.data?.map((c) => ({
+        title: c.title || '',
+        description: c.description || '',
+        id: c.id || '',
+        imgLink: c.image || '',
+        tags: c.tags || [],
+        totalVotes: c.total_votes || 0,
+        votesRatio: c.votes_ratio || 0,
+      }));
+
+      setCardList(cardList);
+    }
+  }, [data]);
 
   return (
     <SC.Container>
       <ProjectsDetails />
-      <SC.ProjectCardContainer>
-        {data?.data.map((p) => (
-          <CatalogCard
-            key={p.id}
-            title={p.title || ''}
-            description={p.description || ''}
-            slug={p.slug || ''}
-            imgLink={p.image || ''}
-            tags={p.tags || []}
-            totalVotes={p.total_votes || 0}
-            votesRatio={p.votes_ratio || 0}
-          />
-        ))}
-      </SC.ProjectCardContainer>
+      {cardList?.length ? <Catalog cardList={cardList} /> : <span>no projects</span>}
     </SC.Container>
   );
 };

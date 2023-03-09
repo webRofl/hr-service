@@ -34,6 +34,11 @@ const Profile = () => {
     }
 
     usersRead(profileId).then((data) => setData(data?.data));
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      document.title = prevTitle;
+    };
   }, [data]);
 
   const editClickHandler: MouseEventHandler<HTMLElement> = () => {

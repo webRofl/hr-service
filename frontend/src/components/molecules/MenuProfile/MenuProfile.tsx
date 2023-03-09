@@ -43,10 +43,10 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
 
   return (
     <SC.ProfileContainer>
-      <div onClick={handleClickProfile} role="presentation">
+      <SC.Profile onClick={handleClickProfile} role="presentation">
         {isOpen && <span style={{ color: '#fff' }}>{username}</span>}
         <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
-      </div>
+      </SC.Profile>
       <Button
         onClick={logoutHandler}
         isShowLabel={isOpen}
