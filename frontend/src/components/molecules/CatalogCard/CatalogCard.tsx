@@ -1,18 +1,18 @@
-import { ICatalogCardData } from '@/types';
+import { ICatalogCardDataWithLink } from '@/types';
 import React, { FC } from 'react';
 import * as SC from './CatalogCard.style';
 
-const CatalogCard: FC<ICatalogCardData> = ({
+const CatalogCard: FC<ICatalogCardDataWithLink> = ({
   title,
   description,
-  id,
+  link,
   imgLink,
   tags,
   totalVotes,
   votesRatio,
 }) => {
   return (
-    <SC.Container to={id}>
+    <SC.Container to={link}>
       <SC.Image src={imgLink} alt="project logo" />
       <SC.InfoContainer>
         <SC.Title>{title}</SC.Title>

@@ -28,7 +28,11 @@ const Projects: FC = () => {
   return (
     <SC.Container>
       <ProjectsDetails />
-      {cardList?.length ? <Catalog cardList={cardList} /> : <span>no projects</span>}
+      {cardList?.length ? (
+        <Catalog linkWiuthoutId="http://localhost:3000/projects" cardList={cardList} />
+      ) : (
+        <span>no projects</span>
+      )}
     </SC.Container>
   );
 };

@@ -5,13 +5,14 @@ import * as SC from './Catalog.style';
 
 interface ICatalogProps {
   cardList: ICatalogCardData[];
+  linkWiuthoutId: string;
 }
 
-const Catalog: FC<ICatalogProps> = ({ cardList }) => {
+const Catalog: FC<ICatalogProps> = ({ cardList, linkWiuthoutId }) => {
   return (
     <SC.CardsContainer>
       {cardList.map((card) => (
-        <CatalogCard key={card.id} {...card} />
+        <CatalogCard key={card.id} link={`${linkWiuthoutId}/${card.id}`} {...card} />
       ))}
     </SC.CardsContainer>
   );

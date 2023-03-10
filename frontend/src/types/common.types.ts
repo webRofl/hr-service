@@ -7,3 +7,7 @@ export interface ICatalogCardData {
   totalVotes: number;
   votesRatio: number;
 }
+
+export interface ICatalogCardDataWithLink extends ICatalogCardData {
+  link: string;
+}

@@ -15,7 +15,7 @@ const Candidates = () => {
         description: c?.bio?.slice(0, 180) || '',
         id: c.user || '',
         imgLink: c.image || '',
-        tags: c?.skills?.map((s) => s.name) || [],
+        tags: c?.skills?.map((s) => s.name || '') || [],
         totalVotes: 0,
         votesRatio: 0,
       }));
@@ -24,7 +24,11 @@ const Candidates = () => {
     }
   }, [data]);
 
-  return cardList?.length ? <Catalog cardList={cardList!} /> : <span>no users</span>;
+  return cardList?.length ? (
+    <Catalog linkWiuthoutId="http://localhost:3000/profile" cardList={cardList!} />
+  ) : (
+    <span>no users</span>
+  );
 };
 
 export default Candidates;
