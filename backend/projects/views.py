@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 from .serializers import ProjectSerializer, TagSerializer
 from .models import Project, Tag
@@ -6,7 +8,6 @@ from .models import Project, Tag
 class ProjectCRUDViewSet(viewsets.ModelViewSet):
   queryset = Project.objects.all()
   serializer_class = ProjectSerializer
-  lookup_field = 'slug'
 
 
 class TagCRUDViewSet(viewsets.ModelViewSet):
