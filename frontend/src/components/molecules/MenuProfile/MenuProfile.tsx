@@ -1,8 +1,9 @@
 import React, { CSSProperties, FC } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
-import { useAuthState, useLocalStorageState } from '@/store';
-import { Button } from '@mui/material';
+import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
+import { Button } from '@/components/atoms';
+import { useNavigate } from 'react-router-dom';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -11,16 +12,22 @@ interface IMenuProfileProps {
 
 const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { isAuth, setIsAuth } = useAuthState(({ isAuth, setIsAuth }) => ({ isAuth, setIsAuth }));
   const { username, setRefreshToken } = useLocalStorageState(({ username, setRefreshToken }) => ({
     username,
     setRefreshToken,
   }));
+  const { image } = useProfileState(({ image }) => ({ image }));
 
   const signInStyles: CSSProperties = {
     backgroundColor: theme.gray.main,
     position: 'absolute',
     bottom: '4%',
+  };
+
+  const handleClickProfile = () => {
+    navigate('/profile');
   };
 
   const logoutHandler = () => {
@@ -36,15 +43,16 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
 
   return (
     <SC.ProfileContainer>
-      <span style={{ color: '#fff' }}>{username}</span>
-      <MenuItem
-        label="Profile"
+      <SC.Profile onClick={handleClickProfile} role="presentation">
+        {isOpen && <span style={{ color: '#fff' }}>{username}</span>}
+        <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
+      </SC.Profile>
+      <Button
+        onClick={logoutHandler}
         isShowLabel={isOpen}
-        style={{ marginBottom: '1rem', marginTop: '0.5rem' }}
+        label="Log Out"
+        iconName="menu_sign-in"
       />
-      <Button variant="outlined" onClick={logoutHandler} sx={{ height: 48 }}>
-        Logout
-      </Button>
     </SC.ProfileContainer>
   );
 };

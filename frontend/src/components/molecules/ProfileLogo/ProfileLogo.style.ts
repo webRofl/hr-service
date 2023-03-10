@@ -1,4 +1,6 @@
+import { IconComponent } from '@/components/common';
 import { Button } from '@mui/material';
+import { CSSProperties } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled('div')`
@@ -26,5 +28,16 @@ export const Name = styled('div')`
 export const EditBtn = styled(Button)`
   position: absolute;
   top: 1rem;
-  left: 1rem;
+  left: 0.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+
+  &[data-isedit='true'] {
+    box-shadow: ${({ theme }) => theme.boxShadow.dark};
+  }
 `;
+
+export const editIconStyles = {
+  width: 'inherit',
+  height: 'inherit',
+};

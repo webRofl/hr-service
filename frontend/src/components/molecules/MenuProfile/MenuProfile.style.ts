@@ -7,3 +7,17 @@ export const ProfileContainer = styled('div')`
   flex-direction: column;
   align-items: center;
 `;
+
+export const Profile = styled('div')`
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+`;
+
+export const Img = styled('img')`
+  width: 2rem;
+  border-radius: 50%;
+`;

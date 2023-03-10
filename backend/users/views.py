@@ -25,7 +25,7 @@ class ProfileCRUDViewSet(viewsets.ModelViewSet):
     def update(self, request, pk=None):
         data = self.__get_data_with_user(request)
 
-        serializer = ProfileUpdateSerializer(data=data)
+        serializer = ProfileUpdateSerializer(data=data, instance=self.queryset.get(user=pk))
         serializer.is_valid(raise_exception=True)
         serializer.save()
 

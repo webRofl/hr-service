@@ -8,7 +8,6 @@ export const RowData = styled('div')`
 
 export const KeyData = styled('div')`
   width: 35%;
-  padding-left: 1rem;
 `;
 
 export const ValueData = styled('div')`

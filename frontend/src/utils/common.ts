@@ -8,3 +8,7 @@ export const getFormatDate = (): string => {
     hour12: true,
   }).format();
 };
+
+export const capitilize = (str: string): string => {
+  return str[0].toUpperCase() + str.slice(1);
+};

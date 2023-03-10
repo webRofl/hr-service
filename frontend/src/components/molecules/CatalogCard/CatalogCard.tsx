@@ -1,27 +1,18 @@
+import { ICatalogCardDataWithLink } from '@/types';
 import React, { FC } from 'react';
-import * as SC from './ProjectCard.style';
+import * as SC from './CatalogCard.style';
 
-interface IProjectCard {
-  description: string;
-  title: string;
-  slug: string;
-  imgLink: string;
-  tags: string[];
-  totalVotes: number;
-  votesRatio: number;
-}
-
-const ProjectCard: FC<IProjectCard> = ({
+const CatalogCard: FC<ICatalogCardDataWithLink> = ({
   title,
   description,
-  slug,
+  link,
   imgLink,
   tags,
   totalVotes,
   votesRatio,
 }) => {
   return (
-    <SC.Container to={slug}>
+    <SC.Container to={link}>
       <SC.Image src={imgLink} alt="project logo" />
       <SC.InfoContainer>
         <SC.Title>{title}</SC.Title>
@@ -31,9 +22,8 @@ const ProjectCard: FC<IProjectCard> = ({
         <SC.FirstLetterUp>Total Votes: {totalVotes}</SC.FirstLetterUp>
         <SC.FirstLetterUp>Votes Ratio: {votesRatio}%</SC.FirstLetterUp>
         <SC.TagsContainer>
-          {tags.map((t, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <SC.Tag key={index}>{t}</SC.Tag>
+          {tags.map((t) => (
+            <SC.Tag>{t}</SC.Tag>
           ))}
         </SC.TagsContainer>
       </SC.InfoContainer>
@@ -41,4 +31,4 @@ const ProjectCard: FC<IProjectCard> = ({
   );
 };
 
-export default ProjectCard;
+export default CatalogCard;
