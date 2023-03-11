@@ -7,3 +7,5 @@ export { default as AuthSupport } from './AuthSupport/AuthSupport';
 export { default as ProfileMainData } from './ProfileMainData/ProfileMainData';
 export { default as ProfileLogo } from './ProfileLogo/ProfileLogo';
 export { default as ProfileSkills } from './ProfileSkills/ProfileSkills';
+export { default as ProjectHeader } from './ProjectHeader/ProjectHeader';
+export { default as ProjectBody } from './ProjectBody/ProjectBody';
