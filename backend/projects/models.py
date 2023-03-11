@@ -16,9 +16,22 @@ class Tag(models.Model):
     return self.name
 
 class Project(models.Model):
+  FULL_TIME = 'FT'
+  PART_TIME = 'PT'
+  PROJECT = 'PR'
+
+  EMPLOYMENT_CHOICES = [
+          ('FT', 'Full-Time'),
+          ('PT', 'Part-Time'),
+          ('PR', 'Project'),
+          ]
+
   title = models.CharField(max_length=100, unique=True, default='')
   slug = models.SlugField(unique=True, default='')
   description = models.TextField(default='')
+  salary = models.IntegerField(null=True, blank=True)
+  experience = models.IntegerField(null=False, blank=False)
+  employment = models.CharField(max_length=2, choices=EMPLOYMENT_CHOICES, default=EMPLOYMENT_CHOICES[0][0])
   tags = models.ManyToManyField(Tag, blank=True)
   image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
   total_votes = models.IntegerField(default=0, null=True, blank=True)
