@@ -1,3 +1,3 @@
 export { GlobalENV } from './global.types';
 export type { AxiosErrorResponse } from './error.types';
-export type { ICatalogCardData, ICatalogCardDataWithLink } from './common.types';
+export type { ICatalogCardData, ICatalogCardDataWithLink, MUIButtonVariant } from './common.types';

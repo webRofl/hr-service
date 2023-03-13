@@ -1,3 +1,6 @@
+import { Button } from '@/components/atoms';
+import { styleMixins } from '@/style';
+import { getMenuItemUtilityClass } from '@mui/material';
 import styled from 'styled-components';
 
 export const ProfileContainer = styled('div')`
@@ -6,6 +9,7 @@ export const ProfileContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
 
 export const Profile = styled('div')`

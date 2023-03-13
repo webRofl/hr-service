@@ -10,7 +10,7 @@ interface IProfileMainDataProps {
 }
 
 const ProfileMainData: FC<IProfileMainDataProps> = ({ data, isEdit, setEditedData }) => {
-  const blackListKeys = ['image', 'skills', 'user'];
+  const blackListKeys = ['image', 'skills', 'user', 'projects'];
   const blockToEditListKeys = ['created', 'email', 'username'];
 
   const displayData = () => {
@@ -43,7 +43,7 @@ const ProfileMainData: FC<IProfileMainDataProps> = ({ data, isEdit, setEditedDat
     });
   };
 
-  return <>{displayData()}</>;
+  return displayData();
 };
 
 export default ProfileMainData;
