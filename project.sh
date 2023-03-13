@@ -34,9 +34,15 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
+set_dump() {
+  docker compose up db -d
+  docker compose exec db psql -U postgres_user -d postgres -f /dump.sql
+}
+
 init() {
     dublicate_front_dependency_files
     docker compose build
+    set_dump
     migrate
     collectstatic
     rm ./bin/node/package.json && rm ./bin/node/yarn.lock

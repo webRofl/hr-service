@@ -18,7 +18,7 @@ x-env-global: &env-global
 
 services:
   db:
-    image: postgres
+    build: ./bin/db/
     container_name: hr-postgres
     expose: 
       - 5432

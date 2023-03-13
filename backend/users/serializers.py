@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Profile, Skill
+from projects.models import Project
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,8 +9,15 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 
+class ProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'title')
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True, read_only=True)
+    projects = ProjectsSerializer(many=True)
 
     class Meta:
         model = Profile
