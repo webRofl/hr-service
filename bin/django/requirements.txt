@@ -11,3 +11,4 @@ djangorestframework
 drf-yasg
 django-cors-headers
 PyJWT
+django-filter

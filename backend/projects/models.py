@@ -1,6 +1,9 @@
 from django.db import models
 import uuid
 from django.utils.text import slugify
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+from authentication.models import User
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, unique=True, default='')
@@ -28,14 +31,16 @@ class Project(models.Model):
 
   title = models.CharField(max_length=100, unique=True, default='')
   slug = models.SlugField(unique=True, default='')
+  author = models.ForeignKey(User, on_delete=models.CASCADE)
   description = models.TextField(default='')
+  fully_description = models.TextField(default='')
   salary = models.IntegerField(null=True, blank=True)
   experience = models.IntegerField(null=False, blank=False)
   employment = models.CharField(max_length=2, choices=EMPLOYMENT_CHOICES, default=EMPLOYMENT_CHOICES[0][0])
   tags = models.ManyToManyField(Tag, blank=True)
   image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
-  total_votes = models.IntegerField(default=0, null=True, blank=True)
-  votes_ratio = models.IntegerField(default=0, null=True, blank=True)
+  total_votes = models.IntegerField(default=0)
+  votes_average = models.PositiveSmallIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
   demo_link = models.CharField(max_length=500, null=True, blank=True)
   source_link = models.CharField(max_length=500, null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
