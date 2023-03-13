@@ -2,7 +2,6 @@ import React, { CSSProperties, FC } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
-import { Button } from '@/components/atoms';
 import { useNavigate } from 'react-router-dom';
 import * as SC from './MenuProfile.style';
 
@@ -47,9 +46,11 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
         {isOpen && <span style={{ color: '#fff' }}>{username}</span>}
         <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
       </SC.Profile>
-      <Button
+      <MenuItem
         onClick={logoutHandler}
+        optional={{ variant: 'outlined' }}
         isShowLabel={isOpen}
+        isLink={false}
         label="Log Out"
         iconName="menu_sign-in"
       />

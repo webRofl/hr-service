@@ -1,2 +1,2 @@
 export { getTheme } from './theme';
-export { styleMixins } from './mixins';
+export * as styleMixins from './mixins';

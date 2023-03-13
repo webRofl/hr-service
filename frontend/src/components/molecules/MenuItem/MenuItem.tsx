@@ -1,21 +1,38 @@
 import { Button } from '@/components/atoms';
-import React, { CSSProperties, FC } from 'react';
+import React, { FC } from 'react';
 import * as SC from './MenuItem.style';
+import { IMenuItemProps } from './MenuItem.type';
 
-interface IMenuItemProps {
-  label: string;
-  isShowLabel: boolean;
-  iconName?: string;
-  style?: CSSProperties | undefined;
+const MenuItem: FC<IMenuItemProps> = ({
+  label,
+  iconName,
+  isShowLabel,
+  onClick,
+  optional,
+  style = {},
+  isLink = true,
+}) => {
+  const button = (
+    <Button label={label} iconName={iconName} isShowLabel={isShowLabel} {...optional} />
+  );
 
-  onClick?: () => void;
-}
+  const setStyles = () => {
+    const SCStyle = optional?.variant && (SC as Record<string, unknown>)[optional.variant];
+    return Object.assign(style || {}, SCStyle);
+  };
 
-const MenuItem: FC<IMenuItemProps> = ({ label, iconName, isShowLabel, style, onClick }) => {
+  if (!isLink) {
+    return (
+      <SC.Block style={setStyles()} onClick={onClick}>
+        {button}
+      </SC.Block>
+    );
+  }
+
   return (
-    <SC.MenuItemContainer to={`/${label.toLowerCase()}`} style={style} onClick={onClick}>
-      <Button label={label} iconName={iconName} isShowLabel={isShowLabel} />
-    </SC.MenuItemContainer>
+    <SC.Link to={`/${label.toLowerCase()}`} style={setStyles()} onClick={onClick}>
+      {button}
+    </SC.Link>
   );
 };
 
