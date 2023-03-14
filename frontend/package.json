@@ -42,7 +42,9 @@
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src//**/*.{js,jsx,ts,tsx}",
     "prepare": "cd .. && husky install frontend/.husky",
-    "generateAPI": "orval --config src/store/api/orval.config.ts"
+    "generateAPI": "orval --config src/store/api/orval.config.ts",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "browserslist": {
     "production": [
@@ -57,14 +59,23 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.21.3",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-vite": "^0.4.2",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.3.0",
     "eslint": "^8.33.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-jest-enzyme": "^7.1.2",
