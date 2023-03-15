@@ -12,6 +12,13 @@ class ProjectCRUDViewSet(viewsets.ModelViewSet):
   filter_backends = [DjangoFilterBackend]
   filterset_fields = ['title']
 
+  def update(self, request, pk=None):
+    serializer = self.serializer_class(data=request.data, instance=self.queryset.filter(id=pk))
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class TagCRUDViewSet(viewsets.ModelViewSet):
   queryset = Tag.objects.all()

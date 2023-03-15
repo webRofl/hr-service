@@ -3,8 +3,6 @@ from authentication.models import User
 import uuid
 from django.utils.text import slugify
 
-from projects.models import Project
-
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
     created = models.DateTimeField(auto_now_add=True)
@@ -16,7 +14,7 @@ class Skill(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    projects = models.ManyToManyField(Project, blank=True)
+    projects = models.ManyToManyField('projects.Project', blank=True)
     name = models.CharField(max_length=50, default='')
     second_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=50, default='', blank=True)
