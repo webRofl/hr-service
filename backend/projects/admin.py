@@ -4,7 +4,7 @@ from .models import Project, Review, Tag
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    readonly_fields = ('id', 'slug',)
+    readonly_fields = ('id',)
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

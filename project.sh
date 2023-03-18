@@ -89,6 +89,9 @@ case $COMMAND in
     local_init)
         local_init
         ;;
+    set_dump)
+        set_dump
+        ;;
     *)
         echo 'No action specified!'
         ;;
