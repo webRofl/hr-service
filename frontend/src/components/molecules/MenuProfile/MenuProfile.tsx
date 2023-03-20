@@ -2,7 +2,7 @@ import React, { CSSProperties, FC } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -12,11 +12,15 @@ interface IMenuProfileProps {
 const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuth, setIsAuth } = useAuthState(({ isAuth, setIsAuth }) => ({ isAuth, setIsAuth }));
-  const { username, setRefreshToken } = useLocalStorageState(({ username, setRefreshToken }) => ({
-    username,
-    setRefreshToken,
-  }));
+  const { username, setRefreshToken, setUserId } = useLocalStorageState(
+    ({ username, setRefreshToken, setUserId }) => ({
+      username,
+      setRefreshToken,
+      setUserId,
+    }),
+  );
   const { image } = useProfileState(({ image }) => ({ image }));
 
   const signInStyles: CSSProperties = {
@@ -30,8 +34,13 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   };
 
   const logoutHandler = () => {
+    setUserId('');
     setIsAuth(false);
     setRefreshToken('');
+
+    if (location.pathname === '/profile') {
+      navigate('/');
+    }
   };
 
   if (!isAuth) {

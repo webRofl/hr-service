@@ -10,16 +10,20 @@ const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { profileId } = useParams();
-  const { getState } = useProfileState(({ getState }) => ({ getState }));
-  const [data, setData] = useState({});
+  const { getState, setProfile } = useProfileState(({ getState, setProfile }) => ({
+    getState,
+    setProfile,
+  }));
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [editedData, setEditedData] = useState(data);
+  const [editedData, setEditedData] = useState(getState());
 
   useEffect(() => {
-    const prevTitle = document.title;
-    document.title = data ? `${data.name} ${data.second_name}` : prevTitle;
+    if (!userId && !profileId && location.pathname === '/profile') {
+      navigate('/');
+      return;
+    }
 
     if (userId === profileId) {
       navigate('/profile');
@@ -28,18 +32,28 @@ const Profile = () => {
 
     if (location.pathname.match(/profile$/) && userId) {
       setIsMyProfile(true);
-      setData(getState());
-      setEditedData({ ...data });
+      usersRead(userId).then((data) => {
+        setProfile(data?.data);
+        setEditedData({ ...data?.data });
+      });
       return;
     }
 
-    usersRead(profileId).then((data) => setData(data?.data));
+    if (profileId) {
+      usersRead(profileId).then((data) => {
+        setEditedData(data?.data);
+      });
+    }
+  }, []);
 
-    // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = editedData ? `${editedData.name} ${editedData.second_name}` : prevTitle;
+
     return () => {
       document.title = prevTitle;
     };
-  }, [data]);
+  }, [editedData]);
 
   const editClickHandler: MouseEventHandler<HTMLElement> = () => {
     return setIsEdit((prev) => !prev);
@@ -56,7 +70,7 @@ const Profile = () => {
     }
   };
 
-  if (!data) {
+  if (!getState()) {
     return <SC.ErrorContainer>There is no such profile</SC.ErrorContainer>;
   }
 
@@ -65,29 +79,30 @@ const Profile = () => {
       <Grid item lg={4} md={4}>
         <SC.GridItem>
           <ProfileLogo
-            image={data.image}
+            image={editedData.image || ''}
             position="Full-Stack dev"
             area="Moscow"
-            name={data.name}
-            secondName={data.second_name}
+            name={editedData.name || ''}
+            secondName={editedData.second_name || ''}
             isEdit={isEdit}
+            isMyProfile={isMyProfile}
             editClickHandler={editClickHandler}
+            submitHandler={submitHandler}
           />
         </SC.GridItem>
       </Grid>
       <Grid item lg={8} md={8}>
         <SC.GridItem>
-          {data && <ProfileMainData data={data} isEdit={isEdit} setEditedData={setEditedData} />}
+          {editedData && (
+            <ProfileMainData data={editedData} isEdit={isEdit} setEditedData={setEditedData} />
+          )}
         </SC.GridItem>
       </Grid>
       <Grid item lg={9} md={7}>
         <SC.GridItem>
-          <ProfileSkills skills={data.skills} />
+          <ProfileSkills skills={editedData.skills} />
         </SC.GridItem>
       </Grid>
-      <Button type="button" onClick={submitHandler}>
-        SUBMIT
-      </Button>
     </SC.Container>
   );
 };

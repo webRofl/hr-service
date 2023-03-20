@@ -9,9 +9,9 @@ x-env-django: &env-django
   ALLOWED_HOSTS: ${ALLOWED_HOSTS}
 
 x-env-node: &env-node
-  VITE_NODE_ENV: ${VITE_NODE_ENV}
   VITE_FQDN_FRONTEND: ${VITE_FQDN_FRONTEND}
   VITE_FQDN_API: ${VITE_FQDN_API}
+  VITE_FQDN_BACKEND: ${VITE_FQDN_BACKEND}
 
 x-env-global: &env-global
   JWT_HEADER_PREFIX: ${JWT_HEADER_PREFIX}

@@ -1,7 +1,12 @@
 import { IconComponent } from '@/components/common';
 import { Button } from '@mui/material';
 import { CSSProperties } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const btnsMixin = css`
+  min-width: 2.5rem;
+  height: 2.5rem;
+`;
 
 export const Container = styled('div')`
   display: flex;
@@ -29,11 +34,23 @@ export const EditBtn = styled(Button)`
   position: absolute;
   top: 1rem;
   left: 0.5rem;
-  min-width: 2.5rem;
-  height: 2.5rem;
+  ${btnsMixin}
 
   &[data-isedit='true'] {
     box-shadow: ${({ theme }) => theme.boxShadow.dark};
+  }
+`;
+
+export const SubmitBtn = styled(Button)`
+  position: absolute;
+  top: 1rem;
+  right: 0.5rem;
+  ${btnsMixin}
+  transition: .5s all;
+  opacity: 0;
+
+  &[data-isedit='true'] {
+    opacity: 1;
   }
 `;
 

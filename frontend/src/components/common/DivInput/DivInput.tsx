@@ -1,4 +1,7 @@
-import React, { CSSProperties, FC, SyntheticEvent } from 'react';
+import React, { CSSProperties, FC, SyntheticEvent, useRef } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import './style.css';
 
 interface DivInputProps {
   value: string;
@@ -17,15 +20,32 @@ const DivInput: FC<DivInputProps> = ({
   inputStyle,
   isBlock,
 }) => {
-  const change = (e: SyntheticEvent<HTMLInputElement>) => {
+  const nodeRef = useRef(null);
+
+  const changeHandler = (e: SyntheticEvent<HTMLInputElement>) => {
     changeValueHandler(e.currentTarget.value);
   };
 
-  if (isEdit && !isBlock) {
-    return <input value={value} onChange={change} style={inputStyle || divStyle} />;
-  }
-
-  return <div style={divStyle}>{value}</div>;
+  return (
+    <SwitchTransition mode="out-in">
+      <CSSTransition
+        key={isEdit}
+        nodeRef={nodeRef}
+        classNames="fade"
+        timeout={250}
+        addEndListener={(done) => {
+          nodeRef.current.addEventListener('transitionend', done, false);
+        }}>
+        <div ref={nodeRef}>
+          {isEdit ? (
+            <input value={value} onChange={changeHandler} style={inputStyle || divStyle} />
+          ) : (
+            <div style={divStyle}>{value}</div>
+          )}
+        </div>
+      </CSSTransition>
+    </SwitchTransition>
+  );
 };
 
 export default DivInput;
