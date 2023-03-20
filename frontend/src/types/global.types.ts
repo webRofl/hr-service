@@ -1,8 +1,8 @@
 const getEnvValue = (key: string): string => {
   try {
-    return process.env[key] || '';
+    return process.env[key] ?? '';
   } catch {
-    return import.meta.env[key] || '';
+    return import.meta.env[key] ?? '';
   }
 };
 

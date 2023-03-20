@@ -1,6 +1,6 @@
 import { Catalog } from '@/components/common';
 import { useUsersList } from '@/store/api/orvalGeneration/users/users';
-import { ICatalogCardData } from '@/types';
+import { GlobalENV, ICatalogCardData } from '@/types';
 import { capitalize } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
@@ -25,7 +25,7 @@ const Candidates = () => {
   }, [data]);
 
   return cardList?.length ? (
-    <Catalog linkWiuthoutId="http://localhost:3000/profile" cardList={cardList!} />
+    <Catalog linkWiuthoutId={`${GlobalENV.FQDN_FRONTEND}profile`} cardList={cardList!} />
   ) : (
     <span>no users</span>
   );

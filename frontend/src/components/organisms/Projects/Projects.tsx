@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { Catalog } from '@/components/common';
-import { ICatalogCardData } from '@/types';
+import { GlobalENV, ICatalogCardData } from '@/types';
 import ProjectsDetails from '../DetailsSection/DetailsSection';
 import * as SC from './Projects.style';
 
@@ -29,7 +29,7 @@ const Projects: FC = () => {
     <SC.Container>
       <ProjectsDetails />
       {cardList?.length ? (
-        <Catalog linkWiuthoutId="http://localhost:3000/projects" cardList={cardList} />
+        <Catalog linkWiuthoutId={`${GlobalENV.FQDN_FRONTEND}projects`} cardList={cardList} />
       ) : (
         <span>no projects</span>
       )}

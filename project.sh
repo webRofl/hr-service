@@ -35,27 +35,37 @@ dublicate_front_dependency_files() {
 }
 
 set_dump() {
-  docker compose up db -d
   docker compose exec db psql -U postgres_user -d postgres -f /dump.sql
 }
 
+build_front() {
+  dublicate_front_dependency_files
+  docker compose build node
+  rm ./bin/node/package.json && rm ./bin/node/yarn.lock
+}
+
+build_back() {
+  docker compose build django
+  migrate
+  collectstatic
+}
+
+build_db() {
+  docker compose build db
+  docker compose up -d db
+  sleep 5
+  set_dump
+}
+
 init() {
-    dublicate_front_dependency_files
-    docker compose build
-    set_dump
-    migrate
-    collectstatic
-    rm ./bin/node/package.json && rm ./bin/node/yarn.lock
+  build_db
+  build_back
+  build_front
 }
 
 generateAPI() {
-    start
-    docker compose exec node yarn generateAPI
-}
-
-local_init() {
-  cp .env.local .env
-  init
+  start
+  docker compose exec node yarn generateAPI
 }
 
 case $COMMAND in
