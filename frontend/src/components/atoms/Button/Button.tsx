@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import { MUIButtonVariant } from '../../../types';
 import * as SC from './Button.style';
 
@@ -7,6 +7,7 @@ interface IButtonProps {
   isShowLabel?: boolean;
   iconName?: string;
   variant?: MUIButtonVariant;
+  style?: CSSProperties;
 
   onClick?: () => void;
 }
@@ -16,12 +17,14 @@ const Button: FC<IButtonProps> = ({
   isShowLabel = true,
   iconName,
   onClick,
+  style,
   variant = 'contained',
 }) => {
   return (
     <SC.MenuItemBtn
       variant={variant}
       onClick={onClick}
+      style={style}
       startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
       {isShowLabel && label}
     </SC.MenuItemBtn>

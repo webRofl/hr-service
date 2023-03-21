@@ -1,5 +1,7 @@
+import { Button } from '@/components/atoms';
 import { styleMixins } from '@/style';
 import { Grid } from '@mui/material';
+import { CSSProperties } from 'react';
 import styled from 'styled-components';
 
 export const RelativeGrid = styled(Grid)`
@@ -43,3 +45,9 @@ export const Img = styled('img')`
   width: 7rem;
   border-radius: 50%;
 `;
+
+export const ProfileBtn: CSSProperties = {
+  width: '60%',
+  marginTop: '1rem',
+  marginBottom: '1rem',
+};

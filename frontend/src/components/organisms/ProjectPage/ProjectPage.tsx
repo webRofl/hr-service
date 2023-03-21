@@ -1,6 +1,6 @@
-import { ProjectBody, ProjectHeader } from '@/components/molecules';
+import { ProjectBody, ProjectFooter, ProjectHeader } from '@/components/molecules';
 import { useProjectsRead } from '@/store/api/orvalGeneration/projects/projects';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as SC from './ProjectsPage.style';
 
@@ -19,7 +19,8 @@ const ProjectPage = () => {
         description={data?.data?.description || ''}
         author={data?.data?.author || ''}
       />
-      <ProjectBody />
+      <ProjectBody content={data?.data?.fully_description || ''} />
+      <ProjectFooter reviews={data?.data?.reviews || []} />
     </SC.Container>
   );
 };
