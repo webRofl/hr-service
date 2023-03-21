@@ -1,5 +1,5 @@
-import { MUIButtonVariant } from '@/types';
 import React, { FC } from 'react';
+import { MUIButtonVariant } from '../../../types';
 import * as SC from './Button.style';
 
 interface IButtonProps {

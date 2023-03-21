@@ -41,7 +41,7 @@
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src//**/*.{js,jsx,ts,tsx}",
-    "prepare": "cd .. && husky install frontend/.husky",
+    "//prepare": "cd .. && husky install frontend/.husky",
     "generateAPI": "orval --config src/store/api/orval.config.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -92,6 +92,7 @@
     "lint-staged": "^13.1.0",
     "orval": "^6.11.1",
     "prettier": "^2.8.3",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "storybook-addon-jsx": "^7.3.14"
   }
 }
