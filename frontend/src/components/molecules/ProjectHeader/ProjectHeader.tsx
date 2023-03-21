@@ -1,6 +1,8 @@
+import { Button } from '@/components/atoms';
 import { useUsersRead } from '@/store/api/orvalGeneration/users/users';
-import { Grid } from '@mui/material';
+import { Grid, Rating } from '@mui/material';
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as SC from './ProjectHeader.style';
 
 interface IProjectHeaderProps {
@@ -22,7 +24,12 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
   description,
   author,
 }) => {
+  const navigate = useNavigate();
   const { data } = useUsersRead(author);
+
+  const profileBtnClickHandler = () => {
+    navigate(`/profile/${data?.data?.user}`);
+  };
 
   return (
     <>
@@ -42,6 +49,13 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
         <SC.AuthorBlock>
           <SC.Img src={`http://localhost:8000${data?.data?.image}` || ''} alt="profile logo" />
           <div>{data?.data?.name}</div>
+          <Rating defaultValue={4} />
+          <Button
+            label="view"
+            variant="outlined"
+            style={SC.ProfileBtn}
+            onClick={profileBtnClickHandler}
+          />
         </SC.AuthorBlock>
       </Grid>
     </>
