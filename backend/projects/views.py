@@ -13,11 +13,13 @@ class ProjectCRUDViewSet(viewsets.ModelViewSet):
   filterset_fields = ['title']
 
   def update(self, request, pk=None):
-    serializer = self.serializer_class(data=request.data, instance=self.queryset.filter(id=pk))
+    del request.data['image']
+
+    serializer = self.serializer_class(data=request.data, instance=self.queryset.get(id=pk))
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TagCRUDViewSet(viewsets.ModelViewSet):
