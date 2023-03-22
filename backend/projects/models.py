@@ -51,3 +51,29 @@ class Project(models.Model):
   def __str__(self):
     return self.title
 
+  def __calculate_reviews(self, cb):
+    instance_list = Project.objects.get(pk=self.id).reviews.all()
+    for instance in instance_list:
+      cb(instance)
+
+  def get_total_votes(self):
+    total = 0
+
+    def cb(instance):
+      nonlocal total
+      total += 1
+
+    self.__calculate_reviews(cb)
+
+    return total
+
+  def get_votes_average(self):
+    reviews_rate_sum = 0
+
+    def cb(instance):
+      nonlocal reviews_rate_sum
+      reviews_rate_sum += instance.rate
+
+    self.__calculate_reviews(cb)
+
+    return round(reviews_rate_sum / self.total_votes, 2)
