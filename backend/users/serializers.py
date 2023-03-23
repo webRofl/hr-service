@@ -12,7 +12,7 @@ class SkillSerializer(serializers.ModelSerializer):
 class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'title')
+        fields = ('id', 'title', 'image', 'description', 'total_votes', 'votes_average',)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
