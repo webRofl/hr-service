@@ -11,13 +11,15 @@ const ProjectPage = () => {
   return (
     <SC.Container container spacing={2}>
       <ProjectHeader
-        title={data?.data?.title || ''}
-        employment={data?.data?.employment || ''}
-        salary={data?.data?.salary || null}
-        img={data?.data?.image || ''}
-        expirience={data?.data?.experience || 0}
-        description={data?.data?.description || ''}
-        author={data?.data?.author || ''}
+        title={data?.data?.title ?? ''}
+        employment={data?.data?.employment ?? ''}
+        salary={data?.data?.salary ?? null}
+        img={data?.data?.image ?? ''}
+        expirience={data?.data?.experience ?? 0}
+        description={data?.data?.description ?? ''}
+        author={data?.data?.author ?? ''}
+        projectRate={data?.data?.votes_average ?? 0}
+        projectVotesCount={data?.data?.total_votes ?? 0}
       />
       <ProjectBody content={data?.data?.fully_description || ''} />
       <ProjectFooter reviews={data?.data?.reviews || []} />

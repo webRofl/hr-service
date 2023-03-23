@@ -13,6 +13,7 @@ const ProjectFooter: FC<ProjectFooterProps> = ({ reviews }) => {
         <SC.Review item lg={12} md={12}>
           <SC.Author>{r.author?.username}</SC.Author>
           <div>{r.text}</div>
+          <SC.Rating defaultValue={r.rate} readOnly />
         </SC.Review>
       ))}
     </SC.Container>
