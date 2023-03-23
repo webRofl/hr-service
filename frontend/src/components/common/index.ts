@@ -5,3 +5,4 @@ export { default as SettingsWrapper } from './SettingsWrapper/SettingsWrapper';
 export { default as DivInput } from './DivInput/DivInput';
 export { default as RequestsWrapper } from './RequestsWrapper/RequestsWrapper';
 export { default as Catalog } from './Catalog/Catalog';
+export { default as Rating } from './Rating/Rating';

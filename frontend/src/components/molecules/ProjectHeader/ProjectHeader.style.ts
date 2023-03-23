@@ -1,4 +1,5 @@
 import { Button } from '@/components/atoms';
+import { Rating } from '@/components/common';
 import { styleMixins } from '@/style';
 import { Grid } from '@mui/material';
 import { CSSProperties } from 'react';
@@ -25,6 +26,21 @@ export const Salary = styled('h4')`
   font-weight: 500;
   font-size: 18px;
   line-height: 1rem;
+`;
+
+export const ProjectRate = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+`;
+
+// export const ProjectRating = styled(Rating)`
+//   margin-right: 1rem;
+// `;
+
+export const ProjectTotalVotes = styled('span')`
+  padding-top: 4px;
 `;
 
 export const ProjectImg = styled('img')`

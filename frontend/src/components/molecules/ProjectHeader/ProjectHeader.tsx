@@ -1,7 +1,8 @@
 import { Button } from '@/components/atoms';
+import { Rating } from '@/components/common';
 import { useUsersRead } from '@/store/api/orvalGeneration/users/users';
-import { Grid, Rating } from '@mui/material';
-import React, { FC } from 'react';
+import { Grid } from '@mui/material';
+import React, { FC, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as SC from './ProjectHeader.style';
 
@@ -13,6 +14,8 @@ interface IProjectHeaderProps {
   employment: string;
   description: string;
   author: string;
+  projectRate: number;
+  projectVotesCount: number;
 }
 
 const ProjectHeader: FC<IProjectHeaderProps> = ({
@@ -23,6 +26,8 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
   employment,
   description,
   author,
+  projectRate,
+  projectVotesCount,
 }) => {
   const navigate = useNavigate();
   const { data } = useUsersRead(author);
@@ -30,7 +35,6 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
   const profileBtnClickHandler = () => {
     navigate(`/profile/${data?.data?.user}`);
   };
-
   return (
     <>
       <SC.RelativeGrid item lg={8} md={8}>
@@ -39,6 +43,10 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
           <SC.Salary>
             {salary ? `${salary?.toLocaleString('ru')} ₽` : 'Salary is not specified'}
           </SC.Salary>
+          <SC.ProjectRate>
+            <Rating value={projectRate} precision={0.5} readOnly tip="Keep your rating in review" />
+            <SC.ProjectTotalVotes>total: {projectVotesCount}</SC.ProjectTotalVotes>
+          </SC.ProjectRate>
           <div>At least {expirience} years experiense</div>
           <div>{employment}</div>
           <div>{description}</div>
@@ -49,7 +57,7 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
         <SC.AuthorBlock>
           <SC.Img src={`http://localhost:8000${data?.data?.image}` || ''} alt="profile logo" />
           <div>{data?.data?.name}</div>
-          <Rating defaultValue={4} />
+          <Rating defaultValue={4} readOnly tip="Keep your rating in profile page" />
           <Button
             label="view"
             variant="outlined"

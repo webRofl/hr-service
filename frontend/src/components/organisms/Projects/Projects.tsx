@@ -12,13 +12,13 @@ const Projects: FC = () => {
   useEffect(() => {
     if (data?.data && Object.keys(data?.data).length) {
       const cardList = data?.data?.map((c) => ({
-        title: c.title || '',
-        description: c.description || '',
-        id: c.id || '',
-        imgLink: c.image || '',
-        tags: c.tags || [],
-        totalVotes: c.total_votes || 0,
-        votesRatio: c.votes_ratio || 0,
+        title: c.title ?? '',
+        description: c.description ?? '',
+        id: c.id ?? '',
+        imgLink: c.image ?? '',
+        tags: c.tags ?? [],
+        totalVotes: c.total_votes ?? 0,
+        votesRatio: c.votes_average ?? 0,
       }));
 
       setCardList(cardList);
