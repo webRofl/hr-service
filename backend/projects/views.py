@@ -11,7 +11,7 @@ class ProjectCRUDViewSet(viewsets.ModelViewSet):
   serializer_class = ProjectSerializer
   http_method_names = ['get', 'post', 'put', 'delete']
   filter_backends = [DjangoFilterBackend]
-  filterset_fields = ['title']
+  filterset_fields = ['author']
 
   def update(self, request, pk=None):
     serializer = self.serializer_class(data=request.data, instance=self.queryset.get(id=pk))
