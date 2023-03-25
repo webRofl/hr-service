@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { Catalog } from '@/components/common';
-import { GlobalENV, ICatalogCardData } from '@/types';
+import { CustomCatalogData, GlobalENV, ICatalogCardData } from '@/types';
+import { catalogCardDataMiddleware } from '@/utils';
 import ProjectsDetails from '../DetailsSection/DetailsSection';
 import * as SC from './Projects.style';
 
@@ -10,19 +11,15 @@ const Projects: FC = () => {
   const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
 
   useEffect(() => {
-    if (data?.data && Object.keys(data?.data).length) {
-      const cardList = data?.data?.map((c) => ({
-        title: c.title ?? '',
-        description: c.description ?? '',
-        id: c.id ?? '',
-        imgLink: c.image ?? '',
-        tags: c.tags ?? [],
-        totalVotes: c.total_votes ?? 0,
-        votesRatio: c.votes_average ?? 0,
-      }));
+    if (!data?.data) return;
 
-      setCardList(cardList);
-    }
+    const keys: CustomCatalogData = {
+      imgLink: 'image',
+      votesRatio: 'votes_average',
+    };
+
+    const cardList = catalogCardDataMiddleware(keys, data?.data);
+    setCardList(cardList);
   }, [data]);
 
   return (

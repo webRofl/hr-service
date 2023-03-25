@@ -4,5 +4,5 @@ export type {
   ICatalogCardData,
   ICatalogCardDataWithLink,
   MUIButtonVariant,
-  CustomCatalogDataItem,
+  CustomCatalogData,
 } from './common.types';

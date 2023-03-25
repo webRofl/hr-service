@@ -1,10 +1,12 @@
-import { ICatalogCardData } from '@/types';
+import { Project } from '@/store/api/orvalGeneration/models';
+import { CustomCatalogData, ICatalogCardData } from '@/types/common.types';
+import { snakeCaseToCamelCase } from './string';
 
 export const catalogCardDataMiddleware = (
-  keys: Record<string, Partial<keyof ICatalogCardData>>,
-  values: Record<string, string | number>[],
-) => {
-  return values.map((v) => {
+  keys: CustomCatalogData,
+  values: Project[],
+): ICatalogCardData[] => {
+  return values.map((project) => {
     const res: ICatalogCardData = {
       title: '',
       description: '',
@@ -15,9 +17,15 @@ export const catalogCardDataMiddleware = (
       votesRatio: 0,
     };
 
-    Object.keys(keys).forEach((k) => {
-      const newKey = keys[k];
-      res[newKey] = v[k] ?? res[newKey];
+    Object.keys(project).forEach((key) => {
+      const rightKey = snakeCaseToCamelCase(key);
+      if (project[key] && Object.prototype.hasOwnProperty.call(res, rightKey)) {
+        res[rightKey] = project[key];
+      }
+    });
+
+    Object.keys(keys).forEach((key) => {
+      res[key] = project[keys[key]] ?? res[key];
     });
 
     return res;

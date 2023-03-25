@@ -1,7 +1,7 @@
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { useLocalStorageState, useProfileState } from '@/store';
 import { usersUpdate, usersRead } from '@/store/api/orvalGeneration/users/users';
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as SC from './Profile.style';
