@@ -8,6 +8,8 @@ export interface ICatalogCardData {
   votesRatio: number;
 }
 
+export type CustomCatalogDataItem = Record<string, keyof ICatalogCardData>;
+
 export interface ICatalogCardDataWithLink extends ICatalogCardData {
   link: string;
 }

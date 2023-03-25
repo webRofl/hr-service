@@ -1,8 +1,9 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties, FC, useEffect, useState } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { OptionsMenu } from '@/components/common';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -23,14 +24,12 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   );
   const { image } = useProfileState(({ image }) => ({ image }));
 
+  const ref = React.useRef<HTMLDivElement>(null);
+
   const signInStyles: CSSProperties = {
     backgroundColor: theme.gray.main,
     position: 'absolute',
     bottom: '4%',
-  };
-
-  const handleClickProfile = () => {
-    navigate('/profile');
   };
 
   const logoutHandler = () => {
@@ -48,10 +47,9 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
       <MenuItem label="Login" iconName="menu_sign-in" isShowLabel={isOpen} style={signInStyles} />
     );
   }
-
   return (
     <SC.ProfileContainer>
-      <SC.Profile onClick={handleClickProfile} role="presentation">
+      <SC.Profile ref={ref} role="presentation">
         {isOpen && <span style={{ color: '#fff' }}>{username}</span>}
         <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
       </SC.Profile>
@@ -62,6 +60,13 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
         isLink={false}
         label="Log Out"
         iconName="menu_sign-in"
+      />
+      <OptionsMenu
+        stack={[
+          ['profile', '/profile'],
+          ['projects', '/profile/projects'],
+        ]}
+        ref={ref}
       />
     </SC.ProfileContainer>
   );
