@@ -8,7 +8,7 @@ interface UseDynamicSVGImportOptions {
   onError?: (err: Error) => void;
 }
 
-export const useDynamicSVGImport = (name: string, options: UseDynamicSVGImportOptions = {}) => {
+const useDynamicSVGImport = (name: string, options: UseDynamicSVGImportOptions = {}) => {
   const ImportedIconRef = useRef<FC<SVGProps<SVGSVGElement>> | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -37,3 +37,5 @@ export const useDynamicSVGImport = (name: string, options: UseDynamicSVGImportOp
     SvgIcon: ImportedIconRef.current,
   };
 };
+
+export default useDynamicSVGImport;
