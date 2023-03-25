@@ -1,3 +1,5 @@
+import { Project } from '@/store/api/orvalGeneration/models';
+
 export interface ICatalogCardData {
   title: string;
   description: string;
@@ -6,9 +8,13 @@ export interface ICatalogCardData {
   tags: string[];
   totalVotes: number;
   votesRatio: number;
+  author?: string;
 }
 
-export type CustomCatalogDataItem = Record<string, keyof ICatalogCardData>;
+type PartialCatalogKeys = Partial<keyof ICatalogCardData>;
+type PartialProjectKeys = Partial<keyof Project>;
+
+export type CustomCatalogData = Partial<Record<PartialCatalogKeys, PartialProjectKeys>>;
 
 export interface ICatalogCardDataWithLink extends ICatalogCardData {
   link: string;
