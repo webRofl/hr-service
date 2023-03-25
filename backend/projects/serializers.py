@@ -10,8 +10,13 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+  id = serializers.CharField(read_only=True)
+  total_votes = serializers.IntegerField(read_only=True)
+  votes_average = serializers.IntegerField(read_only=True)
+  author = serializers.PrimaryKeyRelatedField(read_only=True)
   tags = serializers.StringRelatedField(many=True, read_only=True)
   reviews = ReviewSerializer(many=True, read_only=True)
+  image = serializers.CharField(read_only=True)
 
 
   class Meta:

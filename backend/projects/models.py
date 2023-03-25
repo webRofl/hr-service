@@ -31,7 +31,7 @@ class Project(models.Model):
           (PROJECT, 'Project'),
           ]
 
-  title = models.CharField(max_length=100, unique=True, default='')
+  title = models.CharField(max_length=100, default='')
   author = models.ForeignKey(User, on_delete=models.CASCADE)
   description = models.TextField(default='')
   fully_description = models.TextField(default='')
@@ -76,4 +76,4 @@ class Project(models.Model):
 
     self.__calculate_reviews(cb)
 
-    return round(reviews_rate_sum / self.total_votes, 2)
+    return round(reviews_rate_sum / self.total_votes, 2) if self.total_votes > 0 else 0

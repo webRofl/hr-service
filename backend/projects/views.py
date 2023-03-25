@@ -9,12 +9,11 @@ from .models import Project, Tag
 class ProjectCRUDViewSet(viewsets.ModelViewSet):
   queryset = Project.objects.all()
   serializer_class = ProjectSerializer
+  http_method_names = ['get', 'post', 'put', 'delete']
   filter_backends = [DjangoFilterBackend]
   filterset_fields = ['title']
 
   def update(self, request, pk=None):
-    del request.data['image']
-
     serializer = self.serializer_class(data=request.data, instance=self.queryset.get(id=pk))
     serializer.is_valid(raise_exception=True)
     serializer.save()
