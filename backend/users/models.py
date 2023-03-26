@@ -1,7 +1,9 @@
 from django.db import models
-from authentication.models import User
 import uuid
 from django.utils.text import slugify
+
+from authentication.models import User
+from projects.models import Project
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
@@ -14,7 +16,7 @@ class Skill(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    projects = models.ManyToManyField('projects.Project', blank=True)
+    projects_count = models.PositiveSmallIntegerField(default=0)
     name = models.CharField(max_length=50, default='')
     second_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=50, default='', blank=True)
@@ -33,17 +35,18 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    
+
     def save(self, *args, **kwargs):
         self.username = self.user.username
         self.email = self.user.email
         self.slug = slugify(self.username)
         self.is_active = self.user.is_active
+        self.projects_count = Project.objects.filter(author=self.user).count()
         super(Profile, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username
-    
+
     class Meta:
         ordering = ['created']
 
