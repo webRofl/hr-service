@@ -1,5 +1,3 @@
-import { Button } from '@/components/atoms';
-import { Rating } from '@/components/common';
 import { styleMixins } from '@/style';
 import { Grid } from '@mui/material';
 import { CSSProperties } from 'react';
@@ -18,9 +16,10 @@ export const BriefInfo = styled(GridItem)`
   padding-top: 0.5rem;
 `;
 
-export const Title = styled('h1')`
-  line-height: 1rem;
-`;
+export const title = {
+  fontWeight: 600,
+  fontSize: '1.6rem',
+};
 
 export const Salary = styled('h4')`
   font-weight: 500;
@@ -35,9 +34,9 @@ export const ProjectRate = styled('div')`
   width: fit-content;
 `;
 
-// export const ProjectRating = styled(Rating)`
-//   margin-right: 1rem;
-// `;
+export const experience = {
+  display: 'inline',
+};
 
 export const ProjectTotalVotes = styled('span')`
   padding-top: 4px;

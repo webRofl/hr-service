@@ -1,12 +1,24 @@
 import { IconComponent } from '@/components/common';
 import { styleMixins } from '@/style';
-import { Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import styled from 'styled-components';
 
-export const MenuItemBtn = styled(Button)`
-  ${styleMixins.btnMixin};
-  background-color: inherit;
-  width: 100%;
+interface MenuItemBtnProps {
+  projectStyles: boolean;
+}
+
+export const MenuItemBtn = styled(LoadingButton)<MenuItemBtnProps>`
+  ${({ projectStyles }) => {
+    const styles = `${styleMixins.btnMixin};
+                    background-color: inherit;
+                    width: 100%;
+
+                    &:hover {
+                      background-color: inherit;
+                    }
+                    `;
+    return projectStyles ? styles : '';
+  }}
 `;
 
 export const MenuItemIcon = styled(IconComponent)`
