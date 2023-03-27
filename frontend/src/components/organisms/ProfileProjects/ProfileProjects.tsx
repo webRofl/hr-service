@@ -1,30 +1,40 @@
 import { Catalog } from '@/components/common';
-import { useProfileState } from '@/store';
+import { useLocalStorageState } from '@/store';
+import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { ICatalogCardData, CustomCatalogData } from '@/types';
 import { catalogCardDataMiddleware } from '@/utils';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileProjects = () => {
-  const { projects } = useProfileState(({ projects }) => ({ projects }));
-  const [data, setData] = useState<ICatalogCardData[] | null>(null);
+  const navigate = useNavigate();
+  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
+  const { data } = useProjectsList({ author: userId });
+  const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
 
   useEffect(() => {
-    if (!projects) return;
+    if (!userId) {
+      navigate('/');
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (!data?.data) return;
 
     const keys: CustomCatalogData = {
       imgLink: 'image',
       votesRatio: 'votes_average',
     };
 
-    const data = catalogCardDataMiddleware(keys, projects);
-    setData(data);
-  }, [projects]);
+    const projects = catalogCardDataMiddleware(keys, data?.data);
+    setCardList(projects);
+  }, [data?.data]);
 
-  if (!data) {
+  if (!cardList || !cardList.length) {
     return <div>No projects</div>;
   }
 
-  return <Catalog cardList={data} linkWiuthoutId="/projects" />;
+  return <Catalog cardList={cardList} linkWiuthoutId="/projects" />;
 };
 
 export default ProfileProjects;

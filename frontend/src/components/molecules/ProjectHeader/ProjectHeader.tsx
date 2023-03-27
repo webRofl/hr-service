@@ -1,8 +1,8 @@
 import { Button } from '@/components/atoms';
-import { Rating } from '@/components/common';
+import { DivInput, Rating } from '@/components/common';
 import { useUsersRead } from '@/store/api/orvalGeneration/users/users';
 import { Grid } from '@mui/material';
-import React, { FC, SyntheticEvent } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as SC from './ProjectHeader.style';
 
@@ -16,6 +16,7 @@ interface IProjectHeaderProps {
   author: string;
   projectRate: number;
   projectVotesCount: number;
+  isEdit: boolean;
 }
 
 const ProjectHeader: FC<IProjectHeaderProps> = ({
@@ -28,6 +29,7 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
   author,
   projectRate,
   projectVotesCount,
+  isEdit,
 }) => {
   const navigate = useNavigate();
   const { data } = useUsersRead(author);
@@ -35,21 +37,42 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
   const profileBtnClickHandler = () => {
     navigate(`/profile/${data?.data?.user}`);
   };
+
   return (
     <>
       <SC.RelativeGrid item lg={8} md={8}>
         <SC.BriefInfo>
-          <SC.Title>{title}</SC.Title>
+          <DivInput value={title} commonStyle={SC.title} isEdit={isEdit} isForm name="title" />
           <SC.Salary>
-            {salary ? `${salary?.toLocaleString('ru')} ₽` : 'Salary is not specified'}
+            {salary ? (
+              <DivInput
+                value={`${salary.toLocaleString('ru')} ₽`}
+                isEdit={isEdit}
+                isForm
+                name="salary"
+              />
+            ) : (
+              'Salary is not specified'
+            )}
           </SC.Salary>
           <SC.ProjectRate>
             <Rating value={projectRate} precision={0.5} readOnly tip="Keep your rating in review" />
             <SC.ProjectTotalVotes>total: {projectVotesCount}</SC.ProjectTotalVotes>
           </SC.ProjectRate>
-          <div>At least {expirience} years experiense</div>
+          <div>
+            At least{' '}
+            <DivInput
+              value={expirience.toString()}
+              containerStyle={SC.experience}
+              commonStyle={SC.experience}
+              isEdit={isEdit}
+              isForm
+              name="experience"
+            />{' '}
+            years experience
+          </div>
           <div>{employment}</div>
-          <div>{description}</div>
+          <DivInput value={description} isEdit={isEdit} isForm name="description" />
           <SC.ProjectImg src={img} alt="project logo" />
         </SC.BriefInfo>
       </SC.RelativeGrid>

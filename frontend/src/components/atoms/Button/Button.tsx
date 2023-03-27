@@ -1,30 +1,20 @@
-import React, { CSSProperties, FC } from 'react';
-import { MUIButtonVariant } from '../../../types';
+import React, { FC } from 'react';
 import * as SC from './Button.style';
+import { Props } from './Button.types';
 
-interface IButtonProps {
-  label: string;
-  isShowLabel?: boolean;
-  iconName?: string;
-  variant?: MUIButtonVariant;
-  style?: CSSProperties;
-
-  onClick?: () => void;
-}
-
-const Button: FC<IButtonProps> = ({
+const Button: FC<Props> = ({
   label,
-  isShowLabel = true,
   iconName,
-  onClick,
-  style,
-  variant = 'contained',
+  isShowLabel = true,
+  projectStyles = false,
+  isLoading = false,
+  ...muiButtonProps
 }) => {
   return (
     <SC.MenuItemBtn
-      variant={variant}
-      onClick={onClick}
-      style={style}
+      loading={isLoading}
+      {...muiButtonProps}
+      projectStyles={projectStyles}
       startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
       {isShowLabel && label}
     </SC.MenuItemBtn>

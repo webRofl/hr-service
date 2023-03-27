@@ -13,7 +13,13 @@ const MenuItem: FC<IMenuItemProps> = ({
   isLink = true,
 }) => {
   const button = (
-    <Button label={label} iconName={iconName} isShowLabel={isShowLabel} {...optional} />
+    <Button
+      label={label}
+      iconName={iconName}
+      isShowLabel={isShowLabel}
+      projectStyles
+      {...optional}
+    />
   );
 
   const setStyles = () => {
