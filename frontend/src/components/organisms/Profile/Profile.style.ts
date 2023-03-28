@@ -11,7 +11,7 @@ export const Container = styled(Grid)`
 `;
 
 export const GridItem = styled('div')`
-  ${styleMixins.blockStyle}
+  ${styleMixins.blockStyle};
   color: ${({ theme }) => theme.gray.dark};
 `;
 

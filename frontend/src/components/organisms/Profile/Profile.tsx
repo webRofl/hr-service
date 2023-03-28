@@ -1,9 +1,12 @@
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { useLocalStorageState, useProfileState } from '@/store';
 import { usersUpdate, usersRead } from '@/store/api/orvalGeneration/users/users';
+import { exclude } from '@/utils';
 import { Grid } from '@mui/material';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Profile as IProfile } from '../../../store/api/orvalGeneration/models';
 import * as SC from './Profile.style';
 
 const Profile = () => {
@@ -17,7 +20,16 @@ const Profile = () => {
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [editedData, setEditedData] = useState(getState());
+  const [profileData, setProfileData] = useState<IProfile | null>(null);
+
+  const method = useForm<IProfile>({
+    defaultValues: {},
+  });
+
+  const setProfileEverywhere = (profile: IProfile) => {
+    setProfileData(profile);
+    method.reset(profile);
+  };
 
   useEffect(() => {
     if (!userId && !profileId && location.pathname === '/profile') {
@@ -29,81 +41,89 @@ const Profile = () => {
       navigate('/profile');
       return;
     }
+    const fetch = async () => {
+      if (location.pathname.match(/(profile|profile\/)$/) && userId) {
+        setIsMyProfile(true);
 
-    if (location.pathname.match(/profile$/) && userId) {
-      setIsMyProfile(true);
-      usersRead(userId).then((data) => {
-        setProfile(data?.data);
-        setEditedData({ ...data?.data });
-      });
-      return;
-    }
+        let profile = getState();
 
-    if (profileId) {
-      usersRead(profileId).then((data) => {
-        setEditedData(data?.data);
-      });
-    }
+        if (profile.user === '' && Object.keys(profile).length === 1) {
+          profile = (await usersRead(userId)).data;
+        }
+        setProfileEverywhere(profile);
+        return;
+      }
+
+      const profile = (await usersRead(profileId!)).data;
+      setProfileEverywhere(profile);
+    };
+
+    fetch();
   }, []);
 
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = editedData ? `${editedData.name} ${editedData.second_name}` : prevTitle;
+    document.title = profileData ? `${profileData.name} ${profileData.second_name}` : prevTitle;
 
     return () => {
       document.title = prevTitle;
     };
-  }, [editedData]);
+  }, [profileData]);
 
   const editClickHandler: MouseEventHandler<HTMLElement> = () => {
     return setIsEdit((prev) => !prev);
   };
 
-  const submitHandler: MouseEventHandler<HTMLButtonElement> = async () => {
-    if (editedData) {
-      delete editedData.image;
-      delete editedData.email;
-      delete editedData.username;
-      delete editedData.skills;
-      await usersUpdate(userId, editedData);
+  const submitHandler = async (values: IProfile) => {
+    const profileUpdate = await usersUpdate(userId, values);
+
+    if (profileUpdate.status === 200) {
       setIsEdit(false);
+      const updatedProfile = (await usersRead(userId)).data;
+      setProfileEverywhere(updatedProfile);
     }
   };
 
-  if (!getState()) {
+  if (!profileData || profileData?.user === '') {
     return <SC.ErrorContainer>There is no such profile</SC.ErrorContainer>;
   }
 
   return (
-    <SC.Container container spacing={2}>
-      <Grid item lg={4} md={4}>
-        <SC.GridItem>
-          <ProfileLogo
-            image={editedData.image || ''}
-            position="Full-Stack dev"
-            area="Moscow"
-            name={editedData.name || ''}
-            secondName={editedData.second_name || ''}
-            isEdit={isEdit}
-            isMyProfile={isMyProfile}
-            editClickHandler={editClickHandler}
-            submitHandler={submitHandler}
-          />
-        </SC.GridItem>
-      </Grid>
-      <Grid item lg={8} md={8}>
-        <SC.GridItem>
-          {editedData && (
-            <ProfileMainData data={editedData} isEdit={isEdit} setEditedData={setEditedData} />
-          )}
-        </SC.GridItem>
-      </Grid>
-      <Grid item lg={9} md={7}>
-        <SC.GridItem>
-          <ProfileSkills skills={editedData.skills} />
-        </SC.GridItem>
-      </Grid>
-    </SC.Container>
+    <FormProvider {...method}>
+      <SC.Container
+        component="form"
+        container
+        spacing={2}
+        onSubmit={method.handleSubmit(submitHandler)}>
+        <Grid item lg={4} md={4}>
+          <SC.GridItem>
+            <ProfileLogo
+              image={profileData.image || ''}
+              position="Full-Stack dev"
+              area="Moscow"
+              name={profileData.name || ''}
+              secondName={profileData.second_name || ''}
+              isEdit={isEdit}
+              isMyProfile={isMyProfile}
+              editClickHandler={editClickHandler}
+            />
+          </SC.GridItem>
+        </Grid>
+        <Grid item lg={8} md={8}>
+          <SC.GridItem>
+            <ProfileMainData
+              data={exclude(profileData, ['image', 'skills', 'user', 'projects'])}
+              isEdit={isEdit}
+            />
+          </SC.GridItem>
+        </Grid>
+        <Grid item lg={9} md={7}>
+          <SC.GridItem>
+            <ProfileSkills skills={profileData.skills ?? []} />
+          </SC.GridItem>
+        </Grid>
+      </SC.Container>
+    </FormProvider>
   );
 };
 

@@ -14,24 +14,11 @@ const DivInput: FC<DivInputProps> = ({
   inputStyle,
   containerStyle,
   commonStyle,
-  changeValueHandler,
-  isForm = false,
+  readOnly,
 }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
 
   const { register } = useFormContext();
-
-  const inputEl = useMemo(() => {
-    if (isForm) {
-      return <SC.Input {...register(name)} style={commonStyle} />;
-    }
-
-    const changeHandler = (event: ChangeEvent) => {
-      changeValueHandler(event.currentTarget.value);
-    };
-
-    return <SC.Input value={value} onChange={changeHandler} style={commonStyle} />;
-  }, [isForm]);
 
   return (
     <SwitchTransition mode="out-in">
@@ -44,7 +31,11 @@ const DivInput: FC<DivInputProps> = ({
           nodeRef?.current.addEventListener('transitionend', done, false);
         }}>
         <div ref={nodeRef} style={containerStyle}>
-          {isEdit ? inputEl : <div style={divStyle ?? commonStyle}>{value}</div>}
+          {isEdit && !readOnly ? (
+            <SC.Input {...register(name)} style={inputStyle ?? commonStyle} />
+          ) : (
+            <div style={divStyle ?? commonStyle}>{value}</div>
+          )}
         </div>
       </CSSTransition>
     </SwitchTransition>

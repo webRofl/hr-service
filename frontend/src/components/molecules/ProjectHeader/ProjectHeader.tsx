@@ -42,15 +42,10 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
     <>
       <SC.RelativeGrid item lg={8} md={8}>
         <SC.BriefInfo>
-          <DivInput value={title} commonStyle={SC.title} isEdit={isEdit} isForm name="title" />
+          <DivInput value={title} commonStyle={SC.title} isEdit={isEdit} name="title" />
           <SC.Salary>
             {salary ? (
-              <DivInput
-                value={`${salary.toLocaleString('ru')} ₽`}
-                isEdit={isEdit}
-                isForm
-                name="salary"
-              />
+              <DivInput value={`${salary.toLocaleString('ru')} ₽`} isEdit={isEdit} name="salary" />
             ) : (
               'Salary is not specified'
             )}
@@ -66,13 +61,12 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
               containerStyle={SC.experience}
               commonStyle={SC.experience}
               isEdit={isEdit}
-              isForm
               name="experience"
             />{' '}
             years experience
           </div>
           <div>{employment}</div>
-          <DivInput value={description} isEdit={isEdit} isForm name="description" />
+          <DivInput value={description} isEdit={isEdit} name="description" />
           <SC.ProjectImg src={img} alt="project logo" />
         </SC.BriefInfo>
       </SC.RelativeGrid>

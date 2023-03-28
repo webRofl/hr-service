@@ -13,7 +13,6 @@ interface IProfileLogoProps {
   isMyProfile: boolean;
 
   editClickHandler: MouseEventHandler<HTMLElement>;
-  submitHandler: MouseEventHandler<HTMLElement>;
 }
 
 const ProfileLogo: FC<IProfileLogoProps> = ({
@@ -25,7 +24,6 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
   isEdit,
   isMyProfile,
   editClickHandler,
-  submitHandler,
 }) => {
   return (
     <SC.Container>
@@ -41,7 +39,7 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
       <div>{position}</div>
       <div>{area}</div>
       {isMyProfile && (
-        <SC.SubmitBtn data-isedit={isEdit} onClick={submitHandler}>
+        <SC.SubmitBtn data-isedit={isEdit} type="submit">
           <IconComponent style={SC.editIconStyles} name="check_mark_circle" />
         </SC.SubmitBtn>
       )}

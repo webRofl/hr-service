@@ -1,6 +1,4 @@
-import { IconComponent } from '@/components/common';
 import { Button } from '@mui/material';
-import { CSSProperties } from 'react';
 import styled, { css } from 'styled-components';
 
 const btnsMixin = css`
