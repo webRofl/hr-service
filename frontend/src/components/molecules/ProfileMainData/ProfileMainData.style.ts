@@ -4,6 +4,9 @@ import styled from 'styled-components';
 export const RowData = styled('div')`
   height: 2rem;
   font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 `;
 
 export const KeyData = styled('div')`

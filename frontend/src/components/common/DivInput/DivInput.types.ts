@@ -9,14 +9,13 @@ export interface NodeRef {
 export interface DivInputProps {
   name: string;
   value: string;
-  changeValueHandler: (value: string) => void;
   isEdit: boolean;
   isBlock?: boolean;
   divStyle?: CSSProperties;
   inputStyle?: CSSProperties;
   commonStyle?: CSSProperties;
   containerStyle?: CSSProperties;
-  isForm?: boolean;
+  readOnly?: boolean;
 }
 
 interface Field {

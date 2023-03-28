@@ -21,3 +21,5 @@ export interface ICatalogCardDataWithLink extends ICatalogCardData {
 }
 
 export type MUIButtonVariant = 'text' | 'contained' | 'outlined';
+
+export type AbstractObject = Record<string, unknown>;
