@@ -1,9 +1,15 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
+from django.db import models
 
 from .models import Project
 
-@receiver(pre_save, sender=Project)
-def count_total_votes(sender, instance, **kwargs):
-    print('PRE_SAVE', sender, instance, instance.reviews.count())
+@receiver(m2m_changed, sender=Project.reviews.through)
+def count_votes(sender, instance, **kwargs):
+    votes_sum = instance.reviews.all().aggregate(models.Sum('rate'))
+
+    instance.total_votes = instance.reviews.all().count()
+    instance.votes_average = votes_sum['rate__sum'] / instance.total_votes if votes_sum['rate__sum'] != None else 0
+
+    instance.save()
 

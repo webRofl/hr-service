@@ -4,7 +4,14 @@ from .models import Project, Tag
 from reviews.models import ProjectReview
 
 
+class AuthorReviewSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    id = serializers.CharField()
+
+
 class ProjectReviewSerializer(serializers.ModelSerializer):
+    author = AuthorReviewSerializer()
+
     class Meta:
         model = ProjectReview
         fields = '__all__'
@@ -29,16 +36,4 @@ class ProjectSerializer(serializers.ModelSerializer):
   class Meta:
     model = Project
     fields = '__all__'
-
-
-  def update(self, instance, validated_data):
-    total_votes = instance.get_total_votes()
-    votes_average = instance.get_votes_average()
-
-    validated_data['total_votes'] = total_votes
-    validated_data['votes_average'] = votes_average
-
-    super(ProjectSerializer, self).update(instance, validated_data)
-
-    return instance
 

@@ -4,11 +4,6 @@ from .models import ProjectReview
 from authentication.models import User
 from projects.models import Project
 
-class ReviewAuthorSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    id = serializers.CharField()
-
-
 class ProjectReviewPostSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects)
     project = serializers.PrimaryKeyRelatedField(queryset=Project.objects)
