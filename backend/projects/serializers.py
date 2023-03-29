@@ -1,7 +1,14 @@
 from rest_framework import serializers
 
 from .models import Project, Tag
-from reviews.serializers import ReviewSerializer
+from reviews.models import ProjectReview
+
+
+class ProjectReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectReview
+        fields = '__all__'
+
 
 class TagSerializer(serializers.ModelSerializer):
   class Meta:
@@ -15,7 +22,7 @@ class ProjectSerializer(serializers.ModelSerializer):
   votes_average = serializers.FloatField(read_only=True)
   author = serializers.PrimaryKeyRelatedField(read_only=True)
   tags = serializers.StringRelatedField(many=True, read_only=True)
-  reviews = ReviewSerializer(many=True, read_only=True)
+  reviews = ProjectReviewSerializer(many=True, read_only=True)
   image = serializers.CharField(read_only=True)
 
 
