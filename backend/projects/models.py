@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from authentication.models import User
-from reviews.models import Review
+from reviews.models import ProjectReview
 
 class Tag(models.Model):
   name = models.CharField(max_length=100, unique=True, default='')
@@ -39,9 +39,9 @@ class Project(models.Model):
   experience = models.IntegerField(null=False, blank=False)
   employment = models.CharField(max_length=2, choices=EMPLOYMENT_CHOICES, default=EMPLOYMENT_CHOICES[0][0])
   tags = models.ManyToManyField(Tag, blank=True)
-  reviews = models.ManyToManyField(Review, blank=True)
+  reviews = models.ManyToManyField(ProjectReview, blank=True, related_name='+')
   image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
-  total_votes = models.IntegerField()
+  total_votes = models.IntegerField(default=0)
   votes_average = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
   demo_link = models.CharField(max_length=500, null=True, blank=True)
   source_link = models.CharField(max_length=500, null=True, blank=True)

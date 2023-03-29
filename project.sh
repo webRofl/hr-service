@@ -34,6 +34,10 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
+generate_dump() {
+  docker compose exec db pg_dump postgres > ./bin/db/dump1.sql --username=postgres_user
+}
+
 set_dump() {
   docker compose exec db psql -U postgres_user -d postgres -f /dump.sql
 }
@@ -101,6 +105,9 @@ case $COMMAND in
         ;;
     set_dump)
         set_dump
+        ;;
+    generate_dump)
+        generate_dump
         ;;
     *)
         echo 'No action specified!'
