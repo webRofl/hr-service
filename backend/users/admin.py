@@ -4,7 +4,7 @@ from .models import Profile, Skill
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    readonly_fields = ('slug', 'id',)
+    readonly_fields = ('slug', 'id', 'projects_count',)
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):

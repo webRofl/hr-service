@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from authentication.models import User
 
-from .serializers import ProfileSerializer, ProfileUpdateSerializer, SkillSerializer
+from .serializers import ProfileSerializer, SkillSerializer, ProfilePostSerializer, ProfileUpdateSerializer
 from .models import Profile, Skill
 from .permissions import IsGetMethodOrAuthOnly
 from helpers.get_data_with_user import get_data_with_user
+from users.models import User
 
 class ProfileCRUDViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
@@ -31,8 +32,16 @@ class ProfileCRUDViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         data = get_data_with_user(request)
+        user_instance = User.objects.get(id=data['user'])
 
-        serializer = self.serializer_class(data=data)
+        user_data = {
+                'email': user_instance.email,
+                'username': user_instance.username,
+                }
+
+        data.update(user_data)
+
+        serializer = ProfilePostSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 

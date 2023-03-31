@@ -17,6 +17,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         exclude = ('is_active', 'slug', 'id',)
 
 
+class ProfilePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        exclude = ('created', 'image', 'skills', 'projects_count',)
+
+
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
