@@ -20,7 +20,9 @@ const CatalogCard: FC<ICatalogCardDataWithLink> = ({
           {description.length > 180 ? `${description.slice(0, 180)}...` : description}
         </SC.Description>
         <SC.FirstLetterUp>Total Votes: {totalVotes}</SC.FirstLetterUp>
-        <SC.FirstLetterUp>Votes Ratio: {votesRatio.toFixed(2)}%</SC.FirstLetterUp>
+        <SC.FirstLetterUp>
+          Votes Ratio: {votesRatio % 1 === 0 ? votesRatio : votesRatio.toFixed(1)}%
+        </SC.FirstLetterUp>
         <SC.TagsContainer>
           {tags.map((t) => (
             <SC.Tag>{t}</SC.Tag>

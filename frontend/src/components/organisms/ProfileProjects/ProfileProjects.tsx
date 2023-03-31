@@ -3,6 +3,7 @@ import { useLocalStorageState } from '@/store';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { ICatalogCardData, CustomCatalogData } from '@/types';
 import { catalogCardDataMiddleware } from '@/utils';
+import { Fab } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,11 +31,20 @@ const ProfileProjects = () => {
     setCardList(projects);
   }, [data?.data]);
 
+  const handleClickFab = () => {
+    navigate('/profile/projects/create');
+  };
+
   if (!cardList || !cardList.length) {
     return <div>No projects</div>;
   }
 
-  return <Catalog cardList={cardList} linkWiuthoutId="/projects" />;
+  return (
+    <>
+      <Catalog cardList={cardList} linkWiuthoutId="/projects" />
+      <Fab color="primary" aria-label="add" onClick={handleClickFab} />
+    </>
+  );
 };
 
 export default ProfileProjects;

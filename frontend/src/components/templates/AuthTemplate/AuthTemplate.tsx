@@ -1,10 +1,9 @@
-import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Auth } from 'components/organisms';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from '@/store';
 import { AuthSupport, OAuthContainer } from '@/components/molecules';
-import * as SC from './AuthTemplate.style';
+import { AbstractForm } from '@/components/common';
 
 const AuthTemplate = () => {
   const navigate = useNavigate();
@@ -23,19 +22,13 @@ const AuthTemplate = () => {
   }, [location, isAuth]);
 
   return (
-    <SC.FullSizeGrid container>
-      <SC.ComponentContainer item>
-        <SC.ContentGrid item container rowSpacing={5}>
-          <SC.FormContainer item xs={12} sm={6}>
-            <Auth isLogin={isLogin} />
-          </SC.FormContainer>
-          <Grid item xs={12} sm={6}>
-            <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />
-          </Grid>
-        </SC.ContentGrid>
-        {isLogin && <AuthSupport />}
-      </SC.ComponentContainer>
-    </SC.FullSizeGrid>
+    <AbstractForm
+      renderLeft={<Auth isLogin={isLogin} />}
+      renderRight={
+        <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />
+      }
+      renderBottom={isLogin && <AuthSupport />}
+    />
   );
 };
 

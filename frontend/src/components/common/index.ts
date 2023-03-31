@@ -8,3 +8,4 @@ export { default as Catalog } from './Catalog/Catalog';
 export { default as Rating } from './Rating/Rating';
 export { default as OptionsMenu } from './OptionsMenu/OptionsMenu';
 export { default as Reviews } from './Reviews/Reviews';
+export { default as AbstractForm } from './AbstractForm/AbstractForm';
