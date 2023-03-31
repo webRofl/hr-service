@@ -1,14 +1,20 @@
 import { styleMixins } from '@/style';
 import { Grid, Rating as MUIRating } from '@mui/material';
+import { Button } from '@/components/atoms';
 import styled from 'styled-components';
 
-export const Container = styled(Grid)``;
+interface ReviewProps {
+  isFirst?: boolean;
+  isAuth?: boolean;
+}
 
-export const Review = styled(Grid)`
-  ${styleMixins.blockStyle}
+export const Review = styled(Grid)<ReviewProps>`
+  ${styleMixins.blockStyle};
   margin-bottom: 1.5rem;
   padding: 1rem;
   position: relative;
+
+  ${({ isFirst, isAuth }) => isFirst && isAuth && 'margin-top: 45px;'}
 
   &:last-child {
     margin-bottom: 0;
@@ -23,5 +29,14 @@ export const Author = styled('span')`
 export const Rating = styled(MUIRating)`
   position: absolute;
   top: 0.5rem;
+  right: 1rem;
+`;
+
+export const WritableReview = styled(Review)`
+  min-height: 115px;
+`;
+
+export const SubmitBtn = styled(Button)`
+  position: absolute;
   right: 1rem;
 `;
