@@ -1,4 +1,5 @@
 import { AuthForm } from '@/components/molecules';
+import { useLocalStorageState } from '@/store';
 import { usersCreate } from '@/store/api/orvalGeneration/users/users';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,6 +8,9 @@ import { ProfileFields } from './CreateProfileForm.types';
 
 const CreateProfileForm = () => {
   const navigate = useNavigate();
+  const { setIsNeedToCreateProfile } = useLocalStorageState(({ setIsNeedToCreateProfile }) => ({
+    setIsNeedToCreateProfile,
+  }));
 
   const method = useForm<ProfileFields>({
     defaultValues: {
@@ -22,6 +26,7 @@ const CreateProfileForm = () => {
   });
 
   const successCb = () => {
+    setIsNeedToCreateProfile(false);
     navigate('/');
   };
 

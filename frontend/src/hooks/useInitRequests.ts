@@ -1,12 +1,12 @@
 import { useLocalStorageState, useProfileState } from '@/store';
 import { usersRead } from '@/store/api/orvalGeneration/users/users';
-import React, { FC, PropsWithChildren, useEffect } from 'react';
+import React from 'react';
 
-const RequestsWrapper: FC<PropsWithChildren> = ({ children }) => {
+const useInitRequests = () => {
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
   const { setProfile } = useProfileState(({ setProfile }) => ({ setProfile }));
 
-  useEffect(() => {
+  const startFetch = () => {
     const fetchProfile = async (userId: string) => {
       const data = await usersRead(userId);
       if (data && Object.keys(data?.data).length) {
@@ -17,10 +17,11 @@ const RequestsWrapper: FC<PropsWithChildren> = ({ children }) => {
     if (userId) {
       fetchProfile(userId);
     }
-  }, []);
+  };
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{children}</>;
+  return {
+    startFetch,
+  };
 };
 
-export default RequestsWrapper;
+export default useInitRequests;

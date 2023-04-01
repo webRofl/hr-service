@@ -18,7 +18,7 @@ const Router: FC = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <TemplateWithMenu children={<Redirect path="/projects" />} />,
+      element: <Redirect path="/projects" />,
     },
     {
       path: '/login',
@@ -36,7 +36,6 @@ const Router: FC = () => {
       path: '/projects/:projectId',
       element: <TemplateWithMenu children={<ProjectPage />} />,
     },
-
     {
       path: '/profile/create',
       element: <CreateProfileTemplate />,
