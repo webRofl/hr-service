@@ -1,4 +1,4 @@
-import { Catalog } from '@/components/common';
+import { Catalog, Center } from '@/components/common';
 import { useLocalStorageState } from '@/store';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { ICatalogCardData, CustomCatalogData } from '@/types';
@@ -36,7 +36,7 @@ const ProfileProjects = () => {
   };
 
   if (!cardList || !cardList.length) {
-    return <div>No projects</div>;
+    return <Center>No projects</Center>;
   }
 
   return (

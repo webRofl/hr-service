@@ -22,8 +22,17 @@ export const ComponentContainer = styled(Grid)`
   background-color: #fff;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+
+  ${({ isBigForm }) =>
+    isBigForm
+      ? `
+      padding-top: 0;
+      padding-bottom: 1rem;
+      `
+      : `
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+  `};
 
   ${({ theme }) => theme.breakpoints.up('sm')} {
     box-shadow: 0 0 5px #ddd;

@@ -14,11 +14,3 @@ export const GridItem = styled('div')`
   ${styleMixins.blockStyle};
   color: ${({ theme }) => theme.gray.dark};
 `;
-
-export const ErrorContainer = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-size: 2rem;
-`;

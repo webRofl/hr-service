@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { AuthForm } from '@/components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -39,6 +39,10 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
     register: getMethods(registerSchema, 'email', 'password', 'username'),
   };
 
+  useEffect(() => {
+    methods[location.pathname.slice(1)].reset();
+  }, [location.pathname]);
+
   const onSuccessSubmitHandler = () => {
     if (isLogin) {
       navigate('/projects');
@@ -48,7 +52,6 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
     const signIn = async () => {
       await login({ email: values.email, password: values.password });
       setIsNeedToCreateProfile(true);
-      // navigate('/profile/create');
     };
 
     signIn();

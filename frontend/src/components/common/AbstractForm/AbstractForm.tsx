@@ -6,12 +6,18 @@ interface AbstractFormProps {
   renderLeft: FC<unknown>;
   renderRight: FC<unknown>;
   renderBottom?: FC<unknown>;
+  isBigForm?: boolean;
 }
 
-const AbstractForm: FC<AbstractFormProps> = ({ renderLeft, renderRight, renderBottom }) => {
+const AbstractForm: FC<AbstractFormProps> = ({
+  renderLeft,
+  renderRight,
+  renderBottom,
+  isBigForm = false,
+}) => {
   return (
     <SC.FullSizeGrid container>
-      <SC.ComponentContainer item>
+      <SC.ComponentContainer isBigForm={isBigForm} item>
         <SC.ContentGrid item container rowSpacing={5}>
           <SC.FormContainer item xs={12} sm={6}>
             {renderLeft}

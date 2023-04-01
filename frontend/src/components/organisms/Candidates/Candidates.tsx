@@ -1,4 +1,4 @@
-import { Catalog } from '@/components/common';
+import { Catalog, Center } from '@/components/common';
 import { useUsersList } from '@/store/api/orvalGeneration/users/users';
 import { GlobalENV, ICatalogCardData } from '@/types';
 import { capitalize } from '@mui/material';
@@ -27,7 +27,7 @@ const Candidates = () => {
   return cardList?.length ? (
     <Catalog linkWiuthoutId={`${GlobalENV.FQDN_FRONTEND}profile`} cardList={cardList!} />
   ) : (
-    <span>no users</span>
+    <Center>No Users</Center>
   );
 };
 
