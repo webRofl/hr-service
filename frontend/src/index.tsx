@@ -8,7 +8,7 @@ import Router from './Router';
 import reportWebVitals from './reportWebVitals';
 import { getTheme } from './style';
 import { initSettings } from './utils';
-import { ErrorFallback, RequestsWrapper, SettingsWrapper } from './components/common';
+import { ErrorFallback, Init } from './components/common';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -17,16 +17,13 @@ const { queryClient } = initSettings();
 root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <SettingsWrapper>
-        <QueryClientProvider client={queryClient}>
-          <RequestsWrapper>
-            <ThemeProvider theme={getTheme('light')}>
-              <Router />
-              <CssBaseline />
-            </ThemeProvider>
-          </RequestsWrapper>
-        </QueryClientProvider>
-      </SettingsWrapper>
+      <QueryClientProvider client={queryClient}>
+        <Init />
+        <ThemeProvider theme={getTheme('light')}>
+          <Router />
+          <CssBaseline />
+        </ThemeProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   </React.StrictMode>,
 );
