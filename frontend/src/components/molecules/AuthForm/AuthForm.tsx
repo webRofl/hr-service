@@ -5,12 +5,13 @@ import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
 import { FormInput } from 'components/atoms';
 import { AxiosErrorResponse } from '@/types';
 import { useLocation } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import * as SC from './AuthForm.style';
 
 interface IAuthFormProps {
   onSuccessSubmitHandler: () => void;
   methods: UseFormReturn<FieldValues, unknown>;
-  dataLoadCb: (values: unknown) => Promise<AxiosErrorResponse>;
+  dataLoadCb: (values: unknown) => Promise<AxiosResponse>;
   btnText: string;
   title?: string;
 }
@@ -35,13 +36,12 @@ const AuthForm: FC<IAuthFormProps> = ({
 
     const errors = await dataLoadCb(values);
     setIsLoading(false);
-    setErrors(errors);
-
-    if (!errors) {
+    if (Math.floor(errors.status / 100) === 2) {
       onSuccessSubmitHandler();
+      return;
     }
+    setErrors(errors);
   };
-
   return (
     <FormProvider {...methods}>
       <Box
