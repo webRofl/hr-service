@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Auth } from 'components/organisms';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from '@/store';
 import { AuthSupport, OAuthContainer } from '@/components/molecules';
 import { AbstractForm } from '@/components/common';
+import * as SC from './AuthTemplate.style';
 
 const AuthTemplate = () => {
   const navigate = useNavigate();
@@ -27,7 +28,11 @@ const AuthTemplate = () => {
       renderRight={
         <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />
       }
-      renderBottom={isLogin && <AuthSupport />}
+      renderBottom={
+        <SC.Bottom>
+          {isLogin ? <AuthSupport /> : <SC.LinkItem to="/login">Back to login</SC.LinkItem>}
+        </SC.Bottom>
+      }
     />
   );
 };

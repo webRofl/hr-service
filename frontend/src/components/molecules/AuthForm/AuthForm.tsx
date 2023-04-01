@@ -34,13 +34,14 @@ const AuthForm: FC<IAuthFormProps> = ({
   const onSubmitHandler = async (values: unknown) => {
     setIsLoading(true);
 
-    const errors = await dataLoadCb(values);
+    const data = await dataLoadCb(values);
     setIsLoading(false);
-    if (Math.floor(errors.status / 100) === 2) {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    if (!data || Math.floor(data?.status / 100) === 2) {
       onSuccessSubmitHandler();
       return;
     }
-    setErrors(errors);
+    setErrors(data);
   };
   return (
     <FormProvider {...methods}>

@@ -1,3 +1,4 @@
+import { Center } from '@/components/common';
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { useLocalStorageState, useProfileState } from '@/store';
 import { usersUpdate, usersRead } from '@/store/api/orvalGeneration/users/users';
@@ -85,7 +86,7 @@ const Profile = () => {
   };
 
   if (!profileData || profileData?.user === '') {
-    return <SC.ErrorContainer>There is no such profile</SC.ErrorContainer>;
+    return <Center>There is no such profile</Center>;
   }
 
   return (

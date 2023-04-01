@@ -8,3 +8,4 @@ export { default as OptionsMenu } from './OptionsMenu/OptionsMenu';
 export { default as Reviews } from './Reviews/Reviews';
 export { default as AbstractForm } from './AbstractForm/AbstractForm';
 export { default as Init } from './Init/Init';
+export { default as Center } from './Center/Center';

@@ -39,6 +39,7 @@ const CreateProfileForm = () => {
 
   return (
     <AbstractForm
+      isBigForm
       renderLeft={
         // eslint-disable-next-line react/jsx-wrap-multilines
         <AuthForm
