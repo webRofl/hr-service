@@ -9,7 +9,7 @@ import * as SC from './AuthForm.style';
 
 interface IAuthFormProps {
   onSuccessSubmitHandler: () => void;
-  methods: UseFormReturn<FieldValues, any>;
+  methods: UseFormReturn<FieldValues, unknown>;
   dataLoadCb: (values: unknown) => Promise<AxiosErrorResponse>;
   btnText: string;
   title?: string;

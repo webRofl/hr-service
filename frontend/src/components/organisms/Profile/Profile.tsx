@@ -112,7 +112,7 @@ const Profile = () => {
         <Grid item lg={8} md={8}>
           <SC.GridItem>
             <ProfileMainData
-              data={exclude(profileData, ['image', 'skills', 'user', 'projects'])}
+              data={exclude(profileData, ['image', 'skills', 'user', 'projects_count'])}
               isEdit={isEdit}
             />
           </SC.GridItem>

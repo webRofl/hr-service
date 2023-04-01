@@ -48,6 +48,7 @@ export const WritableReview: FC<WritableReviewProps> = ({
     if (data.status === 201) {
       successCallback();
       setIsWrite(false);
+      return;
     }
     // eslint-disable-next-line no-console
     console.log(data);
