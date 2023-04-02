@@ -19,6 +19,11 @@ export const MenuItemBtn = styled(LoadingButton)<MenuItemBtnProps>`
                     `;
     return projectStyles ? styles : '';
   }}
+  border: none;
+
+  &:hover {
+    border: none;
+  }
 `;
 
 export const MenuItemIcon = styled(IconComponent)`

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { IconButton, useMediaQuery } from '@mui/material';
 import { useTheme } from 'styled-components';
 import { MenuItem, MenuProfile } from '@/components/molecules';
-import { IconComponent } from '@/components/common';
 import { useLocalStorageState } from '@/store';
+import { ReactComponent as UnwrapSVG } from '@/assets/icons/menu_control_unwrap.svg';
+import { ReactComponent as WrapSVG } from '@/assets/icons/menu_control_wrap.svg';
 import * as SC from './Menu.style';
 
 const Menu = () => {
@@ -36,13 +37,9 @@ const Menu = () => {
     <SC.Drawer variant="permanent" isOpen={isOpen} drawerWidth={drawerWidth}>
       <SC.DrawerHeader>
         <IconButton color="success" aria-label="open drawer" onClick={toggleDrawerOpen}>
-          <IconComponent
-            name={isOpen ? 'menu_control_unwrap' : 'menu_control_wrap'}
-            style={{ width: 30 }}
-          />
+          {isOpen ? <WrapSVG style={SC.ocIcon} /> : <UnwrapSVG style={SC.ocIcon} />}
         </IconButton>
       </SC.DrawerHeader>
-      <SC.CustomDivider />
       <SC.MenuContainer
         direction="column"
         justifyContent="flex-start"

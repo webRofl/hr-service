@@ -1,8 +1,10 @@
-import { Button } from '@/components/atoms';
-import { styleMixins } from '@/style';
-import { getMenuItemUtilityClass } from '@mui/material';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
+export const signInStyles: CSSProperties = {
+  backgroundColor: 'transparent',
+  position: 'absolute',
+  bottom: '4%',
+};
 export const ProfileContainer = styled('div')`
   position: absolute;
   bottom: 4%;
@@ -15,6 +17,7 @@ export const ProfileContainer = styled('div')`
 export const Profile = styled('div')`
   display: flex;
   flex-direction: row-reverse;
+  justify-content: center;
   gap: 1rem;
   align-items: center;
   margin-bottom: 1rem;
