@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from authentication.models import User
 
-from .serializers import ProfileSerializer, SkillSerializer, ProfilePostSerializer, ProfileUpdateSerializer
+from .serializers import SkillSerializer, ProfileSerializer, ProfileListSerializer, ProfilePostSerializer, ProfileUpdateSerializer
 from .models import Profile, Skill
 from .permissions import IsGetMethodOrAuthOnly
 from helpers.get_data_with_user import get_data_with_user
@@ -18,6 +18,11 @@ class ProfileCRUDViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         user = get_object_or_404(self.queryset.filter(user_id=pk))
         serializer = self.serializer_class(user)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def list(self, request):
+        serializer = ProfileListSerializer(self.get_queryset(), many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

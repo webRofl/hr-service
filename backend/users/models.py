@@ -4,6 +4,7 @@ from django.utils.text import slugify
 
 from authentication.models import User
 from projects.models import Project
+from reviews.models import ProfileReview
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
@@ -12,7 +13,7 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -28,6 +29,7 @@ class Profile(models.Model):
         null=True, blank=True, upload_to='users/images',
         default="users/images/default.png")
     skills = models.ManyToManyField(Skill, blank=True)
+    reviews = models.ManyToManyField(ProfileReview, blank=True, related_name='+')
     github = models.CharField(max_length=100, blank=True, null=True)
     linkedin = models.CharField(max_length=100, blank=True, null=True)
     youtube = models.CharField(max_length=100, blank=True, null=True)
