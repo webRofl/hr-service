@@ -14,6 +14,11 @@ class Review(models.Model):
     def __str__(self):
         return self.author.username
 
+
 class ProjectReview(Review):
     project = models.ForeignKey('projects.Project', on_delete=models.CASCADE)
+
+
+class ProfileReview(Review):
+    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
 
