@@ -3,11 +3,7 @@ from rest_framework import serializers
 from .models import Project, Tag
 from reviews.models import ProjectReview
 from users.models import User
-
-
-class AuthorReviewSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    id = serializers.CharField()
+from reviews.serializers import AuthorReviewSerializer
 
 
 class ProjectReviewSerializer(serializers.ModelSerializer):

@@ -3,15 +3,24 @@ import { useAuthState } from '@/store';
 import { Review } from '@/store/api/orvalGeneration/models';
 import React, { FC, useState } from 'react';
 import * as SC from './Reviews.style';
+import { ReviewCb, ReviewType } from './Reviews.types';
 
 interface ReviewsProps {
   reviews: Review[];
   placeId: string;
+  placeName: ReviewType;
 
+  dataLoadCallback: ReviewCb;
   successCallback: () => void;
 }
 
-const Reviews: FC<ReviewsProps> = ({ reviews, placeId, successCallback }) => {
+const Reviews: FC<ReviewsProps> = ({
+  reviews,
+  placeId,
+  placeName,
+  successCallback,
+  dataLoadCallback,
+}) => {
   const { isAuth } = useAuthState(({ isAuth }) => ({ isAuth }));
   const [isWrite, setIsWrite] = useState<boolean>(false);
 
@@ -32,7 +41,9 @@ const Reviews: FC<ReviewsProps> = ({ reviews, placeId, successCallback }) => {
       {isWrite && (
         <WritableReview
           placeId={placeId}
+          placeName={placeName}
           successCallback={successCallback}
+          dataLoadCallback={dataLoadCallback}
           setIsWrite={setIsWrite}
         />
       )}

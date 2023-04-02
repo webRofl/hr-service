@@ -3,14 +3,21 @@ import { usersRead } from '@/store/api/orvalGeneration/users/users';
 import React from 'react';
 
 const useInitRequests = () => {
-  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
+  const { userId, setIsNeedToCreateProfile } = useLocalStorageState(
+    ({ userId, setIsNeedToCreateProfile }) => ({ userId, setIsNeedToCreateProfile }),
+  );
   const { setProfile } = useProfileState(({ setProfile }) => ({ setProfile }));
 
   const startFetch = () => {
     const fetchProfile = async (userId: string) => {
-      const data = await usersRead(userId);
-      if (data && Object.keys(data?.data).length) {
-        setProfile(data?.data);
+      try {
+        const data = await usersRead(userId);
+        if (data && Object.keys(data?.data).length) {
+          setIsNeedToCreateProfile(false);
+          setProfile(data?.data);
+        }
+      } catch {
+        setIsNeedToCreateProfile(true);
       }
     };
 

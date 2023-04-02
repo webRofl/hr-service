@@ -1,2 +1,2 @@
 export { email, password } from './validationSchemes';
-export type { EventNames, Difference } from './types';
+export type { EventNames, InsertProperties, Difference } from './types';

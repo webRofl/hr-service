@@ -36,7 +36,11 @@ export const WritableReview = styled(Review)`
   min-height: 115px;
 `;
 
-export const SubmitBtn = styled(Button)`
+export const Buttons = styled('div')`
   position: absolute;
   right: 1rem;
+`;
+
+export const CancelBtn = styled(Button)`
+  margin-right: 1rem;
 `;

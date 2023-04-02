@@ -2,17 +2,12 @@ from rest_framework import serializers
 
 from .models import Profile, Skill
 from reviews.models import ProfileReview
+from reviews.serializers import AuthorReviewSerializer
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = ('id', 'name',)
-
-
-class AuthorReviewSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    id = serializers.CharField()
-
 
 
 class ProfileReviewSerializer(serializers.ModelSerializer):
