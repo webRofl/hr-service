@@ -1,9 +1,10 @@
-import { IconComponent } from '@/components/common';
+import { IconComponent, Rating } from '@/components/common';
 import { GlobalENV } from '@/types';
 import React, { FC, MouseEventHandler, useEffect } from 'react';
 import * as SC from './ProfileLogo.style';
 
 interface IProfileLogoProps {
+  votesAverage: number;
   image: string;
   position: string;
   area: string;
@@ -16,6 +17,7 @@ interface IProfileLogoProps {
 }
 
 const ProfileLogo: FC<IProfileLogoProps> = ({
+  votesAverage,
   image,
   position,
   area,
@@ -32,6 +34,7 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
           <IconComponent style={SC.editIconStyles} name="edit" />
         </SC.EditBtn>
       )}
+      <Rating value={votesAverage} readOnly tip="leave me a couple of reviews bottom" />
       <SC.Logo src={`${GlobalENV.FQDN_BACKEND}${image}`} alt={area} />
       <SC.Name>
         {name} {secondName}

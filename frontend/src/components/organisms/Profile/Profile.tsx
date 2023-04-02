@@ -1,6 +1,7 @@
-import { Center } from '@/components/common';
+import { Center, Reviews } from '@/components/common';
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { useLocalStorageState, useProfileState } from '@/store';
+import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { usersUpdate, usersRead } from '@/store/api/orvalGeneration/users/users';
 import { exclude } from '@/utils';
 import { Grid } from '@mui/material';
@@ -85,6 +86,13 @@ const Profile = () => {
     }
   };
 
+  const reviewSuccessCallback = async () => {
+    const data = await usersRead(profileId ?? userId);
+    if (data.status === 200) {
+      setProfileEverywhere(data.data);
+    }
+  };
+
   if (!profileData || profileData?.user === '') {
     return <Center>There is no such profile</Center>;
   }
@@ -99,6 +107,7 @@ const Profile = () => {
         <Grid item lg={4} md={4}>
           <SC.GridItem>
             <ProfileLogo
+              votesAverage={profileData.votes_average}
               image={profileData.image || ''}
               position="Full-Stack dev"
               area="Moscow"
@@ -113,7 +122,7 @@ const Profile = () => {
         <Grid item lg={8} md={8}>
           <SC.GridItem>
             <ProfileMainData
-              data={exclude(profileData, ['image', 'skills', 'user', 'projects_count'])}
+              data={exclude(profileData, ['image', 'skills', 'user', 'projects_count', 'reviews'])}
               isEdit={isEdit}
             />
           </SC.GridItem>
@@ -123,6 +132,13 @@ const Profile = () => {
             <ProfileSkills skills={profileData.skills ?? []} />
           </SC.GridItem>
         </Grid>
+        <Reviews
+          placeName="profile"
+          placeId={profileData.id ?? ''}
+          reviews={profileData.reviews ?? []}
+          dataLoadCallback={reviewsProfileCreate}
+          successCallback={reviewSuccessCallback}
+        />
       </SC.Container>
     </FormProvider>
   );
