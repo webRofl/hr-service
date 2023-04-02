@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.utils.text import slugify
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from authentication.models import User
 from projects.models import Project
@@ -22,6 +23,8 @@ class Profile(models.Model):
     second_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=50, default='', blank=True)
     username = models.CharField(max_length=50, unique=True, default='', blank=True)
+    total_votes = models.IntegerField(default=0)
+    votes_average = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
     slug = models.SlugField(unique=True, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
