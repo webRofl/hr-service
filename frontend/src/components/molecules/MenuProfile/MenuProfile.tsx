@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useEffect, useState } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import { MenuItem } from '@/components/molecules';
 import { useTheme } from 'styled-components';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
@@ -26,12 +26,6 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
 
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const signInStyles: CSSProperties = {
-    backgroundColor: theme.gray.main,
-    position: 'absolute',
-    bottom: '4%',
-  };
-
   const logoutHandler = () => {
     setUserId('');
     setIsAuth(false);
@@ -44,13 +38,18 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
 
   if (!isAuth) {
     return (
-      <MenuItem label="Login" iconName="menu_sign-in" isShowLabel={isOpen} style={signInStyles} />
+      <MenuItem
+        label="Login"
+        iconName="menu_sign-in"
+        isShowLabel={isOpen}
+        style={SC.signInStyles}
+      />
     );
   }
   return (
     <SC.ProfileContainer>
       <SC.Profile ref={ref} role="presentation">
-        {isOpen && <span style={{ color: '#fff' }}>{username}</span>}
+        {isOpen && <span style={{ color: '#1976d2' }}>{username}</span>}
         <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
       </SC.Profile>
       <MenuItem

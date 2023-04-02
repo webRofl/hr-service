@@ -23,7 +23,7 @@ const Projects: FC = () => {
   }, [data]);
 
   return (
-    <SC.Container>
+    <SC.Container style={{ height: 'calc(100vh - 2rem)' }}>
       <ProjectsDetails />
       {cardList?.length ? (
         <Catalog linkWiuthoutId={`${GlobalENV.FQDN_FRONTEND}projects`} cardList={cardList} />

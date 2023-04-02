@@ -5,13 +5,13 @@ import MuiDrawer from '@mui/material/Drawer';
 import { IDrawerProps } from './Menu.types';
 
 export const MenuContainer = styled(Stack)`
-  background-color: ${({ theme }) => theme.black.main};
   height: 100vh;
   padding-top: 10%;
   position: relative;
 `;
 
 const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
+  backgroundColor: 'transparent',
   width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -21,6 +21,7 @@ const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
+  backgroundColor: 'transparent',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -36,15 +37,15 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  backgroundColor: theme.black.main,
+  backgroundColor: 'transparent',
   fill: theme.white.main,
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
 }));
 
-export const CustomDivider = styled(Divider)`
-  background-color: ${({ theme }) => theme.gray.main};
-`;
+export const ocIcon = {
+  width: 25,
+};
 
 export const Drawer = styled(MuiDrawer)<IDrawerProps>((props) => ({
   width: props.drawerWidth,

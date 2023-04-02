@@ -9,6 +9,7 @@ const MenuItem = css`
 
 export const Link = styled(RRDLink)`
   ${MenuItem};
+  background-color: transparent;
 `;
 
 export const Block = styled('div')`
