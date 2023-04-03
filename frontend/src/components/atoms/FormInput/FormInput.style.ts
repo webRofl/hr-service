@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TextField as MUITextField } from '@mui/material';
+import { InputAdornment, TextField as MUITextField } from '@mui/material';
 
 export const TextField = styled(MUITextField)({
   '& label.Mui-focused': {
@@ -30,3 +30,9 @@ export const TextField = styled(MUITextField)({
     },
   },
 });
+
+export const Eye = styled(InputAdornment)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
