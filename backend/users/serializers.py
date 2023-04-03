@@ -24,7 +24,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True, read_only=True)
     projects_count = serializers.IntegerField(read_only=True)
     reviews = ProfileReviewSerializer(many=True, read_only=True)
+    image = serializers.SerializerMethodField('get_image_link')
 
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
 
     class Meta:
         model = Profile
@@ -34,6 +37,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ProfileListSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True, read_only=True)
     projects_count = serializers.IntegerField(read_only=True)
+    image = serializers.SerializerMethodField('get_image_link')
+
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
 
 
     class Meta:

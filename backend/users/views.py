@@ -17,12 +17,12 @@ class ProfileCRUDViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         user = get_object_or_404(self.queryset.filter(user_id=pk))
-        serializer = self.serializer_class(user)
+        serializer = self.serializer_class(user, context={'request': request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def list(self, request):
-        serializer = ProfileListSerializer(self.get_queryset(), many=True)
+        serializer = ProfileListSerializer(self.get_queryset(), many=True, context={'request': request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
