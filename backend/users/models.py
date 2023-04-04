@@ -56,7 +56,7 @@ class EmployeeProfile(BaseProfile):
     github = models.CharField(max_length=100, blank=True, null=True)
     linkedin = models.CharField(max_length=100, blank=True, null=True)
     youtube = models.CharField(max_length=100, blank=True, null=True)
-    experience = models.SmallIntegerField()
+    experience = models.SmallIntegerField(default=0)
     salary = models.IntegerField(null=True, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)
     work_places = models.ManyToManyField(WorkPlace, blank=True)
