@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from authentication.models import User
 from projects.models import Project
 from reviews.models import ProfileReview
+from responses.models import Response
 
 class Skill(models.Model):
     name = models.CharField(max_length=50, unique=True, default='')
@@ -69,20 +70,9 @@ class EmployeeProfile(BaseProfile):
         super(EmployeeProfile, self).save(*args, **kwargs)
 
 
-class Response(models.Model):
-    author = models.OneToOneField(User, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    text = models.TextField()
-
-    def __str__(self):
-        return self.author.username
-
-
 class EmployerProfile(BaseProfile):
     projects_count = models.PositiveSmallIntegerField(default=0)
     website = models.CharField(max_length=100, blank=True, null=True)
-    responses = models.ManyToManyField(Response, blank=True)
     image = models.ImageField(upload_to='users/images', blank=True, null=True)
 
     def save(self, *args, **kwargs):

@@ -9,7 +9,7 @@ from helpers.get_data_with_user import get_data_with_user
 class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
     queryset = ProjectReview.objects.all()
     serializer_class = ProjectReviewPostSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['post']
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def create(self, request):
@@ -25,7 +25,7 @@ class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
 class ProfileReviewCRUDViewSet(viewsets.ModelViewSet):
     queryset = ProfileReview.objects.all()
     serializer_class = ProfileReviewPostSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['post']
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def create(self, request):

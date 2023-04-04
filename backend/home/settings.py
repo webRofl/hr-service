@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'authentication.apps.AuthenticationConfig',
     'reviews.apps.ReviewsConfig',
+    'responses.apps.ResponsesConfig',
 
     'rest_framework',
     'drf_yasg',
