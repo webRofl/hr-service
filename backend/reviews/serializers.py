@@ -3,8 +3,6 @@ from rest_framework import serializers
 from .models import ProjectReview, ProfileReview
 from authentication.models import User
 from projects.models import Project
-from users.models import Profile
-
 
 class AuthorReviewSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -23,7 +21,7 @@ class ProjectReviewPostSerializer(serializers.ModelSerializer):
 
 class ProfileReviewPostSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects)
-    profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects)
     text = serializers.CharField(max_length=512)
 
     class Meta:

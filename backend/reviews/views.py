@@ -5,7 +5,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import ProjectReview, ProfileReview
 from .serializers import ProjectReviewPostSerializer, ProfileReviewPostSerializer
 from helpers.get_data_with_user import get_data_with_user
-from users.models import Profile
 
 class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
     queryset = ProjectReview.objects.all()

@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from authentication.models import User
 
 
-class Review(models.Model):
+class BaseReview(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     text = models.TextField(default='')
     rate = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
@@ -14,11 +14,14 @@ class Review(models.Model):
     def __str__(self):
         return self.author.username
 
+    class Meta:
+        abstract = True
 
-class ProjectReview(Review):
+
+class ProjectReview(BaseReview):
     project = models.ForeignKey('projects.Project', on_delete=models.CASCADE)
 
 
-class ProfileReview(Review):
-    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
+class ProfileReview(BaseReview):
+    profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
 
