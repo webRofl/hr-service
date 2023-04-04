@@ -57,8 +57,8 @@ build_back() {
 build_db() {
   docker compose build db
   docker compose up -d db
-  sleep 5
-  set_dump
+  # sleep 5
+  # set_dump
 }
 
 init() {

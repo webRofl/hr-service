@@ -33,9 +33,7 @@ services:
     expose:
       - ${DJANGO_PORT}
     environment:
-      <<: *env-postgres
-      <<: *env-django
-      <<: *env-global
+      <<: [*env-postgres, *env-django, *env-global]
     depends_on:
       - db
   node:
@@ -48,8 +46,7 @@ services:
     expose:
       - ${NODE_PORT}
     environment:
-      <<: *env-node
-      <<: *env-global
+      <<: [*env-node, *env-global]
 
 volumes:
   db:

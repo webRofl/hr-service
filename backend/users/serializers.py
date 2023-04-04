@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Profile, Skill
+from .models import Skill, EmployeeProfile, WorkPlace, EmployerProfile, Response
 from reviews.models import ProfileReview
 from reviews.serializers import AuthorReviewSerializer
 
@@ -13,45 +13,104 @@ class SkillSerializer(serializers.ModelSerializer):
 class ProfileReviewSerializer(serializers.ModelSerializer):
     author = AuthorReviewSerializer()
 
-
     class Meta:
         model = ProfileReview
         fields = '__all__'
 
 
+class ProfileWorkPlaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkPlace
+        fields = '__all__'
 
-class ProfileSerializer(serializers.ModelSerializer):
+
+class EmployeeProfileSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(many=True, read_only=True)
-    projects_count = serializers.IntegerField(read_only=True)
     reviews = ProfileReviewSerializer(many=True, read_only=True)
+    image = serializers.SerializerMethodField('get_image_link')
+    work_places = ProfileWorkPlaceSerializer(many=True, read_only=True)
+
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
+
+    class Meta:
+        model = EmployeeProfile
+        exclude = ('is_active',)
+
+
+class EmployeeProfileListSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_image_link')
+
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
 
 
     class Meta:
-        model = Profile
-        exclude = ('is_active', 'slug',)
+        model = EmployeeProfile
+        exclude = ('is_active', 'reviews', 'work_places')
 
 
-class ProfileListSerializer(serializers.ModelSerializer):
-    skills = SkillSerializer(many=True, read_only=True)
-    projects_count = serializers.IntegerField(read_only=True)
-
-
-    class Meta:
-        model = Profile
-        exclude = ('is_active', 'slug', 'reviews',)
-
-
-
-class ProfilePostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        exclude = ('created', 'image', 'skills', 'projects_count',)
-
-
-class ProfileUpdateSerializer(serializers.ModelSerializer):
+class EmployeeProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
-        model = Profile
-        exclude = ('is_active', 'slug', 'id', 'image', 'skills', 'created', 'email', 'username',)
+        model = EmployeeProfile
+        exclude = ('is_active', 'id', 'image', 'skills', 'created', 'email', 'username', 'work_places',)
+
+
+class EmployeeProfilePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeProfile
+        exclude = ('created', 'image', 'skills', 'work_places',)
+
+
+class ProfileResponseSerializer(serializers.ModelSerializer):
+    author = AuthorReviewSerializer()
+
+    class Meta:
+        model = Response
+        fields = '__all__'
+
+
+class EmployerProfileSerializer(serializers.ModelSerializer):
+    reviews = ProfileReviewSerializer(many=True, read_only=True)
+    image = serializers.SerializerMethodField('get_image_link')
+    projects_count = serializers.IntegerField(read_only=True)
+    responses = ProfileResponseSerializer(many=True, read_only=True)
+
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
+
+    class Meta:
+        model = EmployerProfile
+        exclude = ('is_active',)
+
+
+class EmployerProfileListSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_image_link')
+
+    def get_image_link(self, instance):
+        return self.context['request'].build_absolute_uri(instance.image.url)
+
+
+    class Meta:
+        model = EmployerProfile
+        exclude = ('is_active', 'reviews',)
+
+
+
+
+class EmployerProfilePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployerProfile
+        exclude = ('created', 'image', 'skills', 'projects_count',)
+
+
+class EmployerProfileUpdateSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = EmployerProfile
+        exclude = ('is_active', 'id', 'image', 'created', 'email', 'username',)
+
 

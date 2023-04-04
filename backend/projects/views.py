@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .serializers import ProjectSerializer, TagSerializer, ProjectListSerializer, ProjectPostSerializer
+from .serializers import ProjectSerializer, TagSerializer, ProjectListSerializer, ProjectPostSerializer, ProjectRetrieveSerializer
 from .models import Project, Tag
 from helpers.get_data_with_user import get_data_with_user
 
@@ -17,9 +17,14 @@ class ProjectCRUDViewSet(viewsets.ModelViewSet):
   permission_classes = [IsAuthenticatedOrReadOnly]
 
   def list(self, request):
-    serializer = ProjectListSerializer(self.get_queryset(), many=True)
+      serializer = ProjectListSerializer(self.get_queryset(), many=True, context={'request': request})
 
-    return Response(serializer.data, status=status.HTTP_200_OK)
+      return Response(serializer.data, status=status.HTTP_200_OK)
+
+  def retrieve(self, request, pk=None):
+      serializer = ProjectRetrieveSerializer(Project.objects.get(pk=pk), context={'request': request})
+
+      return Response(serializer.data, status=status.HTTP_200_OK)
 
   def create(self, request):
       data = get_data_with_user(request, 'author')
