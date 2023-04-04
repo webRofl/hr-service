@@ -1,13 +1,14 @@
-from rest_framework import viewsets, permissions, status, mixins
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from authentication.models import User
 
-from .serializers import SkillSerializer, EmployeeProfileSerializer, EmployeeProfileListSerializer, EmployeeProfilePostSerializer, EmployeeProfileUpdateSerializer, EmployerProfileSerializer, EmployerProfileListSerializer, EmployerProfilePostSerializer, EmployerProfileUpdateSerializer
+from .serializers import SkillSerializer, EmployeeProfileSerializer, EmployeeProfileListSerializer, EmployeeProfilePostSerializer, EmployeeProfileUpdateSerializer, EmployerProfileRetrieveSerializer, EmployerProfileListSerializer, EmployerProfilePostSerializer, EmployerProfileUpdateSerializer
 from .models import Skill, EmployeeProfile, EmployerProfile
 from .permissions import IsGetMethodOrAuthOnly
 from helpers.get_data_with_user import get_data_with_user
 from users.models import User
+from authentication.models import User
+from helpers.permissions import is_owner
 
 class EmployeeProfileCRUDViewSet(viewsets.ModelViewSet):
     queryset = EmployeeProfile.objects.all()
@@ -55,7 +56,7 @@ class EmployeeProfileCRUDViewSet(viewsets.ModelViewSet):
 
 class EmployerProfileCRUDViewSet(viewsets.ModelViewSet):
     queryset = EmployerProfile.objects.all()
-    serializer_class = EmployerProfileSerializer
+    serializer_class = EmployerProfileRetrieveSerializer
     permission_classes = (IsGetMethodOrAuthOnly,)
     http_method_names = ['get', 'post', 'put', 'delete']
 
@@ -100,4 +101,3 @@ class EmployerProfileCRUDViewSet(viewsets.ModelViewSet):
 class SkillsCRUDViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
-

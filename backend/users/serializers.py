@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Skill, EmployeeProfile, WorkPlace, EmployerProfile, Response
 from reviews.models import ProfileReview
 from reviews.serializers import AuthorReviewSerializer
+from helpers.permissions import is_owner
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,13 +56,13 @@ class EmployeeProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmployeeProfile
-        exclude = ('is_active', 'id', 'image', 'skills', 'created', 'email', 'username', 'work_places',)
+        exclude = ('is_active', 'id', 'image', 'skills', 'created', 'email', 'username', 'work_places', 'reviews',)
 
 
 class EmployeeProfilePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeProfile
-        exclude = ('created', 'image', 'skills', 'work_places',)
+        exclude = ('created', 'image', 'skills', 'work_places', 'experience',)
 
 
 class ProfileResponseSerializer(serializers.ModelSerializer):
@@ -72,11 +73,10 @@ class ProfileResponseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmployerProfileSerializer(serializers.ModelSerializer):
+class EmployerProfileRetrieveSerializer(serializers.ModelSerializer):
     reviews = ProfileReviewSerializer(many=True, read_only=True)
     image = serializers.SerializerMethodField('get_image_link')
     projects_count = serializers.IntegerField(read_only=True)
-    responses = ProfileResponseSerializer(many=True, read_only=True)
 
     def get_image_link(self, instance):
         return self.context['request'].build_absolute_uri(instance.image.url)
@@ -98,12 +98,10 @@ class EmployerProfileListSerializer(serializers.ModelSerializer):
         exclude = ('is_active', 'reviews',)
 
 
-
-
 class EmployerProfilePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployerProfile
-        exclude = ('created', 'image', 'skills', 'projects_count',)
+        exclude = ('created', 'image', 'projects_count', 'total_votes', 'votes_average', 'reviews',)
 
 
 class EmployerProfileUpdateSerializer(serializers.ModelSerializer):
@@ -111,6 +109,6 @@ class EmployerProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmployerProfile
-        exclude = ('is_active', 'id', 'image', 'created', 'email', 'username',)
+        exclude = ('is_active', 'id', 'image', 'created', 'email', 'username', 'reviews',)
 
 

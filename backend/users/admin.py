@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import EmployeeProfile, EmployerProfile, Skill, WorkPlace, Response
+from .models import EmployeeProfile, EmployerProfile, Skill, WorkPlace
 
 @admin.register(EmployeeProfile)
 class ProfileAdmin(admin.ModelAdmin):
@@ -18,8 +18,4 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(WorkPlace)
 class WorkPlaceAdmin(admin.ModelAdmin):
-    readonly_fields = ('id',)
-
-@admin.register(Response)
-class ResponseAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
