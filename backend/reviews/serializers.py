@@ -21,7 +21,7 @@ class ProjectReviewPostSerializer(serializers.ModelSerializer):
 
 class ProfileReviewPostSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects)
+    profile = serializers.PrimaryKeyRelatedField(queryset=User.objects)
     text = serializers.CharField(max_length=512)
 
     class Meta:

@@ -8,7 +8,6 @@ from home.settings import JWT_HEADER_PREFIX
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
-    print(JWT_HEADER_PREFIX)
     authentication_header_prefix = JWT_HEADER_PREFIX
 
     def authenticate(self, request):

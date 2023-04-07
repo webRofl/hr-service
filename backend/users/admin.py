@@ -9,7 +9,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(EmployerProfile)
 class ProfileAdmin(admin.ModelAdmin):
-    readonly_fields = ('id', 'projects_count', 'email', 'name', 'second_name', 'username', 'total_votes', 'votes_average', 'created')
+    readonly_fields = ('id', 'projects_count', 'email', 'username', 'total_votes', 'votes_average', 'created')
 
 
 @admin.register(Skill)

@@ -10,3 +10,4 @@ export { default as ProfileSkills } from './ProfileSkills/ProfileSkills';
 export { default as ProjectHeader } from './ProjectHeader/ProjectHeader';
 export { default as ProjectBody } from './ProjectBody/ProjectBody';
 export { default as ProjectPageControl } from './ProjectPageControl/ProjectPageControl';
+export { default as EmployerProfileHeader } from './EmployerProfileHeader/EmployerProfileHeader';
