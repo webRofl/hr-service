@@ -1,9 +1,9 @@
-import React, { CSSProperties, FC } from 'react';
-import { MenuItem } from '@/components/molecules';
-import { useTheme } from 'styled-components';
-import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
+import React, { FC } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { MenuItem } from '@/components/molecules';
+import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { OptionsMenu } from '@/components/common';
+import { ROUTES } from '@/core';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -11,15 +11,19 @@ interface IMenuProfileProps {
 }
 
 const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuth, setIsAuth } = useAuthState(({ isAuth, setIsAuth }) => ({ isAuth, setIsAuth }));
-  const { username, setRefreshToken, setUserId } = useLocalStorageState(
-    ({ username, setRefreshToken, setUserId }) => ({
+  const { isAuth, setIsAuth, profileType } = useAuthState(({ isAuth, setIsAuth, profileType }) => ({
+    isAuth,
+    setIsAuth,
+    profileType,
+  }));
+  const { username, setRefreshToken, setUserId, userId } = useLocalStorageState(
+    ({ username, setRefreshToken, setUserId, userId }) => ({
       username,
       setRefreshToken,
       setUserId,
+      userId,
     }),
   );
   const { image } = useProfileState(({ image }) => ({ image }));
@@ -32,7 +36,7 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
     setRefreshToken('');
 
     if (location.pathname === '/profile') {
-      navigate('/');
+      navigate(ROUTES.MAIN);
     }
   };
 
@@ -50,7 +54,7 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
     <SC.ProfileContainer>
       <SC.Profile ref={ref} role="presentation">
         {isOpen && <span style={{ color: '#1976d2' }}>{username}</span>}
-        <SC.Img src={`http://localhost:8000${image}`} alt="menu profile logo" />
+        <SC.Img src={image} alt="menu profile logo" />
       </SC.Profile>
       <MenuItem
         onClick={logoutHandler}
@@ -62,7 +66,12 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
       />
       <OptionsMenu
         stack={[
-          ['profile', '/profile'],
+          [
+            'profile',
+            profileType === 'employee'
+              ? `${ROUTES.EMPLOYEE_PROFILE}/${userId}`
+              : `${ROUTES.EMPLOYER_PROFILE}/${userId}`,
+          ],
           ['projects', '/profile/projects'],
         ]}
         ref={ref}

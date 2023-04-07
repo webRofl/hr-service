@@ -6,4 +6,5 @@ export type {
   MUIButtonVariant,
   CustomCatalogData,
   AbstractObject,
+  ProfileReadFn,
 } from './common.types';

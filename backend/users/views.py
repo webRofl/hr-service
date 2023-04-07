@@ -8,7 +8,6 @@ from .permissions import IsGetMethodOrAuthOnly
 from helpers.get_data_with_user import get_data_with_user
 from users.models import User
 from authentication.models import User
-from helpers.permissions import is_owner
 
 class EmployeeProfileCRUDViewSet(viewsets.ModelViewSet):
     queryset = EmployeeProfile.objects.all()

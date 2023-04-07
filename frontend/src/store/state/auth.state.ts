@@ -1,20 +1,28 @@
+import { ProfileType } from '@/core';
 import { create } from 'zustand';
 
 interface IUseAuthStore {
   isAuth: boolean;
-  userId: number | null;
+  userId: string | null;
+  profileType: ProfileType | null;
 
   setIsAuth: (isAuth: boolean) => void;
+  setUserId: (userId: string) => void;
+  setProfileType: (profileType: ProfileType) => void;
 }
 
 const useAuthState = create<IUseAuthStore>((set, get) => ({
   isAuth: false,
   userId: null,
-  setIsAuth: (isAuth: boolean) => {
+  profileType: null,
+  setIsAuth: (isAuth) => {
     set({ isAuth });
   },
-  setUserId: (userId: number) => {
+  setUserId: (userId) => {
     set({ userId });
+  },
+  setProfileType: (type) => {
+    set({ profileType: type });
   },
 }));
 

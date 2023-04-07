@@ -35,7 +35,7 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
         </SC.EditBtn>
       )}
       <Rating value={votesAverage} readOnly tip="leave me a couple of reviews bottom" />
-      <SC.Logo src={`${GlobalENV.FQDN_BACKEND}${image}`} alt={area} />
+      <SC.Logo src={image} alt={area} />
       <SC.Name>
         {name} {secondName}
       </SC.Name>
