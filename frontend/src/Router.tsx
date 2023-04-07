@@ -1,11 +1,10 @@
 /* eslint-disable react/no-children-prop */
 import React, { FC } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, Routes, createBrowserRouter } from 'react-router-dom';
 import { TemplateWithMenu, AuthTemplate } from 'components/templates';
 import {
   Candidates,
   CreateProjectForm,
-  Profile,
   ProfileProjects,
   ProjectPage,
   Projects,
@@ -13,47 +12,53 @@ import {
 import { Redirect } from './components/common';
 // eslint-disable-next-line max-len
 import CreateProfileTemplate from './components/templates/CreateProfileTemplate/CreateProfileTemplate';
+import ProfileTemplate from './components/templates/ProfileTemplate/ProfileTemplate';
+import { ROUTES } from './core';
 
 const Router: FC = () => {
   const router = createBrowserRouter([
     {
-      path: '/',
-      element: <Redirect path="/projects" />,
+      path: ROUTES.MAIN,
+      element: <Redirect path={ROUTES.PROJECTS} />,
     },
     {
-      path: '/login',
+      path: ROUTES.LOGIN,
       element: <AuthTemplate />,
     },
     {
-      path: '/register',
+      path: ROUTES.REGISTER,
       element: <AuthTemplate />,
     },
     {
-      path: '/projects',
+      path: ROUTES.PROJECTS,
       element: <TemplateWithMenu children={<Projects />} />,
     },
     {
-      path: '/projects/:projectId',
+      path: ROUTES.PROJECT_ID,
       element: <TemplateWithMenu children={<ProjectPage />} />,
     },
     {
-      path: '/profile/create',
+      path: ROUTES.PROFILE_CREATE,
       element: <CreateProfileTemplate />,
     },
     {
-      path: '/candidates',
+      path: ROUTES.CANDIDATES,
       element: <TemplateWithMenu children={<Candidates />} />,
     },
     {
-      path: '/profile/:profileId?',
-      element: <TemplateWithMenu children={<Profile />} />,
+      path: ROUTES.EMPLOYEE_PROFILE_WITH_ID,
+      element: <TemplateWithMenu children={<ProfileTemplate profileType="employee" />} />,
     },
     {
-      path: '/profile/projects/create',
+      path: ROUTES.EMPLOYER_PROFILE_WITH_ID,
+      element: <TemplateWithMenu children={<ProfileTemplate profileType="employer" />} />,
+    },
+    {
+      path: ROUTES.PROJECT_CREATE,
       element: <TemplateWithMenu children={<CreateProjectForm />} />,
     },
     {
-      path: '/profile/:profileId?/projects',
+      path: ROUTES.PROJECTS,
       element: <TemplateWithMenu children={<ProfileProjects />} />,
     },
   ]);

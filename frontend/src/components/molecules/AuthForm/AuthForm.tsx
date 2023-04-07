@@ -1,6 +1,6 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography, Box } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
 import { FormInput } from 'components/atoms';
 import { AxiosErrorResponse } from '@/types';
@@ -16,12 +16,13 @@ interface IAuthFormProps {
   title?: string;
 }
 
-const AuthForm: FC<IAuthFormProps> = ({
+const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
   onSuccessSubmitHandler,
   methods,
   title,
   dataLoadCb,
   btnText,
+  children,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<AxiosErrorResponse>(undefined);
@@ -43,6 +44,7 @@ const AuthForm: FC<IAuthFormProps> = ({
     }
     setErrors(data);
   };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -56,6 +58,8 @@ const AuthForm: FC<IAuthFormProps> = ({
         <Typography variant="h6" component="h1" sx={SC.LoginText}>
           {title}
         </Typography>
+
+        {children}
 
         {Object.keys(methods.getValues()).map((i) => (
           <FormInput key={Math.random()} name={i} required />

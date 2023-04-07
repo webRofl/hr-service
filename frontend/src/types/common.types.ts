@@ -1,4 +1,5 @@
 import { Project } from '@/store/api/orvalGeneration/models';
+import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 
 export interface ICatalogCardData {
   title: string;
@@ -23,3 +24,5 @@ export interface ICatalogCardDataWithLink extends ICatalogCardData {
 export type MUIButtonVariant = 'text' | 'contained' | 'outlined';
 
 export type AbstractObject = Record<string, unknown>;
+
+export type ProfileReadFn = typeof usersEmployeeRead | typeof usersEmployerRead;

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from '@/store';
 import { AuthSupport, OAuthContainer } from '@/components/molecules';
 import { AbstractForm } from '@/components/common';
+import { ROUTES } from '@/core';
 import * as SC from './AuthTemplate.style';
 
 const AuthTemplate = () => {
@@ -30,7 +31,7 @@ const AuthTemplate = () => {
       }
       renderBottom={
         <SC.Bottom>
-          {isLogin ? <AuthSupport /> : <SC.LinkItem to="/login">Back to login</SC.LinkItem>}
+          {isLogin ? <AuthSupport /> : <SC.LinkItem to={ROUTES.LOGIN}>Back to login</SC.LinkItem>}
         </SC.Bottom>
       }
     />

@@ -63,6 +63,7 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
       title={isLogin ? 'Log into your account' : 'Register new account'}
       dataLoadCb={isLogin ? login : register}
       btnText={isLogin ? 'Login' : 'Register'}
+      isLogin={isLogin}
       onSuccessSubmitHandler={onSuccessSubmitHandler}
     />
   );

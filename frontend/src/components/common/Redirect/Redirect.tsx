@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalENV } from '@/types';
+import { ROUTES } from '@/core';
 
 interface IRedirectProps {
-  path: string;
+  path: ROUTES;
 }
 
 const Redirect: FC<IRedirectProps> = ({ path }) => {
