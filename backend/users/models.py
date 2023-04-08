@@ -19,8 +19,6 @@ class Skill(models.Model):
 
 class BaseProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default='')
-    second_name = models.CharField(max_length=50, default='')
     email = models.EmailField(max_length=50, default='', blank=True)
     username = models.CharField(max_length=50, unique=True, default='', blank=True)
     total_votes = models.IntegerField(default=0)
@@ -54,6 +52,8 @@ class WorkPlace(models.Model):
 
 
 class EmployeeProfile(BaseProfile):
+    name = models.CharField(max_length=50, default='')
+    second_name = models.CharField(max_length=50, default='')
     github = models.CharField(max_length=100, blank=True, null=True)
     linkedin = models.CharField(max_length=100, blank=True, null=True)
     youtube = models.CharField(max_length=100, blank=True, null=True)
@@ -74,6 +74,8 @@ class EmployerProfile(BaseProfile):
     projects_count = models.PositiveSmallIntegerField(default=0)
     website = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to='users/images', blank=True, null=True)
+    company_name = models.CharField(max_length=255)
+    description = models.TextField()
 
     def save(self, *args, **kwargs):
         self.username = self.user.username

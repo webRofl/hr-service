@@ -44,6 +44,9 @@ const useAuth = (): IUseAuthReturn => {
       axios.defaults.headers.common.Authorization = `Token ${newAuthData.access}`;
       setRefreshToken(newAuthData.refresh!);
       setIsAuth(true);
+
+      // if access token is die
+      setInterval(setHeaders, 5000);
     } catch (e) {
       if (e instanceof Error) {
         // eslint-disable-next-line no-console

@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { FC, MouseEventHandler, useState } from 'react';
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Center, Reviews } from '@/components/common';
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
@@ -13,7 +13,7 @@ import * as SC from './Profile.style';
 interface EmployeeProfileProps {
   profileData: Required<EmployeeProfile>;
   userId: string;
-  isMyProfile: boolean;
+  profileId: string;
 
   setToggleToFetch: (prev: boolean) => void;
 }
@@ -21,10 +21,11 @@ interface EmployeeProfileProps {
 const Profile: FC<EmployeeProfileProps> = ({
   profileData,
   userId,
-  isMyProfile,
+  profileId,
   setToggleToFetch,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [isMyProfile, setIsMyProfile] = useState(false);
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
   const method = useForm<IProfile>({
@@ -35,6 +36,12 @@ const Profile: FC<EmployeeProfileProps> = ({
     // setProfileData(profile);
     method.reset(profile);
   };
+
+  useEffect(() => {
+    if (profileId === userId) {
+      setIsMyProfile(true);
+    }
+  }, [profileId, userId]);
 
   const editClickHandler: MouseEventHandler<HTMLElement> = () => {
     return setIsEdit((prev) => !prev);
@@ -101,7 +108,7 @@ const Profile: FC<EmployeeProfileProps> = ({
         </Grid>
         <Reviews
           placeName="profile"
-          placeId={profileData.id}
+          placeId={profileId}
           reviews={profileData.reviews}
           dataLoadCallback={reviewsProfileCreate}
           successCallback={reviewSuccessCallback}
