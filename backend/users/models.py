@@ -1,6 +1,5 @@
 from django.db import models
 import uuid
-from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from authentication.models import User
@@ -76,6 +75,7 @@ class EmployerProfile(BaseProfile):
     image = models.ImageField(upload_to='users/images', blank=True, null=True)
     company_name = models.CharField(max_length=255)
     description = models.TextField()
+    responses = models.ManyToManyField(Response, blank=True)
 
     def save(self, *args, **kwargs):
         self.username = self.user.username
