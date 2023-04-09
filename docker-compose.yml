@@ -25,6 +25,11 @@ services:
     restart: unless-stopped
     environment:
       <<: *env-postgres
+  redis:
+    container_name: hr-redis
+    image: redis:alpine
+    expose:
+      - 6379
   django:
     build: ./bin/django/
     container_name: hr-django
@@ -36,6 +41,7 @@ services:
       <<: [*env-postgres, *env-django, *env-global]
     depends_on:
       - db
+      - redis
   node:
     build: ./bin/node
     container_name: hr-node

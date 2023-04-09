@@ -3,7 +3,6 @@ from rest_framework import serializers
 from .models import Skill, EmployeeProfile, WorkPlace, EmployerProfile, Response
 from reviews.models import ProfileReview
 from reviews.serializers import AuthorReviewSerializer
-from helpers.permissions import is_owner
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,6 +76,7 @@ class EmployerProfileRetrieveSerializer(serializers.ModelSerializer):
     reviews = ProfileReviewSerializer(many=True, read_only=True)
     image = serializers.SerializerMethodField('get_image_link')
     projects_count = serializers.IntegerField(read_only=True)
+    responses = ProfileResponseSerializer(many=True, read_only=True)
 
     def get_image_link(self, instance):
         return self.context['request'].build_absolute_uri(instance.image.url)
@@ -95,7 +95,7 @@ class EmployerProfileListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmployerProfile
-        exclude = ('is_active', 'reviews',)
+        exclude = ('is_active', 'reviews', 'responses',)
 
 
 class EmployerProfilePostSerializer(serializers.ModelSerializer):

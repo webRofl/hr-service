@@ -20,6 +20,7 @@ ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'reviews.apps.ReviewsConfig',
     'responses.apps.ResponsesConfig',
+    'notification.apps.NotificationConfig',
 
     'rest_framework',
     'drf_yasg',
@@ -154,4 +156,17 @@ REST_FRAMEWORK = {
         'authentication.backends.JWTAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+# CHANNELS
+
+ASGI_APPLICATION = "home.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
 }

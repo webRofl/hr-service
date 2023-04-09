@@ -46,7 +46,7 @@ const useAuth = (): IUseAuthReturn => {
       setIsAuth(true);
 
       // if access token is die
-      setInterval(setHeaders, 5000);
+      // setInterval(setHeaders, 5000);
     } catch (e) {
       if (e instanceof Error) {
         // eslint-disable-next-line no-console
