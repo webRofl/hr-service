@@ -22,8 +22,9 @@ const useAuth = (): IUseAuthReturn => {
       setUserId,
     }),
   );
-  const { setIsAuth } = useAuthState(({ setIsAuth }) => ({
+  const { setIsAuth, setAccessToken } = useAuthState(({ setIsAuth, setAccessToken }) => ({
     setIsAuth,
+    setAccessToken,
   }));
 
   const disableAuthHeader = () => {
@@ -41,6 +42,7 @@ const useAuth = (): IUseAuthReturn => {
         refresh_token: refreshToken,
       };
       const newAuthData = (await authRefreshCreate(requestData)).data;
+      setAccessToken(newAuthData.access!);
       axios.defaults.headers.common.Authorization = `Token ${newAuthData.access}`;
       setRefreshToken(newAuthData.refresh!);
       setIsAuth(true);
