@@ -18,9 +18,15 @@ class TokenAuthMiddleware(BaseMiddleware):
         try:
             token = ''
             for key, value in scope["headers"]:
+                print(key, value)
+                if key == b'sec-websocket-protocol':
+                    parsed_value = value.decode('utf-8').split(', ')
+                    token = parsed_value[1] if len(parsed_value) == 2 else None
                 if key == b'authentication':
-                    token = value.decode('utf-8').split(' ')[1]
-            
+                    parsed_value = value.decode('utf-8').split(' ')
+                    token = parsed_value[1] if len(parsed_value) == 2 else None
+
+
         except ValueError:
             token = None
         scope['user'] = AnonymousUser() if token is None else await get_user(token)

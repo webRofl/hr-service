@@ -2,8 +2,10 @@ import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 import { ProfileReadFn } from '@/types';
 import React from 'react';
+import useWebSocket from './useWebSocket';
 
 const useInitRequests = () => {
+  useWebSocket();
   const { userId, setIsNeedToCreateProfile } = useLocalStorageState(
     ({ userId, setIsNeedToCreateProfile }) => ({ userId, setIsNeedToCreateProfile }),
   );
