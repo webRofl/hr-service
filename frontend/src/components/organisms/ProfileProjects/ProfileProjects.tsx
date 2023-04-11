@@ -41,7 +41,7 @@ const ProfileProjects = () => {
 
   return (
     <>
-      <Catalog cardList={cardList} linkWiuthoutId="/projects" />
+      <Catalog cardList={cardList} linkWithoutId="/projects" />
       <Fab color="primary" aria-label="add" onClick={handleClickFab} />
     </>
   );

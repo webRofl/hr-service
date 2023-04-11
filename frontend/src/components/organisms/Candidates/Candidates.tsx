@@ -26,7 +26,7 @@ const Candidates = () => {
   }, [data]);
 
   return cardList?.length ? (
-    <Catalog linkWiuthoutId={ROUTES.EMPLOYEE_PROFILE} cardList={cardList!} />
+    <Catalog linkWithoutId={ROUTES.EMPLOYEE_PROFILE} cardList={cardList!} />
   ) : (
     <Center>No Users</Center>
   );

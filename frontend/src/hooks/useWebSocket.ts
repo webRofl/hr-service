@@ -1,40 +1,41 @@
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { GlobalENV } from '@/types';
-import { useAuthState } from '@/store';
+import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
+import { usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 
 /* eslint-disable no-console */
 const useWebSocket = () => {
   const { accessToken } = useAuthState(({ accessToken }) => ({ accessToken }));
+  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
+  const { setProfile } = useProfileState(({ setProfile }) => ({ setProfile }));
+  const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
 
-  const onConnect = () => {
-    console.log('CONNECT');
+  const onMessage = async (message: MessageEvent) => {
+    const profile = (await usersEmployerRead(userId)).data;
+    setProfile(profile);
+    toast(JSON.parse(message.data).message, {
+      position: 'top-right',
+      autoClose: 7000,
+      closeOnClick: true,
+      theme: 'dark',
+    });
   };
 
-  const onConnectError = () => {
-    console.log('CONNECT_ERROR');
-  };
-
-  const onMessage = (message: string) => {
-    console.log(JSON.parse(message.data));
-  };
-
-  const onDisconnect = () => {
-    console.log('DISCONNECT');
-  };
-
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
+    if (profileType === 'employee') {
+      return;
+    }
+
     if (accessToken) {
       const socket = new WebSocket(`${GlobalENV.FQDN_BACKEND_WS}notifications`, [
         'Token',
         accessToken!,
       ]);
 
-      socket.onopen = onConnect;
-      socket.onerror = onConnectError;
       socket.onmessage = onMessage;
-      socket.onclose = onDisconnect;
 
+      // eslint-disable-next-line consistent-return
       return () => {
         socket.close();
       };

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { ProfileType } from '@/core';
 import { useProfileState } from '@/store';
 import { EmployeeProfile, EmployerProfileRetrieve } from '@/store/api/orvalGeneration/models';

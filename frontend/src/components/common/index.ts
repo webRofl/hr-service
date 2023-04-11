@@ -2,7 +2,7 @@ export { default as Redirect } from './Redirect/Redirect';
 export { default as IconComponent } from './IconComponent/IconComponent';
 export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';
 export { default as DivInput } from './DivInput/DivInput';
-export { default as Catalog } from './Catalog/Catalog';
+export { Catalog, PopupCatalog } from './Catalog/Catalog';
 export { default as Rating } from './Rating/Rating';
 export { default as OptionsMenu } from './OptionsMenu/OptionsMenu';
 export { default as Reviews } from './Reviews/Reviews';

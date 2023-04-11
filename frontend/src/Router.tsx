@@ -14,6 +14,7 @@ import { Redirect } from './components/common';
 import CreateProfileTemplate from './components/templates/CreateProfileTemplate/CreateProfileTemplate';
 import ProfileTemplate from './components/templates/ProfileTemplate/ProfileTemplate';
 import { ROUTES } from './core';
+import Responses from './components/organisms/Responses/Responses';
 
 const Router: FC = () => {
   const router = createBrowserRouter([
@@ -60,6 +61,10 @@ const Router: FC = () => {
     {
       path: ROUTES.PROJECTS,
       element: <TemplateWithMenu children={<ProfileProjects />} />,
+    },
+    {
+      path: ROUTES.RESPONSES,
+      element: <TemplateWithMenu children={<Responses />} />,
     },
   ]);
 

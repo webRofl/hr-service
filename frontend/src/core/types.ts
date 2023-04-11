@@ -17,8 +17,6 @@ export type ProfileType = 'employee' | 'employer';
 
 export type InsertProperties<T, U extends keyof T> = T[U];
 
-export type Difference<T, U extends keyof T> = Pick<T, Exclude<keyof T, U>>;
-
 export const enum ROUTES {
   MAIN = '/',
   LOGIN = '/login',
@@ -34,4 +32,5 @@ export const enum ROUTES {
   EMPLOYEE_PROFILE = '/profile/employee',
   PROJECT_CREATE = '/profile/projects/create',
   PROFILE_PROJECTS_WITH_ID = '/profile/:profileId?/projects',
+  RESPONSES = '/responses',
 }

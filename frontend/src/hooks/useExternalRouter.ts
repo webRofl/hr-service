@@ -1,10 +1,10 @@
-import { useLocalStorageState } from '@/store';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocalStorageState } from '@/store';
 
-type AviableNames = 'isNeedToCreateProfile';
+type AvailableNames = 'isNeedToCreateProfile';
 
-const useExternalRouter = (name: AviableNames) => {
+const useExternalRouter = (name: AvailableNames) => {
   const navigate = useNavigate();
   const { isNeedToCreateProfile } = useLocalStorageState(({ isNeedToCreateProfile }) => ({
     isNeedToCreateProfile,
