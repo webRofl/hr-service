@@ -27,7 +27,7 @@ const Projects: FC = () => {
     <SC.Container style={{ height: 'calc(100vh - 2rem)' }}>
       <ProjectsDetails />
       {cardList?.length ? (
-        <Catalog linkWiuthoutId={ROUTES.PROJECTS} cardList={cardList} />
+        <Catalog linkWithoutId={ROUTES.PROJECTS} cardList={cardList} />
       ) : (
         <Center>No Projects</Center>
       )}

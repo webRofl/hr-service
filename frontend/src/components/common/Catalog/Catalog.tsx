@@ -1,21 +1,24 @@
-import { CatalogCard } from '@/components/molecules';
-import { ICatalogCardData } from '@/types';
 import React, { FC } from 'react';
+import { CatalogCard, PopupCard } from '@/components/molecules';
 import * as SC from './Catalog.style';
+import { ICatalogProps, IPopupCatalogProps } from './Catalog.type';
 
-interface ICatalogProps {
-  cardList: ICatalogCardData[];
-  linkWiuthoutId: string;
-}
-
-const Catalog: FC<ICatalogProps> = ({ cardList, linkWiuthoutId }) => {
+export const Catalog: FC<ICatalogProps> = ({ cardList, linkWithoutId }) => {
   return (
     <SC.CardsContainer>
       {cardList.map((card) => (
-        <CatalogCard key={card.id} link={`${linkWiuthoutId}/${card.id}`} {...card} />
+        <CatalogCard key={card.id} link={`${linkWithoutId ?? ''}/${card.id}`} {...card} />
       ))}
     </SC.CardsContainer>
   );
 };
 
-export default Catalog;
+export const PopupCatalog: FC<IPopupCatalogProps> = ({ cardList }) => {
+  return (
+    <SC.CardsContainer>
+      {cardList.map((card) => (
+        <PopupCard title={card.author.username} text={card.text} time={card.created!} />
+      ))}
+    </SC.CardsContainer>
+  );
+};

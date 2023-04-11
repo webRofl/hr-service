@@ -1,5 +1,5 @@
-import { EventNames } from '@/core';
 import { useEffect, useRef } from 'react';
+import { EventNames } from '@/core';
 
 const useEventListener = (eventName: EventNames, cb: EventListener, element: Node | null) => {
   const handler = useRef(cb);
@@ -24,7 +24,7 @@ const useEventListener = (eventName: EventNames, cb: EventListener, element: Nod
     return () => {
       element.removeEventListener(eventName, listener);
     };
-  }, [eventName, element, cb]);
+  }, [eventName, element]);
 };
 
 export default useEventListener;

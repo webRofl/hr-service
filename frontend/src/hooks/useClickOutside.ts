@@ -1,9 +1,12 @@
-import { RefObject, useEffect } from 'react';
+import { MutableRefObject, RefObject, useEffect } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-const useClickOutside = (ref: RefObject<HTMLElement>, cb: Function) => {
+const useClickOutside = (
+  ref: RefObject<HTMLElement> | MutableRefObject<unknown>,
+  cb: () => void,
+) => {
   const handler = (e: Event) => {
-    if (ref?.current && !ref?.current.contains(e.target as Node)) {
+    if (ref?.current instanceof Node && !ref?.current.contains(e.target as Node)) {
       cb();
     }
   };
