@@ -12,3 +12,5 @@ export { default as ProjectBody } from './ProjectBody/ProjectBody';
 export { default as ProjectPageControl } from './ProjectPageControl/ProjectPageControl';
 export { default as EmployerProfileHeader } from './EmployerProfileHeader/EmployerProfileHeader';
 export { default as PopupCard } from './PopupCard/PopupCard';
+export { default as ModalButton } from './ModalButton/ModalButton';
+export { default as SimpleForm } from './SimpleForm/SimpleForm';

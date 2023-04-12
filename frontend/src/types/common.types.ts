@@ -1,3 +1,4 @@
+import { SubmitHandler } from 'react-hook-form';
 import { Project } from '@/store/api/orvalGeneration/models';
 import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 
@@ -26,3 +27,14 @@ export type MUIButtonVariant = 'text' | 'contained' | 'outlined';
 export type AbstractObject = Record<string, unknown>;
 
 export type ProfileReadFn = typeof usersEmployeeRead | typeof usersEmployerRead;
+
+export type DefaultFormSubmitHandler = SubmitHandler<Record<string, string | number>>;
+
+export type CommonColors =
+  | 'primary'
+  | 'secondary'
+  | 'default'
+  | 'error'
+  | 'info'
+  | 'success'
+  | 'warning';

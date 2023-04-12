@@ -1,4 +1,4 @@
-import { MUIButtonVariant } from '@/types';
+import { CommonColors, MUIButtonVariant } from '@/types';
 import { CSSProperties } from 'react';
 
 interface IOptionalProp {
@@ -11,6 +11,8 @@ export interface IMenuItemProps {
   iconName?: string;
   style?: CSSProperties | undefined;
   isLink?: boolean;
+  badgeContent?: string | number;
+  badgeColor?: CommonColors;
   optional?: Partial<IOptionalProp>;
 
   onClick?: () => void;

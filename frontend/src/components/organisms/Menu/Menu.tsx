@@ -9,10 +9,13 @@ import * as SC from './Menu.style';
 
 const Menu = () => {
   const theme = useTheme();
-  const { isMenuOpen, setIsMenuOpen } = useLocalStorageState(({ isMenuOpen, setIsMenuOpen }) => ({
-    isMenuOpen,
-    setIsMenuOpen,
-  }));
+  const { isMenuOpen, setIsMenuOpen, responsesQuantityDifference } = useLocalStorageState(
+    ({ isMenuOpen, setIsMenuOpen, responsesQuantityDifference }) => ({
+      isMenuOpen,
+      setIsMenuOpen,
+      responsesQuantityDifference,
+    }),
+  );
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -49,7 +52,13 @@ const Menu = () => {
         <MenuItem label="Projects" iconName="menu_projects" isShowLabel={isOpen} />
         <MenuItem label="Candidates" iconName="menu_candidates" isShowLabel={isOpen} />
         {profileType === 'employer' && (
-          <MenuItem label="Responses" iconName="menu_responses" isShowLabel={isOpen} />
+          <MenuItem
+            label="Responses"
+            iconName="menu_responses"
+            isShowLabel={isOpen}
+            badgeContent={responsesQuantityDifference || undefined}
+            badgeColor="info"
+          />
         )}
         <MenuProfile isOpen={isOpen} />
       </SC.MenuContainer>

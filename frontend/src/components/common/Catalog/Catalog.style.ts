@@ -12,7 +12,8 @@ export const CardsContainer = styled(Grid)`
 `;
 
 export const PopupCardsContainer = styled(CardsContainer)`
+  flex-wrap: wrap;
   flex-direction: row;
-  gap: 2rem;
-  justify-content: center;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
 `;
