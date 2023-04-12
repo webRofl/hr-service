@@ -15,10 +15,10 @@ export const Catalog: FC<ICatalogProps> = ({ cardList, linkWithoutId }) => {
 
 export const PopupCatalog: FC<IPopupCatalogProps> = ({ cardList }) => {
   return (
-    <SC.CardsContainer>
+    <SC.PopupCardsContainer>
       {cardList.map((card) => (
         <PopupCard title={card.author.username} text={card.text} time={card.created!} />
       ))}
-    </SC.CardsContainer>
+    </SC.PopupCardsContainer>
   );
 };

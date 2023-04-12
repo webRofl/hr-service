@@ -3,23 +3,29 @@ import { toast } from 'react-toastify';
 import { GlobalENV } from '@/types';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
+import useNotifications from './useNotifications';
 
 /* eslint-disable no-console */
 const useWebSocket = () => {
+  const { createToast } = useNotifications();
   const { accessToken } = useAuthState(({ accessToken }) => ({ accessToken }));
-  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
+  const { userId, setResponsesQuantity } = useLocalStorageState(
+    ({ userId, setResponsesQuantity }) => ({
+      userId,
+      setResponsesQuantity,
+    }),
+  );
   const { setProfile } = useProfileState(({ setProfile }) => ({ setProfile }));
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
 
   const onMessage = async (message: MessageEvent) => {
     const profile = (await usersEmployerRead(userId)).data;
     setProfile(profile);
-    toast(JSON.parse(message.data).message, {
-      position: 'top-right',
-      autoClose: 7000,
-      closeOnClick: true,
-      theme: 'dark',
-    });
+    if (profile?.responses) {
+      setResponsesQuantity(profile.responses.length);
+    }
+
+    createToast(JSON.parse(message.data).message);
   };
 
   useEffect(() => {

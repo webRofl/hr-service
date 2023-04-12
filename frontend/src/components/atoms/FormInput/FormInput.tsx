@@ -2,14 +2,16 @@
 import React, { FC, useState } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { TextFieldProps } from '@mui/material';
+import { CSSProperties } from 'styled-components';
 import { IconComponent } from '@/components/common';
 import * as SC from './FormInput.style';
 
 type IFormInputProps = {
   name: string;
+  styles?: CSSProperties;
 } & TextFieldProps;
 
-const FormInput: FC<IFormInputProps> = ({ name, ...otherProps }) => {
+const FormInput: FC<IFormInputProps> = ({ name, styles, ...otherProps }) => {
   const [isShowValue, setIsShowValue] = useState(false);
   const {
     control,
@@ -29,6 +31,7 @@ const FormInput: FC<IFormInputProps> = ({ name, ...otherProps }) => {
         <SC.TextField
           {...field}
           {...otherProps}
+          style={styles}
           label={name[0].toUpperCase() + name.slice(1)}
           type={isShowValue ? 'text' : name}
           placeholder={`Type your ${name}`}

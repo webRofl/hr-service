@@ -1,7 +1,7 @@
+import React from 'react';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 import { ProfileReadFn } from '@/types';
-import React from 'react';
 import useWebSocket from './useWebSocket';
 
 const useInitRequests = () => {
@@ -11,6 +11,9 @@ const useInitRequests = () => {
   );
   const { setProfile } = useProfileState(({ setProfile }) => ({ setProfile }));
   const { setProfileType } = useAuthState(({ setProfileType }) => ({ setProfileType }));
+  const { setResponsesQuantity } = useLocalStorageState(({ setResponsesQuantity }) => ({
+    setResponsesQuantity,
+  }));
 
   const startFetch = () => {
     const fetchProfile = async (userId: string) => {
@@ -19,6 +22,9 @@ const useInitRequests = () => {
         if (data && Object.keys(data?.data).length) {
           setIsNeedToCreateProfile(false);
           setProfile(data?.data);
+          if (data?.data?.responses) {
+            setResponsesQuantity(data?.data?.responses.length);
+          }
         }
       };
 
@@ -30,7 +36,7 @@ const useInitRequests = () => {
           await dataValidate(usersEmployerRead);
           setProfileType('employer');
         } catch {
-          setIsNeedToCreateProfile(true);
+          // setIsNeedToCreateProfile(true);
         }
       }
     };

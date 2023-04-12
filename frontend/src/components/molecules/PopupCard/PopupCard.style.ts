@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Divider as MUIDivider } from '@mui/material';
 import { styleMixins } from '@/style';
 
@@ -25,12 +25,21 @@ export const Text = styled('div')`
   overflow: hidden;
 `;
 
+const modalContainerAnimation = keyframes`
+  0% { transform: scale(0%); }
+  100% { transform: scale(100%); }
+`;
+
 export const ModalContainer = styled('div')`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.5s;
+  animation-name: ${modalContainerAnimation};
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
 `;
 
 export const ModalContent = styled('div')`

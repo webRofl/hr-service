@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from .models import Response
 from authentication.models import User
-from users.models import EmployerProfile
 from users.serializers import EmployerProfileRetrieveSerializer
 from projects.serializers import AuthorReviewSerializer
 
@@ -18,7 +17,7 @@ class ResponseGetSerializer(serializers.ModelSerializer):
 
 class ResponsePostSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects)
-    target = serializers.PrimaryKeyRelatedField(queryset=EmployerProfile.objects)
+    target = serializers.PrimaryKeyRelatedField(queryset=User.objects)
     text = serializers.CharField()
 
     class Meta:

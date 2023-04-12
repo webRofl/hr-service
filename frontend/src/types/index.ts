@@ -7,4 +7,6 @@ export type {
   CustomCatalogData,
   AbstractObject,
   ProfileReadFn,
+  DefaultFormSubmitHandler,
+  CommonColors,
 } from './common.types';

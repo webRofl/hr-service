@@ -5,16 +5,17 @@ from asgiref.sync import async_to_sync
 import json
 
 from .models import Response
+from users.models import EmployerProfile
 
 @receiver(post_save, sender=Response)
 def append_response(sender, instance, **kwargs):
-    target = instance.target
-    target.responses.add(instance)
-    target.save()
+    employer = EmployerProfile.objects.get(user=instance.target)
+    employer.responses.add(instance)
+    employer.save()
 
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
-        target.username,
+        employer.username,
         {
             'type': 'receive',
             'message': f'User {instance.author.username} responded to the vacancy',

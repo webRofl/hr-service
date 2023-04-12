@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Badge } from '@mui/material';
 import * as SC from './Button.style';
 import { Props } from './Button.types';
 
@@ -8,6 +9,8 @@ const Button: FC<Props> = ({
   isShowLabel = true,
   projectStyles = false,
   isLoading = false,
+  badgeContent,
+  badgeColor,
   ...muiButtonProps
 }) => {
   return (
@@ -15,7 +18,13 @@ const Button: FC<Props> = ({
       loading={isLoading}
       {...muiButtonProps}
       projectStyles={projectStyles}
-      startIcon={iconName && <SC.MenuItemIcon name={iconName} />}>
+      startIcon={
+        iconName && (
+          <Badge badgeContent={badgeContent} color={badgeColor ?? 'default'}>
+            <SC.MenuItemIcon name={iconName} />
+          </Badge>
+        )
+      }>
       {isShowLabel && label}
     </SC.MenuItemBtn>
   );
