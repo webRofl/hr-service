@@ -21,3 +21,8 @@ export const menuItem = css`
   ${btnMixin};
   width: 75%;
 `;
+
+export const fullSizeScroll = css`
+  max-height: calc(100vh - 2rem);
+  overflow-y: scroll;
+`;

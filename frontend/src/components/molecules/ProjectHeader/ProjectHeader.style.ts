@@ -39,7 +39,9 @@ export const experience = {
 };
 
 export const ProjectTotalVotes = styled('span')`
-  padding-top: 4px;
+  padding-bottom: 2px;
+  font-size: 18px;
+  margin-left: 0.5rem;
 `;
 
 export const ProjectImg = styled('img')`

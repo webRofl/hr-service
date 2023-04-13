@@ -14,4 +14,5 @@ export const ChildrenBox = styled(Box)`
   margin-left: 0;
   height: calc(100vh - 2rem);
   overflow-y: hidden;
+  position: relative;
 `;

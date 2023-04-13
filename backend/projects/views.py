@@ -14,11 +14,12 @@ class ProjectList(generics.ListAPIView):
    filterset_fields = ['author']
 
 
-class ProjectCRUViewSet(viewsets.GenericViewSet,
-                 mixins.CreateModelMixin,
-                 mixins.RetrieveModelMixin,
-                 mixins.UpdateModelMixin):
+class ProjectCRUViewSet(mixins.RetrieveModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.UpdateModelMixin,
+                        viewsets.GenericViewSet):
   queryset = Project.objects.all()
+  http_method_names = ['get', 'post', 'put']
   serializer_class = ProjectSerializer
   permission_classes = [IsAuthenticatedOrReadOnly]
 
