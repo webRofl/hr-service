@@ -59,7 +59,7 @@ const Router: FC = () => {
       element: <TemplateWithMenu children={<CreateProjectForm />} />,
     },
     {
-      path: ROUTES.PROJECTS,
+      path: ROUTES.PROFILE_PROJECTS_WITH_ID,
       element: <TemplateWithMenu children={<ProfileProjects />} />,
     },
     {

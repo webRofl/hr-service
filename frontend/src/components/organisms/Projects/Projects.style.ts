@@ -12,4 +12,5 @@ export const ProjectCardContainer = styled('div')`
   padding-right: 4.5%;
   padding-left: 4.5%;
   overflow-y: scroll;
+  max-height: calc(100vh - 2rem);
 `;
