@@ -72,7 +72,7 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
               ? `${ROUTES.EMPLOYEE_PROFILE}/${userId}`
               : `${ROUTES.EMPLOYER_PROFILE}/${userId}`,
           ],
-          ['projects', '/profile/projects'],
+          ['projects', `/profile/${userId}/projects`],
         ]}
         ref={ref}
       />

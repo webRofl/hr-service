@@ -1,4 +1,5 @@
 import { Catalog, Center } from '@/components/common';
+import { ROUTES } from '@/core';
 import { useLocalStorageState } from '@/store';
 import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { ICatalogCardData, CustomCatalogData } from '@/types';
@@ -8,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileProjects = () => {
+  // work not correct, rewrite via profileId (ROUTES.PROFILE_PROJECTS_WITH_ID)
   const navigate = useNavigate();
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
   const { data } = useProjectsList({ author: userId });
@@ -32,7 +34,7 @@ const ProfileProjects = () => {
   }, [data?.data]);
 
   const handleClickFab = () => {
-    navigate('/profile/projects/create');
+    navigate(ROUTES.PROJECT_CREATE);
   };
 
   if (!cardList || !cardList.length) {

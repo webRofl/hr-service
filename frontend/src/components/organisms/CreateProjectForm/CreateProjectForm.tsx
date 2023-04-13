@@ -1,5 +1,6 @@
 import { AbstractForm } from '@/components/common';
 import { AuthForm } from '@/components/molecules';
+import { useLocalStorageState } from '@/store';
 import { Project } from '@/store/api/orvalGeneration/models';
 import { projectsCreate } from '@/store/api/orvalGeneration/projects/projects';
 import React from 'react';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateProfileForm = () => {
   const navigate = useNavigate();
+  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
 
   const method = useForm<
     Pick<
@@ -34,7 +36,7 @@ const CreateProfileForm = () => {
   });
 
   const successCb = () => {
-    navigate('/projects');
+    navigate(`/profile/${userId}/projects`);
   };
 
   return (

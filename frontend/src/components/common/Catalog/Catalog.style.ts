@@ -9,6 +9,7 @@ export const CardsContainer = styled(Grid)`
   padding-right: 4.5%;
   padding-left: 4.5%;
   overflow-y: scroll;
+  max-height: calc(100vh - 2rem);
 `;
 
 export const PopupCardsContainer = styled(CardsContainer)`
