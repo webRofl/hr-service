@@ -1,25 +1,17 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Catalog, Center } from '@/components/common';
 import { ROUTES } from '@/core';
-import { useLocalStorageState } from '@/store';
-import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
+import { useProjectsListList } from '@/store/api/orvalGeneration/projects/projects';
 import { ICatalogCardData, CustomCatalogData } from '@/types';
 import { catalogCardDataMiddleware } from '@/utils';
-import { Fab } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import * as SC from './ProfileProjects.style';
 
 const ProfileProjects = () => {
-  // work not correct, rewrite via profileId (ROUTES.PROFILE_PROJECTS_WITH_ID)
   const navigate = useNavigate();
-  const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
-  const { data } = useProjectsList({ author: userId });
+  const { profileId } = useParams();
+  const { data } = useProjectsListList({ author: profileId });
   const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
-
-  useEffect(() => {
-    if (!userId) {
-      navigate('/');
-    }
-  }, [userId]);
 
   useEffect(() => {
     if (!data?.data) return;
@@ -44,7 +36,9 @@ const ProfileProjects = () => {
   return (
     <>
       <Catalog cardList={cardList} linkWithoutId="/projects" />
-      <Fab color="primary" aria-label="add" onClick={handleClickFab} />
+      <SC.Fab color="primary" aria-label="add" onClick={handleClickFab}>
+        +
+      </SC.Fab>
     </>
   );
 };

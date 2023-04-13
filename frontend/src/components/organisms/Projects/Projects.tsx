@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useProjectsList } from '@/store/api/orvalGeneration/projects/projects';
 import { Catalog, Center } from '@/components/common';
 import { CustomCatalogData, GlobalENV, ICatalogCardData } from '@/types';
 import { catalogCardDataMiddleware } from '@/utils';
 import { ROUTES } from '@/core';
+import { useProjectsListList } from '@/store/api/orvalGeneration/projects/projects';
 import ProjectsDetails from '../DetailsSection/DetailsSection';
 import * as SC from './Projects.style';
 
 const Projects: FC = () => {
-  const { data } = useProjectsList();
+  const { data } = useProjectsListList();
   const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
 
   useEffect(() => {

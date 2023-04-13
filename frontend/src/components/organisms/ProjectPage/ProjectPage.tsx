@@ -1,9 +1,9 @@
-import { ProjectBody, ProjectHeader, ProjectPageControl } from '@/components/molecules';
-import { useLocalStorageState } from '@/store';
-import { projectsRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { ProjectBody, ProjectHeader, ProjectPageControl } from '@/components/molecules';
+import { useLocalStorageState } from '@/store';
+import { projectsRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
 import { Project } from '@/store/api/orvalGeneration/models';
 import { Reviews } from '@/components/common';
 import { reviewsProjectCreate } from '@/store/api/orvalGeneration/reviews/reviews';
@@ -53,6 +53,8 @@ const ProjectPage = () => {
     setIsLoadingSubmitBtn(false);
     if (data.status === 200) {
       setIsEdit(false);
+      const newData = (await projectsRead(data.data.id!)).data;
+      setData(newData);
       return;
     }
     // eslint-disable-next-line no-alert

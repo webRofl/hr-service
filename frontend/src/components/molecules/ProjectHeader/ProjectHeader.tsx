@@ -74,15 +74,15 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
         <SC.BriefInfo>
           <DivInput value={title} commonStyle={SC.title} isEdit={isEdit} name="title" />
           <SC.Salary>
-            {salary ? (
-              <DivInput value={`${salary.toLocaleString('ru')} ₽`} isEdit={isEdit} name="salary" />
-            ) : (
-              'Salary is not specified'
-            )}
+            <DivInput
+              value={salary ? `${salary.toLocaleString('ru')} ₽` : 'Salary is not specified'}
+              isEdit={isEdit}
+              name="salary"
+            />
           </SC.Salary>
           <SC.ProjectRate>
             <Rating value={projectRate} precision={0.5} readOnly tip="Keep your rating in review" />
-            <SC.ProjectTotalVotes>total: {projectVotesCount}</SC.ProjectTotalVotes>
+            <SC.ProjectTotalVotes>{projectVotesCount}</SC.ProjectTotalVotes>
           </SC.ProjectRate>
           <div>
             At least{' '}
