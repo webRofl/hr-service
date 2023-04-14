@@ -32,7 +32,7 @@ const PopupCard: FC<PopupCardProps> = ({ title, text, time }) => {
           <SC.ModalContent>
             <SC.ModalTitle>{title}</SC.ModalTitle>
             <SC.Divider>{getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
-            <div>{text}</div>
+            <SC.ModalText>{text}</SC.ModalText>
             <SC.ModalCross onClick={handleClose}>x</SC.ModalCross>
           </SC.ModalContent>
         </SC.ModalContainer>

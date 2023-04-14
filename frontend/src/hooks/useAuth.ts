@@ -1,30 +1,34 @@
+import axios, { AxiosError } from 'axios';
 import {
   authLoginCreate,
   authRefreshCreate,
   authRegisterCreate,
 } from '@/store/api/orvalGeneration/auth/auth';
-import axios, { AxiosError } from 'axios';
-import { AxiosErrorResponse, UserDataType } from '@/types';
+import { AxiosErrorResponse } from '@/types';
 import { useAuthState, useLocalStorageState } from '@/store';
+import { Login, Registration } from '@/store/api/orvalGeneration/models';
 
 interface IUseAuthReturn {
-  login: (data: UserDataType) => Promise<AxiosErrorResponse>;
+  login: (data: Login) => Promise<AxiosErrorResponse>;
   setHeaders: () => void;
-  register: (data: UserDataType & { username: string }) => Promise<AxiosErrorResponse>;
+  register: (data: Registration) => Promise<AxiosErrorResponse>;
+  logout: () => void;
 }
 
 const useAuth = (): IUseAuthReturn => {
-  const { refreshToken, setRefreshToken, setUsername, setUserId } = useLocalStorageState(
-    ({ refreshToken, setRefreshToken, setUsername, setUserId }) => ({
-      refreshToken,
-      setRefreshToken,
+  const { setUsername, setUserId, refreshToken, setRefreshToken } = useLocalStorageState(
+    ({ setUsername, setUserId, refreshToken, setRefreshToken }) => ({
       setUsername,
       setUserId,
+      refreshToken,
+      setRefreshToken,
     }),
   );
   const { setIsAuth, setAccessToken } = useAuthState(({ setIsAuth, setAccessToken }) => ({
     setIsAuth,
     setAccessToken,
+    refreshToken,
+    setRefreshToken,
   }));
 
   const disableAuthHeader = () => {
@@ -46,9 +50,6 @@ const useAuth = (): IUseAuthReturn => {
       axios.defaults.headers.common.Authorization = `Token ${newAuthData.access}`;
       setRefreshToken(newAuthData.refresh!);
       setIsAuth(true);
-
-      // if access token is die
-      // setInterval(setHeaders, 5000);
     } catch (e) {
       if (e instanceof Error) {
         // eslint-disable-next-line no-console
@@ -58,7 +59,7 @@ const useAuth = (): IUseAuthReturn => {
   };
 
   // eslint-disable-next-line consistent-return
-  const login = async (data: UserDataType): Promise<AxiosErrorResponse> => {
+  const login = async (data): Promise<AxiosErrorResponse> => {
     try {
       disableAuthHeader();
 
@@ -79,9 +80,13 @@ const useAuth = (): IUseAuthReturn => {
     }
   };
 
-  const register = async (
-    data: UserDataType & { username: string },
-  ): Promise<AxiosErrorResponse> => {
+  const logout = () => {
+    setUserId('');
+    setIsAuth(false);
+    setRefreshToken('');
+  };
+
+  const register = async (data): Promise<AxiosErrorResponse> => {
     try {
       await authRegisterCreate(data);
       return;
@@ -101,6 +106,7 @@ const useAuth = (): IUseAuthReturn => {
     login,
     setHeaders,
     register,
+    logout,
   };
 };
 

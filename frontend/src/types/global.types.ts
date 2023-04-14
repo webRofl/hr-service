@@ -12,4 +12,5 @@ export const GlobalENV = {
   FQDN_BACKEND_HTTP: getEnvValue('VITE_FQDN_BACKEND_HTTP'),
   FQDN_BACKEND_WS: getEnvValue('VITE_FQDN_BACKEND_WS'),
   NODE_ENV: getEnvValue('VITE_NODE_ENV'),
+  JWT_ACCESS_TTL: parseInt(getEnvValue('VITE_JWT_ACCESS_TTL')),
 };

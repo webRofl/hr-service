@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Badge } from '@mui/material';
-import { Button } from '@/components/atoms';
+import { useLocation } from 'react-router-dom';
+import { useLocalStorageState } from '@/store';
 import * as SC from './MenuItem.style';
 import { IMenuItemProps } from './MenuItem.type';
 
@@ -15,18 +15,21 @@ const MenuItem: FC<IMenuItemProps> = ({
   style = {},
   isLink = true,
 }) => {
+  const { pathname } = useLocation();
+  const { isMenuOpen } = useLocalStorageState(({ isMenuOpen }) => ({ isMenuOpen }));
+
   const button = (
-    <Badge color="default" badgeContent={badgeContent}>
-      <Button
-        label={label}
-        iconName={iconName}
-        isShowLabel={isShowLabel}
-        badgeContent={badgeContent}
-        badgeColor={badgeColor}
-        projectStyles
-        {...optional}
-      />
-    </Badge>
+    <SC.Button
+      label={label}
+      iconName={iconName}
+      isShowLabel={isShowLabel}
+      badgeContent={badgeContent}
+      badgeColor={badgeColor}
+      isCurrentItem={pathname.slice(1).toLocaleLowerCase() === label.toLowerCase()}
+      isMenuOpen={isMenuOpen}
+      projectStyles
+      {...optional}
+    />
   );
 
   const setStyles = () => {

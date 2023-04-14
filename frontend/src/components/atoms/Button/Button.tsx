@@ -6,6 +6,7 @@ import { Props } from './Button.types';
 const Button: FC<Props> = ({
   label,
   iconName,
+  style,
   isShowLabel = true,
   projectStyles = false,
   isLoading = false,
@@ -16,6 +17,7 @@ const Button: FC<Props> = ({
   return (
     <SC.MenuItemBtn
       loading={isLoading}
+      style={style}
       {...muiButtonProps}
       projectStyles={projectStyles}
       startIcon={

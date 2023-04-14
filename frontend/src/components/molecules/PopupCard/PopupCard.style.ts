@@ -8,6 +8,7 @@ export const Container = styled('div')`
   width: 10rem;
   transition: 0.5s all;
   cursor: pointer;
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0px 8px 24px rgb(69, 69, 80);
@@ -23,6 +24,7 @@ export const Title = styled('div')`
 export const Text = styled('div')`
   margin-left: 1rem;
   overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const modalContainerAnimation = keyframes`
@@ -68,4 +70,8 @@ export const ModalCross = styled('span')`
   cursor: pointer;
   font-size: 30px;
   line-height: 1rem;
+`;
+
+export const ModalText = styled('div')`
+  ${styleMixins.customSizeScroll(10, 'rem')};
 `;

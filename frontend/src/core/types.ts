@@ -1,3 +1,4 @@
+// JS
 type MouseEventNames =
   | 'click'
   | 'dblclick'
@@ -13,9 +14,14 @@ type WindowEventNames = 'resize' | 'scroll' | 'load' | 'unload' | 'hashchange';
 
 export type EventNames = MouseEventNames | TouchEventNames | KeyboardEventNames | WindowEventNames;
 
-export type ProfileType = 'employee' | 'employer';
+// CSS
+type AbsoluteLengths = 'cm' | 'mm' | 'in' | 'px' | 'pt' | 'pc';
+type RelativeLengths = 'em' | 'ex' | 'ch' | 'rem' | 'vw' | 'vh' | 'vmin' | 'vmax' | '%';
 
-export type InsertProperties<T, U extends keyof T> = T[U];
+export type CSSUnits = AbsoluteLengths | RelativeLengths;
+
+// PROJECT
+export type ProfileType = 'employee' | 'employer';
 
 export const enum ROUTES {
   MAIN = '/',
@@ -38,3 +44,6 @@ export const enum ROUTES {
   // response
   RESPONSES = '/responses',
 }
+
+// CUSTOM UTILITY TYPES
+export type InsertProperties<T, U extends keyof T> = T[U];

@@ -6,7 +6,7 @@ import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecu
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { exclude } from '@/utils';
 import { useTitleToggle } from '@/hooks';
-import { usersEmployeeRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
 import * as SC from './Profile.style';
 
@@ -29,13 +29,19 @@ const Profile: FC<EmployeeProfileProps> = ({
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
   const method = useForm<IProfile>({
-    defaultValues: {},
+    defaultValues: profileData,
   });
 
   const setProfileEverywhere = (profile: IProfile) => {
     // setProfileData(profile);
     method.reset(profile);
   };
+
+  useEffect(() => {
+    if (!Object.keys(method.getValues()).keys && profileData) {
+      method.reset(profileData);
+    }
+  }, [profileData, method]);
 
   useEffect(() => {
     if (profileId === userId) {

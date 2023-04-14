@@ -1,23 +1,30 @@
-import { ProfileType } from '@/core';
 import { create } from 'zustand';
+import { ProfileType } from '@/core';
 
-interface IUseAuthStore {
+interface AuthStoreState {
   isAuth: boolean;
   userId: string | null;
   profileType: ProfileType | null;
   accessToken: string | null;
+}
 
+interface AuthStoreMethods {
   setIsAuth: (isAuth: boolean) => void;
   setUserId: (userId: string) => void;
   setProfileType: (profileType: ProfileType) => void;
   setAccessToken: (token: string) => void;
 }
 
-const useAuthState = create<IUseAuthStore>((set, get) => ({
+const initialState: AuthStoreState = {
   isAuth: false,
   userId: null,
   profileType: null,
   accessToken: null,
+};
+
+const useAuthState = create<AuthStoreState & AuthStoreMethods>((set, get) => ({
+  ...initialState,
+
   setIsAuth: (isAuth) => {
     set({ isAuth });
   },

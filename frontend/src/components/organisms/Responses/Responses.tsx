@@ -9,18 +9,19 @@ const Responses = () => {
   const navigate = useNavigate();
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
   const { responses } = useProfileState(({ responses }) => ({ responses }));
-  const { responsesQuantityDifference, resetToZeroResponsesDifference } = useLocalStorageState(
-    ({ responsesQuantityDifference, resetToZeroResponsesDifference }) => ({
+  const { responsesQuantityDifference, setResponsesQuantity } = useLocalStorageState(
+    ({ responsesQuantityDifference, setResponsesQuantity, responsesQuantity }) => ({
       responsesQuantityDifference,
-      resetToZeroResponsesDifference,
+      setResponsesQuantity,
+      responsesQuantity,
     }),
   );
 
   useEffect(() => {
     if (responsesQuantityDifference !== 0) {
-      resetToZeroResponsesDifference();
+      setResponsesQuantity(0);
     }
-  }, [responsesQuantityDifference, resetToZeroResponsesDifference]);
+  }, [responsesQuantityDifference, setResponsesQuantity]);
 
   if (profileType !== 'employer') {
     navigate(ROUTES.PROJECTS);
