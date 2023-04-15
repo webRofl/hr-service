@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Center, Reviews } from '@/components/common';
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
-import { exclude } from '@/utils';
+import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
 import { usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
@@ -93,7 +93,7 @@ const Profile: FC<EmployeeProfileProps> = ({
         <Grid item lg={8} md={8}>
           <SC.GridItem>
             <ProfileMainData
-              data={exclude(profileData, [
+              data={objectUtils.exclude(profileData, [
                 'image',
                 'skills',
                 'user',

@@ -4,6 +4,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { TextFieldProps } from '@mui/material';
 import { CSSProperties } from 'styled-components';
 import { IconComponent } from '@/components/common';
+import { stringUtils } from '@/utils';
 import * as SC from './FormInput.style';
 
 type IFormInputProps = {
@@ -22,6 +23,8 @@ const FormInput: FC<IFormInputProps> = ({ name, styles, ...otherProps }) => {
     setIsShowValue((prev) => !prev);
   };
 
+  const prettyName = stringUtils.capitalizeAll(name.replaceAll('_', ' '));
+
   return (
     <Controller
       control={control}
@@ -32,9 +35,9 @@ const FormInput: FC<IFormInputProps> = ({ name, styles, ...otherProps }) => {
           {...field}
           {...otherProps}
           style={styles}
-          label={name[0].toUpperCase() + name.slice(1)}
+          label={prettyName}
           type={isShowValue ? 'text' : name}
-          placeholder={`Type your ${name}`}
+          placeholder={`Type your ${prettyName}`}
           variant="outlined"
           sx={{ mb: '1.5rem' }}
           error={!!errors[name]}

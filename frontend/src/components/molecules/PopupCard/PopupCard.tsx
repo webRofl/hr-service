@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Modal } from '@mui/material';
-import { getRelativeTimeString } from '@/utils';
+import { timeUtils } from '@/utils';
 import * as SC from './PopupCard.style';
 
 interface PopupCardProps {
@@ -24,14 +24,14 @@ const PopupCard: FC<PopupCardProps> = ({ title, text, time }) => {
     <>
       <SC.Container onClick={handleOpen}>
         <SC.Title>{title}</SC.Title>
-        <SC.Divider>{getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
+        <SC.Divider>{timeUtils.getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
         <SC.Text>{text}</SC.Text>
       </SC.Container>
       <Modal open={isOpen} onClose={handleClose}>
         <SC.ModalContainer>
           <SC.ModalContent>
             <SC.ModalTitle>{title}</SC.ModalTitle>
-            <SC.Divider>{getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
+            <SC.Divider>{timeUtils.getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
             <SC.ModalText>{text}</SC.ModalText>
             <SC.ModalCross onClick={handleClose}>x</SC.ModalCross>
           </SC.ModalContent>

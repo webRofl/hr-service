@@ -1,6 +1,6 @@
 import { Project } from '@/store/api/orvalGeneration/models';
 import { CustomCatalogData, ICatalogCardData } from '@/types/common.types';
-import { snakeCaseToCamelCase } from './string';
+import { stringUtils } from '@/utils';
 
 export const catalogCardDataMiddleware = (
   keys: CustomCatalogData,
@@ -18,7 +18,7 @@ export const catalogCardDataMiddleware = (
     };
 
     Object.keys(project).forEach((key) => {
-      const rightKey = snakeCaseToCamelCase(key);
+      const rightKey = stringUtils.snakeCaseToCamelCase(key);
       if (project[key] && Object.prototype.hasOwnProperty.call(res, rightKey)) {
         res[rightKey] = project[key];
       }
