@@ -52,16 +52,19 @@ class EmployeeProfileListSerializer(serializers.ModelSerializer):
 
 class EmployeeProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
+    image = serializers.ImageField()
 
     class Meta:
         model = EmployeeProfile
-        exclude = ('is_active', 'id', 'image', 'skills', 'created', 'email', 'username', 'work_places', 'reviews',)
+        exclude = ('is_active', 'id', 'skills', 'created', 'email', 'username', 'work_places', 'reviews',)
 
 
 class EmployeeProfilePostSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+
     class Meta:
         model = EmployeeProfile
-        exclude = ('created', 'image', 'skills', 'work_places', 'experience',)
+        exclude = ('created', 'skills', 'work_places', 'experience',)
 
 
 class ProfileResponseSerializer(serializers.ModelSerializer):
@@ -86,29 +89,18 @@ class EmployerProfileRetrieveSerializer(serializers.ModelSerializer):
         exclude = ('is_active',)
 
 
-class EmployerProfileListSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_image_link')
-
-    def get_image_link(self, instance):
-        return self.context['request'].build_absolute_uri(instance.image.url)
-
-
-    class Meta:
-        model = EmployerProfile
-        exclude = ('is_active', 'reviews', 'responses',)
-
-
 class EmployerProfilePostSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
+
     class Meta:
         model = EmployerProfile
-        exclude = ('created', 'image', 'projects_count', 'total_votes', 'votes_average', 'reviews',)
+        exclude = ('created', 'projects_count', 'total_votes', 'votes_average', 'reviews',)
 
 
 class EmployerProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
+    image = serializers.ImageField()
 
     class Meta:
         model = EmployerProfile
-        exclude = ('is_active', 'id', 'image', 'created', 'email', 'username', 'reviews',)
-
-
+        exclude = ('is_active', 'id', 'created', 'email', 'username', 'reviews',)
