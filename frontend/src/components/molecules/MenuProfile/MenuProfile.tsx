@@ -4,6 +4,7 @@ import { MenuItem } from '@/components/molecules';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { OptionsMenu } from '@/components/common';
 import { ROUTES } from '@/core';
+import { useAuth } from '@/hooks';
 import * as SC from './MenuProfile.style';
 
 interface IMenuProfileProps {
@@ -13,27 +14,21 @@ interface IMenuProfileProps {
 const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuth, setIsAuth, profileType } = useAuthState(({ isAuth, setIsAuth, profileType }) => ({
+  const { logout } = useAuth();
+  const { isAuth, profileType } = useAuthState(({ isAuth, profileType }) => ({
     isAuth,
-    setIsAuth,
     profileType,
   }));
-  const { username, setRefreshToken, setUserId, userId } = useLocalStorageState(
-    ({ username, setRefreshToken, setUserId, userId }) => ({
-      username,
-      setRefreshToken,
-      setUserId,
-      userId,
-    }),
-  );
+  const { username, userId } = useLocalStorageState(({ username, userId }) => ({
+    username,
+    userId,
+  }));
   const { image } = useProfileState(({ image }) => ({ image }));
 
   const ref = React.useRef<HTMLDivElement>(null);
 
   const logoutHandler = () => {
-    setUserId('');
-    setIsAuth(false);
-    setRefreshToken('');
+    logout();
 
     if (location.pathname === '/profile') {
       navigate(ROUTES.MAIN);
@@ -53,7 +48,7 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
   return (
     <SC.ProfileContainer>
       <SC.Profile ref={ref} role="presentation">
-        {isOpen && <span style={{ color: '#1976d2' }}>{username}</span>}
+        {isOpen && <SC.Username>{username}</SC.Username>}
         <SC.Img src={image} alt="menu profile logo" />
       </SC.Profile>
       <MenuItem

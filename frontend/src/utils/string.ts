@@ -10,3 +10,11 @@ export const snakeCaseToCamelCase = (str: string): string => {
     })
     .join('');
 };
+
+export const capitalize = (str: string): string => {
+  return str[0].toUpperCase() + str.slice(1);
+};
+
+export const capitalizeAll = (str: string): string => {
+  return str.trim().split(' ').map(capitalize).join(' ');
+};

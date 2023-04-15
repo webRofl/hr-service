@@ -1,11 +1,22 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Grid } from '@mui/material';
+import { styleMixins } from '@/style';
 
-export const FullSizeGrid = styled(Grid)`
+interface FullSizeGridProps {
+  heightException: boolean | number;
+}
+
+export const FullSizeGrid = styled(Grid)<FullSizeGridProps>`
   width: 100%;
   height: 100vh;
   align-items: center;
   justify-content: center;
+  ${({ heightException }) =>
+    typeof heightException === 'number'
+      ? styleMixins.customSizeScroll(heightException, 'rem')
+      : typeof heightException === 'boolean'
+      ? styleMixins.fullSizeScroll
+      : ''};
 
   ${({ theme }) => theme.breakpoints.up('xs')} {
     background-color: #fff;
@@ -16,12 +27,22 @@ export const FullSizeGrid = styled(Grid)`
   }
 `;
 
-export const ComponentContainer = styled(Grid)`
+const marginxMixin = css`
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+interface ComponentContainerProps {
+  isBigForm: boolean;
+}
+
+export const ComponentContainer = styled(Grid)<ComponentContainerProps>`
   max-width: 70rem;
   width: 100%;
   background-color: #fff;
   padding-left: 1rem;
   padding-right: 1rem;
+  ${marginxMixin};
 
   ${({ isBigForm }) =>
     isBigForm
@@ -42,6 +63,7 @@ export const ComponentContainer = styled(Grid)`
 export const ContentGrid = styled(Grid)`
   justify-content: space-between;
   margin-inline: auto;
+  ${marginxMixin};
 
   ${({ theme }) => theme.breakpoints.up('sm')} {
     max-width: 45rem;

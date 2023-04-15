@@ -4,9 +4,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Center, Reviews } from '@/components/common';
 import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecules';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
-import { exclude } from '@/utils';
+import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
-import { usersEmployeeRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
 import * as SC from './Profile.style';
 
@@ -29,13 +29,19 @@ const Profile: FC<EmployeeProfileProps> = ({
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
   const method = useForm<IProfile>({
-    defaultValues: {},
+    defaultValues: profileData,
   });
 
   const setProfileEverywhere = (profile: IProfile) => {
     // setProfileData(profile);
     method.reset(profile);
   };
+
+  useEffect(() => {
+    if (!Object.keys(method.getValues()).keys && profileData) {
+      method.reset(profileData);
+    }
+  }, [profileData, method]);
 
   useEffect(() => {
     if (profileId === userId) {
@@ -87,7 +93,7 @@ const Profile: FC<EmployeeProfileProps> = ({
         <Grid item lg={8} md={8}>
           <SC.GridItem>
             <ProfileMainData
-              data={exclude(profileData, [
+              data={objectUtils.exclude(profileData, [
                 'image',
                 'skills',
                 'user',

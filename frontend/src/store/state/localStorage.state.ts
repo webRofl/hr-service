@@ -1,47 +1,55 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface ILocalStorageState {
+interface LocalStorageState {
   isMenuOpen: boolean;
-  refreshToken: string;
   username: string;
   userId: string;
   isNeedToCreateProfile: boolean;
   responsesQuantity: number;
   responsesQuantityDifference: number;
+  refreshToken: string | null;
+}
 
+interface LocalStorageMethods {
   setIsMenuOpen(isMenuOpen: boolean): void;
-  setRefreshToken(refreshToken: string): void;
   setUsername(username: string): void;
   setUserId(userId: string): void;
   setIsNeedToCreateProfile(isNeedToCreateProfile: boolean): void;
   setResponsesQuantity: (responsesQuantity: number) => void;
-  resetToZeroResponsesDifference: () => void;
+  setRefreshToken: (token: string) => void;
 }
 
-const useLocalStorageState = create<ILocalStorageState>()(
+const initialState: LocalStorageState = {
+  isMenuOpen: false,
+  username: '',
+  userId: '',
+  isNeedToCreateProfile: false,
+  responsesQuantity: 0,
+  responsesQuantityDifference: 0,
+  refreshToken: null,
+};
+
+const useLocalStorageState = create<LocalStorageState & LocalStorageMethods>()(
   persist(
     (set, get) => ({
-      isMenuOpen: false,
-      refreshToken: '',
-      username: '',
-      userId: '',
-      isNeedToCreateProfile: false,
-      responsesQuantity: 0,
-      responsesQuantityDifference: 0,
+      ...initialState,
+
       setIsMenuOpen: (isMenuOpen) => set({ isMenuOpen }),
-      setRefreshToken: (refreshToken) => set({ refreshToken }),
       setUsername: (username) => set({ username }),
       setUserId: (userId) => set({ userId }),
       setIsNeedToCreateProfile: (isNeedToCreateProfile) => set({ isNeedToCreateProfile }),
       setResponsesQuantity: (responsesQuantity) => {
         const difference = responsesQuantity - get().responsesQuantity;
-        if (difference !== 0) {
+
+        if (difference > 0) {
           set({ responsesQuantityDifference: difference });
+          return;
         }
-        set({ responsesQuantity });
+
+        set({ responsesQuantityDifference: 0, responsesQuantity });
       },
-      resetToZeroResponsesDifference: () => set({ responsesQuantityDifference: 0 }),
+      setRefreshToken: (token) => set({ refreshToken: token }),
     }),
     { version: 1, name: 'localStorageState' },
   ),

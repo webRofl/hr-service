@@ -24,6 +24,10 @@ export const Profile = styled('div')`
   cursor: pointer;
 `;
 
+export const Username = styled('span')`
+  color: white;
+`;
+
 export const Img = styled('img')`
   width: 2rem;
   border-radius: 50%;

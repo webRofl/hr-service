@@ -41,6 +41,7 @@ const CreateProfileForm = () => {
 
   return (
     <AbstractForm
+      heightException
       isBigForm
       renderLeft={
         // eslint-disable-next-line react/jsx-wrap-multilines

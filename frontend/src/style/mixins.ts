@@ -1,3 +1,4 @@
+import { CSSUnits } from '@/core/types';
 import { css } from 'styled-components';
 
 export const btnMixin = css`
@@ -25,4 +26,9 @@ export const menuItem = css`
 export const fullSizeScroll = css`
   max-height: calc(100vh - 2rem);
   overflow-y: scroll;
+`;
+
+export const customSizeScroll = (value: number, unit: CSSUnits) => css`
+  ${fullSizeScroll};
+  max-height: calc(100vh - ${value}${unit});
 `;

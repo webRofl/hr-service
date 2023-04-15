@@ -20,6 +20,7 @@ export const MenuItemBtn = styled(LoadingButton)<MenuItemBtnProps>`
     return projectStyles ? styles : '';
   }}
   border: none;
+  gap: 0.5rem;
 
   &:hover {
     border: none;
