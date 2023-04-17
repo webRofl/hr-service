@@ -1,18 +1,21 @@
-import { Profile } from '@/store/api/orvalGeneration/models';
+import { Difference, ProfileType } from '@/core';
+import {
+  UsersEmployeeCreateBody,
+  UsersEmployerCreateBody,
+} from '@/store/api/orvalGeneration/models';
 
-type RequiredFields = Required<Pick<Profile, 'name' | 'second_name'>>;
+type ExtraFields = 'user' | 'username' | 'email' | 'is_active';
 
-type UnusableFieldsNames =
-  | 'user'
-  | 'created'
-  | 'email'
-  | 'username'
-  | 'image'
-  | 'created'
-  | 'user'
-  | 'skills'
-  | 'projects_count';
+export type ExtractProfiles = Omit<
+  Difference<UsersEmployeeCreateBody, UsersEmployerCreateBody>,
+  ExtraFields
+>;
 
-type OptionalFields = Partial<Pick<Profile, Exclude<keyof Profile, UnusableFieldsNames>>>;
+type ProfileOmit<T extends UsersEmployerCreateBody | UsersEmployeeCreateBody> = Omit<
+  T,
+  ExtraFields
+>;
 
-export type ProfileFields = RequiredFields & OptionalFields;
+export type DefaultValues<T extends ProfileType> = T extends 'employer'
+  ? ProfileOmit<UsersEmployerCreateBody>
+  : ProfileOmit<UsersEmployeeCreateBody>;

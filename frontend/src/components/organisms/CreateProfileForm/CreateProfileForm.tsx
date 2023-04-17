@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Switch } from '@mui/material';
@@ -6,7 +6,7 @@ import { AuthForm } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
 import { usersEmployeeCreate, usersEmployerCreate } from '@/store/api/orvalGeneration/users/users';
 import { ProfileType, ROUTES } from '@/core';
-import { ProfileFields } from './CreateProfileForm.types';
+import { DefaultValues, ExtractProfiles } from './CreateProfileForm.types';
 import * as SC from './CreateProfileForm.style';
 
 const CreateProfileForm = () => {
@@ -16,14 +16,40 @@ const CreateProfileForm = () => {
   }));
   const [profileType, setProfileType] = useState<ProfileType>('employee');
 
-  const method = useForm<ProfileFields & { type: ProfileType }>({
-    defaultValues: {
-      name: '',
-      second_name: '',
+  const setDefaultValues = (profileType: ProfileType): DefaultValues<typeof profileType> => {
+    const commonValues = {
+      image: new Blob(),
       city: '',
       bio: '',
-    },
+    };
+
+    if (profileType === 'employer') {
+      return {
+        ...commonValues,
+        company_name: '',
+        description: '',
+        website: '',
+      };
+    }
+
+    return {
+      ...commonValues,
+      name: '',
+      second_name: '',
+      github: '',
+      linkedin: '',
+      youtube: '',
+      salary: undefined,
+    };
+  };
+
+  const method = useForm<ExtractProfiles>({
+    defaultValues: setDefaultValues(profileType),
   });
+
+  useEffect(() => {
+    method.reset(setDefaultValues(profileType));
+  }, [profileType]);
 
   const successCb = () => {
     setIsNeedToCreateProfile(false);

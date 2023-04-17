@@ -47,3 +47,6 @@ export const enum ROUTES {
 
 // CUSTOM UTILITY TYPES
 export type InsertProperties<T, U extends keyof T> = T[U];
+export type Difference<T, U> = Extract<keyof T, keyof U> extends never
+  ? never
+  : Pick<T, Extract<keyof T, keyof U>>;

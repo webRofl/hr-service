@@ -32,3 +32,8 @@ export const customSizeScroll = (value: number, unit: CSSUnits) => css`
   ${fullSizeScroll};
   max-height: calc(100vh - ${value}${unit});
 `;
+
+export const fullSizeCover = (customHeight = 0, customUnit = 'rem') => css`
+  min-height: calc(100vh - ${customHeight}${customUnit});
+  height: fit-content;
+`;

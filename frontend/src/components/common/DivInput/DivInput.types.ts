@@ -8,7 +8,7 @@ export interface NodeRef {
 
 export interface DivInputProps {
   name: string;
-  value: string;
+  value: string | number;
   isEdit: boolean;
   isBlock?: boolean;
   divStyle?: CSSProperties;

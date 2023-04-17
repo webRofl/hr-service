@@ -14,7 +14,7 @@ const AbstractForm: FC<AbstractFormProps> = ({
   renderLeft,
   renderRight,
   renderBottom,
-  heightException,
+  heightException = false,
   isBigForm = false,
 }) => {
   return (

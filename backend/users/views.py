@@ -13,50 +13,6 @@ from helpers.permissions import is_owner
 from helpers.unwrap_formdata_string import unwrap_formdata_string
 from helpers.serializer_lifecycle import serializer_lifecycle
 
-# class EmployeeProfileCRUDViewSet(viewsets.ModelViewSet):
-#     queryset = EmployeeProfile.objects.all()
-#     serializer_class = EmployeeProfileSerializer
-#     permission_classes = (IsGetMethodOrAuthOnly,)
-#     http_method_names = ['get', 'post', 'put']
-
-#     def retrieve(self, request, pk=None):
-#         user = get_object_or_404(self.queryset.filter(user_id=pk))
-#         serializer = self.serializer_class(user, context={'request': request})
-
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-#     def list(self, request):
-#         serializer = EmployeeProfileListSerializer(self.get_queryset(), many=True, context={'request': request})
-
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-#     def update(self, request, pk=None):
-#         data = get_data_with_user(request)
-
-#         serializer = EmployeeProfileUpdateSerializer(data=data, instance=self.queryset.get(user=pk))
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-#     def create(self, request):
-#         data = get_data_with_user(request)
-#         user_instance = User.objects.get(id=data['user'])
-
-#         user_data = {
-#                 'email': user_instance.email,
-#                 'username': user_instance.username,
-#                 }
-
-#         data.update(user_data)
-
-#         serializer = EmployeeProfilePostSerializer(data=data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 class EmployeeProfilePostView(mixins.CreateModelMixin,
                               mixins.UpdateModelMixin,
                               viewsets.GenericViewSet):
@@ -146,7 +102,7 @@ class EmployerProfilePostView(mixins.CreateModelMixin,
         serializer = serializer_lifecycle(EmployerProfilePostSerializer, data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+
     def update(self, request, pk=None):
         if not is_owner(request):
             return Response({}, status=status.HTTP_403_FORBIDDEN)

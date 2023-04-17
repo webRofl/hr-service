@@ -1,12 +1,12 @@
 import { capitalize } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Catalog, Center } from '@/components/common';
-import { useUsersEmployeeList } from '@/store/api/orvalGeneration/users/users';
-import { GlobalENV, ICatalogCardData } from '@/types';
+import { ICatalogCardData } from '@/types';
 import { ROUTES } from '@/core';
+import { useUsersEmployeeListList } from '@/store/api/orvalGeneration/users/users';
 
 const Candidates = () => {
-  const { data } = useUsersEmployeeList();
+  const { data } = useUsersEmployeeListList();
   const [cardList, setCardList] = useState<ICatalogCardData[] | null>(null);
 
   useEffect(() => {

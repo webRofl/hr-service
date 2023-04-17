@@ -32,7 +32,7 @@ const DivInput: FC<DivInputProps> = ({
         }}>
         <div ref={nodeRef} style={containerStyle}>
           {isEdit && !readOnly ? (
-            <SC.Input {...register(name)} style={inputStyle ?? commonStyle} />
+            <SC.Input {...register(name, { value })} style={inputStyle ?? commonStyle} />
           ) : (
             <div style={divStyle ?? commonStyle}>{value}</div>
           )}
