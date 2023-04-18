@@ -65,6 +65,7 @@ const CreateProfileForm = () => {
       methods={method}
       btnText="Go"
       onSuccessSubmitHandler={successCb}
+      profileType={profileType}
       dataLoadCb={profileType === 'employee' ? usersEmployeeCreate : usersEmployerCreate}>
       <SC.SwitchBlock>
         <span>Employee</span>

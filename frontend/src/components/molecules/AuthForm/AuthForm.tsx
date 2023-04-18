@@ -7,13 +7,16 @@ import { AxiosErrorResponse } from '@/types';
 import { useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { objectUtils } from '@/utils';
+import { ProfileType } from '@/core';
 import * as SC from './AuthForm.style';
+import ImagePickerWithCrop from '../ImagePickerWithCrop/ImagePickerWithCrop';
 
 interface IAuthFormProps {
   onSuccessSubmitHandler: () => void;
   methods: UseFormReturn<FieldValues, unknown>;
   dataLoadCb: (values: unknown) => Promise<AxiosResponse>;
   btnText: string;
+  profileType?: ProfileType;
   title?: string;
 }
 
@@ -24,6 +27,7 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
   dataLoadCb,
   btnText,
   children,
+  profileType,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<AxiosErrorResponse>(undefined);
@@ -66,7 +70,13 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
 
         {Object.entries(methods.getValues()).map(([key, value]) => {
           if (value instanceof Blob) {
-            return <ImagePicker name={key} />;
+            return (
+              <ImagePickerWithCrop
+                name={key}
+                aspect={profileType === 'employee' ? [10, 10] : [16, 9]}
+                cropShape={profileType === 'employee' ? 'round' : 'rect'}
+              />
+            );
           }
 
           return <FormInput key={Math.random()} name={key} required />;

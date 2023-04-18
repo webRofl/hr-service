@@ -1,6 +1,6 @@
-import { Rating } from '@mui/material';
 import styled from 'styled-components';
 
-export const RestoreOpacity = styled(Rating)`
-  opacity: 1 !important;
+export const Container = styled('div')`
+  display: 'flex';
+  gap: 1.5rem;
 `;

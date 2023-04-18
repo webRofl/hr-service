@@ -5,8 +5,8 @@ interface ContainerProps {
 }
 
 export const Container = styled('div')<ContainerProps>`
-  width: 10rem;
-  height: 10rem;
+  width: inherit;
+  height: inherit;
   border-radius: 6px;
   background: ${({ imgLink }) => (imgLink.length ? `url(${imgLink})` : 'gray')};
   background-size: contain;

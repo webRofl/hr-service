@@ -98,7 +98,6 @@ class EmployerProfilePostView(mixins.CreateModelMixin,
                 }
 
         data.update(user_data)
-
         serializer = serializer_lifecycle(EmployerProfilePostSerializer, data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
