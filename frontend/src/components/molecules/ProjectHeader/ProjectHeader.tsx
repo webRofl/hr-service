@@ -3,13 +3,13 @@ import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextArea } from '@/components/atoms';
 import { Center, DivInput, Rating } from '@/components/common';
-import { useUsersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 import { ROUTES } from '@/core';
 import { responsesCreate } from '@/store/api/orvalGeneration/responses/responses';
 import { SimpleForm, ModalButton } from '@/components/molecules';
 import { DefaultFormSubmitHandler } from '@/types';
 import { useAuthState, useLocalStorageState } from '@/store';
 import { useNotifications } from '@/hooks';
+import { useUsersEmployerGetRead } from '@/store/api/orvalGeneration/users/users';
 import * as SC from './ProjectHeader.style';
 
 interface IProjectHeaderProps {
@@ -39,7 +39,7 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const { createToast } = useNotifications();
-  const { data } = useUsersEmployerRead(author);
+  const { data } = useUsersEmployerGetRead(author);
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
 

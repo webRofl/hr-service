@@ -14,3 +14,4 @@ export { default as EmployerProfileHeader } from './EmployerProfileHeader/Employ
 export { default as PopupCard } from './PopupCard/PopupCard';
 export { default as ModalButton } from './ModalButton/ModalButton';
 export { default as SimpleForm } from './SimpleForm/SimpleForm';
+export { default as ImagePickerWithCrop } from './ImagePickerWithCrop/ImagePickerWithCrop';

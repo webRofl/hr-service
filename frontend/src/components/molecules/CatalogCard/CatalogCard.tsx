@@ -1,3 +1,4 @@
+import { Rating } from '@/components/common';
 import { ICatalogCardDataWithLink } from '@/types';
 import React, { FC } from 'react';
 import * as SC from './CatalogCard.style';
@@ -19,10 +20,7 @@ const CatalogCard: FC<ICatalogCardDataWithLink> = ({
         <SC.Description>
           {description.length > 180 ? `${description.slice(0, 180)}...` : description}
         </SC.Description>
-        <SC.FirstLetterUp>Total Votes: {totalVotes}</SC.FirstLetterUp>
-        <SC.FirstLetterUp>
-          Votes Ratio: {votesRatio % 1 === 0 ? votesRatio : votesRatio.toFixed(1)}%
-        </SC.FirstLetterUp>
+        <Rating readOnly value={votesRatio} totalVotes={totalVotes} />
         <SC.TagsContainer>
           {tags.map((t) => (
             <SC.Tag>{t}</SC.Tag>

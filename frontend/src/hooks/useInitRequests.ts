@@ -1,7 +1,10 @@
 import React from 'react';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
-import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 import { ProfileReadFn } from '@/types';
+import {
+  usersEmployeeGetRead,
+  usersEmployerGetRead,
+} from '@/store/api/orvalGeneration/users/users';
 import useWebSocket from './useWebSocket';
 
 const useInitRequests = () => {
@@ -29,11 +32,11 @@ const useInitRequests = () => {
       };
 
       try {
-        await dataValidate(usersEmployeeRead);
+        await dataValidate(usersEmployeeGetRead);
         setProfileType('employee');
       } catch {
         try {
-          await dataValidate(usersEmployerRead);
+          await dataValidate(usersEmployerGetRead);
           setProfileType('employer');
         } catch {
           // setIsNeedToCreateProfile(true);

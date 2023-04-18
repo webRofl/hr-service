@@ -79,11 +79,11 @@ const Profile: FC<EmployeeProfileProps> = ({
           <SC.GridItem>
             <ProfileLogo
               votesAverage={profileData.votes_average}
-              image={profileData.image || ''}
+              image={profileData.image ?? ''}
               position="Full-Stack dev"
-              area="Moscow"
-              name={profileData.name || ''}
-              secondName={profileData.second_name || ''}
+              area={profileData.city ?? ''}
+              name={profileData.name ?? ''}
+              secondName={profileData.second_name ?? ''}
               isEdit={isEdit}
               isMyProfile={isMyProfile}
               editClickHandler={editClickHandler}

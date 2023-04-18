@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { ProfileType } from '@/core';
 import { useProfileState } from '@/store';
 import { EmployeeProfile, EmployerProfileRetrieve } from '@/store/api/orvalGeneration/models';
-import { usersEmployeeRead, usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
 import { ProfileReadFn } from '@/types';
+import {
+  usersEmployeeGetRead,
+  usersEmployerGetRead,
+} from '@/store/api/orvalGeneration/users/users';
 
 interface UseProfileFetchReturn {
   profileData: EmployeeProfile | EmployerProfileRetrieve;
@@ -35,10 +38,10 @@ const useProfileFetch = (
     // eslint-disable-next-line default-case
     switch (profileType) {
       case 'employee':
-        fetchProfile(usersEmployeeRead);
+        fetchProfile(usersEmployeeGetRead);
         return;
       case 'employer':
-        fetchProfile(usersEmployerRead);
+        fetchProfile(usersEmployerGetRead);
     }
   }, [profileType, toggleToFetch]);
 

@@ -7,3 +7,4 @@ env.d.ts
 .eslintrc.js
 orvalGeneration
 AbstractForm.style.ts
+cropImage.ts

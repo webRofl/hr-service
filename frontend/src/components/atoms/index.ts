@@ -3,3 +3,4 @@ export { default as OAuth } from './OAuth/OAuth';
 export { default as Button } from './Button/Button';
 export { Review, WritableReview } from './Review/Review';
 export { default as TextArea } from './TextArea/TextArea';
+export { default as ImagePicker } from './ImagePicker/ImagePicker';

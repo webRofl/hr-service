@@ -6,6 +6,7 @@ import React, { FC } from 'react';
 const CreateProfileTemplate: FC = () => {
   return (
     <AbstractForm
+      heightException={0}
       renderLeft={<CreateProfileForm />}
       renderRight={
         <Box

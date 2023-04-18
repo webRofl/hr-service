@@ -1,17 +1,20 @@
-import React, { FC, SyntheticEvent, useState } from 'react';
-import { Popover, Rating as MUIRating, RatingProps, Tooltip } from '@mui/material';
+import React, { FC } from 'react';
+import { Rating as MUIRating, RatingProps, Tooltip } from '@mui/material';
+import * as SC from './Rating.style';
 
 interface RatingExtProps extends RatingProps {
   tip?: string;
+  totalVotes?: number;
 }
 
-const Rating: FC<RatingExtProps> = ({ tip, ...props }) => {
+const Rating: FC<RatingExtProps> = ({ tip, totalVotes, ...props }) => {
   if (tip) {
     return (
       <Tooltip title={tip} followCursor>
-        <div>
+        <SC.Container>
           <MUIRating {...props} />
-        </div>
+          {totalVotes && <span>{totalVotes}</span>}
+        </SC.Container>
       </Tooltip>
     );
   }

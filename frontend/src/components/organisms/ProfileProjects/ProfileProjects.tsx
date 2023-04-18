@@ -30,7 +30,14 @@ const ProfileProjects = () => {
   };
 
   if (!cardList || !cardList.length) {
-    return <Center>No projects</Center>;
+    return (
+      <>
+        <Center>No projects</Center>
+        <SC.Fab color="primary" aria-label="add" onClick={handleClickFab}>
+          +
+        </SC.Fab>
+      </>
+    );
   }
 
   return (

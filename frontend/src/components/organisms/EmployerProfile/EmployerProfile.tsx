@@ -5,7 +5,7 @@ import { EmployerProfileRetrieve } from '@/store/api/orvalGeneration/models';
 import { Center, Reviews } from '@/components/common';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { EmployerProfileHeader } from '@/components/molecules';
-import { usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployerGetRead } from '@/store/api/orvalGeneration/users/users';
 import * as SC from './EmployerProfile.style';
 
 interface EmployerProfileProps {
@@ -33,7 +33,7 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
   });
 
   const reviewSuccessCb = () => {
-    usersEmployerRead(profileId).then((data) => setData(data.data));
+    usersEmployerGetRead(profileId).then((data) => setData(data.data));
   };
 
   if (!data) {

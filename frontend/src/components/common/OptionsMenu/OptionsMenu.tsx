@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import * as SC from './OptionsMenu.style';
 
 interface OptionMenuProps {
-  stack: [string, string][];
+  stack: ([string, string] | null)[];
 }
 
 const OptionMenu = React.forwardRef<HTMLDivElement, OptionMenuProps>(({ stack }, ref) => {
@@ -25,9 +25,12 @@ const OptionMenu = React.forwardRef<HTMLDivElement, OptionMenuProps>(({ stack },
       divider={<SC.Divider variant="fullWidth" />}
       isDisplay={isOpen}
       leftStyle={ref?.current?.parentNode?.clientWidth}>
-      {stack.map(([key, value]) => (
-        <SC.Link to={value}>{key}</SC.Link>
-      ))}
+      {stack.map((item) => {
+        if (!item) return null;
+
+        const [key, value] = item;
+        return <SC.Link to={value}>{key}</SC.Link>;
+      })}
     </SC.Container>
   );
 });

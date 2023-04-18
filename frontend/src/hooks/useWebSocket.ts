@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { GlobalENV } from '@/types';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
-import { usersEmployerRead } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployerGetRead } from '@/store/api/orvalGeneration/users/users';
 import useNotifications from './useNotifications';
 
 /* eslint-disable no-console */
@@ -19,7 +18,7 @@ const useWebSocket = () => {
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
 
   const onMessage = async (message: MessageEvent) => {
-    const profile = (await usersEmployerRead(userId)).data;
+    const profile = (await usersEmployerGetRead(userId)).data;
     setProfile(profile);
     if (profile?.responses) {
       setResponsesQuantity(profile.responses.length);
