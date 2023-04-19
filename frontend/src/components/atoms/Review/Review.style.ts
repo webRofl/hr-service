@@ -1,7 +1,6 @@
-import { styleMixins } from '@/style';
 import { Grid, Rating as MUIRating } from '@mui/material';
-import { Button } from '@/components/atoms';
 import styled from 'styled-components';
+import { styleMixins } from '@/style';
 
 interface ReviewProps {
   isFirst?: boolean;
@@ -30,17 +29,4 @@ export const Rating = styled(MUIRating)`
   position: absolute;
   top: 0.5rem;
   right: 1rem;
-`;
-
-export const WritableReview = styled(Review)`
-  min-height: 115px;
-`;
-
-export const Buttons = styled('div')`
-  position: absolute;
-  right: 1rem;
-`;
-
-export const CancelBtn = styled(Button)`
-  margin-right: 1rem;
 `;

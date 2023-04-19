@@ -8,6 +8,8 @@ module.exports = {
     '@storybook/addon-interactions',
     'storybook-addon-jsx',
     '@storybook/addon-mdx-gfm',
+    '@storybook/addon-actions',
+    'storybook-addon-react-router-v6',
   ],
   framework: {
     name: '@storybook/react-vite',
@@ -29,7 +31,7 @@ module.exports = {
     };
     return mergeConfig(config, {
       optimizeDeps: {
-        include: ['@storybook/addon-actions/preview.js', '@storybook/addon-backgrounds/preview.js'],
+        include: ['@storybook/addon-actions', '@storybook/addon-backgrounds'],
       },
     });
   },

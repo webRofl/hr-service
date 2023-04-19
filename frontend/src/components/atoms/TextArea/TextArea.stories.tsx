@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import StorybookWrapper from '@/components/common/StorybookWrapper/StorybookWrapper';
 import TextArea from './TextArea';
 
@@ -8,19 +8,26 @@ export default {
   component: TextArea,
   argTypes: {
     name: {
-      defaultValue: 'text',
       table: {
         disable: true,
       },
     },
   },
-} as ComponentMeta<typeof TextArea>;
+} as Meta<typeof TextArea>;
 
-const Template: ComponentStory<typeof TextArea> = (args) => (
-  <StorybookWrapper defaultValues={{ text: '' }}>
-    <TextArea {...args} />
-  </StorybookWrapper>
-);
+type Story = StoryObj<typeof TextArea>;
 
-export const Default = Template.bind({});
-Default.args = {};
+const Template: Story = {
+  render: (args) => (
+    <StorybookWrapper defaultValues={{ text: '' }}>
+      <TextArea {...args} />
+    </StorybookWrapper>
+  ),
+};
+
+export const Default: Story = {
+  ...Template,
+  args: {
+    name: 'text',
+  },
+};

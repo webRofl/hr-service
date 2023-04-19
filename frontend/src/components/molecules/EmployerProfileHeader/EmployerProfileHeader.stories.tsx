@@ -1,11 +1,11 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import StorybookWrapper from '@/components/common/StorybookWrapper/StorybookWrapper';
-import DivInput from './DivInput';
+import EmployerProfileHeader from './EmployerProfileHeader';
 
 export default {
-  title: 'common/DivInput',
-  component: DivInput,
+  title: 'molecules/EmployerProfileHeader',
+  component: EmployerProfileHeader,
   argTypes: {
     name: {
       table: {
@@ -13,14 +13,14 @@ export default {
       },
     },
   },
-} as Meta<typeof DivInput>;
+} as Meta<typeof EmployerProfileHeader>;
 
-type Story = StoryObj<typeof DivInput>;
+type Story = StoryObj<typeof EmployerProfileHeader>;
 
 const Template: Story = {
   render: (args) => (
     <StorybookWrapper defaultValues={{ name: 'text' }}>
-      <DivInput {...args} />
+      <EmployerProfileHeader {...args} />
     </StorybookWrapper>
   ),
 };
@@ -28,8 +28,12 @@ const Template: Story = {
 export const Default: Story = {
   ...Template,
   args: {
-    name: 'text',
-    value: 'some string',
-    isEdit: false,
+    title: 'title',
+    city: 'moscow',
+    image: '',
+    projectsCount: 167,
+    website: '',
+    totalVotes: 1245,
+    votesAverage: 2.4,
   },
 };

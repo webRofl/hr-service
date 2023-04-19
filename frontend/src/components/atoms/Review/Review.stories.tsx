@@ -1,13 +1,12 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import Review from './Review';
 
 export default {
   title: 'atoms/Review',
   component: Review,
-} as ComponentMeta<typeof Review>;
+} as Meta<typeof Review>;
 
-const Template: ComponentStory<typeof Review> = (args) => <Review {...args} />;
+type Story = StoryObj<typeof Review>;
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default: Story = {};

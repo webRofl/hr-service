@@ -1,15 +1,33 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
+import { StorybookWrapper } from '@/components/common';
 import FormInput from './FormInput';
 
 export default {
   title: 'atoms/FormInput',
   component: FormInput,
-} as ComponentMeta<typeof FormInput>;
+  argTypes: {
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+} as Meta<typeof FormInput>;
 
-const Template: ComponentStory<typeof FormInput> = (args) => <FormInput {...args} />;
+type Story = StoryObj<typeof FormInput>;
 
-export const Default = Template.bind({});
-Default.args = {
-  name: 'email',
+const Template: Story = {
+  render: (args) => (
+    <StorybookWrapper defaultValues={{ [args.name]: '' }}>
+      <FormInput {...args} />
+    </StorybookWrapper>
+  ),
+};
+
+export const Default = {
+  ...Template,
+  args: {
+    name: 'email',
+  },
 };

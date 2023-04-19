@@ -1,23 +1,38 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React, { FC, useRef } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 import StorybookWrapper from '@/components/common/StorybookWrapper/StorybookWrapper';
+import { withRouter } from 'storybook-addon-react-router-v6';
+import { Button } from '@/components/atoms';
 import OptionsMenu from './OptionsMenu';
 
 export default {
   title: 'common/OptionsMenu',
   component: OptionsMenu,
-} as ComponentMeta<typeof OptionsMenu>;
+  decorators: [withRouter],
+  parameters: {
+    reactRouter: {
+      routePath: '/projects',
+    },
+  },
+} as Meta<typeof OptionsMenu>;
 
-const Template: ComponentStory<typeof OptionsMenu> = (args) => (
-  <StorybookWrapper>
-    <OptionsMenu {...args} />
-  </StorybookWrapper>
-);
+type Story = StoryObj<typeof OptionsMenu>;
 
-export const Default = Template.bind({});
-Default.args = {
-  stack: [
-    ['profile', '/profile'],
-    ['projects', '/projects'],
-  ],
+const Template: Story = {
+  render: (args) => (
+    <StorybookWrapper>
+      <OptionsMenu {...args} />
+    </StorybookWrapper>
+  ),
+};
+
+export const Default: Story = {
+  ...Template,
+  args: {
+    ref: useRef(<Button label="Open options" />),
+    stack: [
+      ['profile', '/profile'],
+      ['projects', '/projects'],
+    ],
+  },
 };

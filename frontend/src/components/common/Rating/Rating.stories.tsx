@@ -1,18 +1,33 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import Rating from './Rating';
 
 export default {
   title: 'common/Rating',
   component: Rating,
-} as ComponentMeta<typeof Rating>;
+  argTypes: {
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+} as Meta<typeof Rating>;
 
-const Template: ComponentStory<typeof Rating> = (args) => <Rating {...args} />;
+type Story = StoryObj<typeof Rating>;
 
-export const Default = Template.bind({});
-Default.args = {
-  totalVotes: 16,
-  defaultValue: 3.5,
-  precision: 0.5,
-  tip: 'U can change the tip',
+const Template: Story = {
+  render: (args) => <Rating {...args} />,
+  args: {
+    totalVotes: 16,
+    defaultValue: 3.5,
+    precision: 0.5,
+    tip: 'U can change the tip',
+    readOnly: false,
+    disabled: false,
+  },
+};
+
+export const Default = {
+  ...Template,
 };
