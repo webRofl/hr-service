@@ -45,8 +45,8 @@
     "prettier": "prettier --write src//**/*.{js,jsx,ts,tsx}",
     "//prepare": "cd .. && husky install frontend/.husky",
     "generateAPI": "orval --config src/store/api/orval.config.ts",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "browserslist": {
     "production": [
@@ -66,13 +66,14 @@
     "@commitlint/config-conventional": "^17.4.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-vite": "^0.4.2",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-actions": "^7.0.6",
+    "@storybook/addon-essentials": "^7.0.6",
+    "@storybook/addon-interactions": "^7.0.6",
+    "@storybook/addon-links": "^7.0.6",
+    "@storybook/addon-mdx-gfm": "^7.0.6",
+    "@storybook/react": "^7.0.6",
+    "@storybook/react-vite": "^7.0.6",
+    "@storybook/testing-library": "^0.1.0",
     "@types/react-transition-group": "^4.4.5",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
@@ -96,6 +97,8 @@
     "orval": "^6.11.1",
     "prettier": "^2.8.3",
     "react-transition-group": "^4.4.5",
-    "storybook-addon-jsx": "^7.3.14"
+    "storybook": "^7.0.6",
+    "storybook-addon-jsx": "^7.3.14",
+    "storybook-addon-react-router-v6": "^0.3.5"
   }
 }

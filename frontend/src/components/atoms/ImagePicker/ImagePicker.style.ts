@@ -8,7 +8,7 @@ export const Container = styled('div')<ContainerProps>`
   width: inherit;
   height: inherit;
   border-radius: 6px;
-  background: ${({ imgLink }) => (imgLink.length ? `url(${imgLink})` : 'gray')};
+  background: ${({ imgLink }) => (imgLink && imgLink.length ? `url(${imgLink})` : 'gray')};
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

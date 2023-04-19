@@ -1,7 +1,7 @@
+import React, { FC, useState } from 'react';
 import { Review as ReviewComponent, WritableReview } from '@/components/atoms';
 import { useAuthState } from '@/store';
 import { Review } from '@/store/api/orvalGeneration/models';
-import React, { FC, useState } from 'react';
 import * as SC from './Reviews.style';
 import { ReviewCb, ReviewType } from './Reviews.types';
 

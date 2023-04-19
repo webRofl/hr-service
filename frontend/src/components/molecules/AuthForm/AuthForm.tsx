@@ -2,7 +2,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography, Box } from '@mui/material';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
-import { FormInput, ImagePicker } from 'components/atoms';
+import { FormInput } from 'components/atoms';
 import { AxiosErrorResponse } from '@/types';
 import { useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';

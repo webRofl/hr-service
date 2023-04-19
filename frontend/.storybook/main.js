@@ -1,6 +1,5 @@
 const { mergeConfig } = require('vite');
 const path = require('path');
-
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -8,10 +7,13 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-addon-jsx',
+    '@storybook/addon-mdx-gfm',
+    '@storybook/addon-actions',
+    'storybook-addon-react-router-v6',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-vite',
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
   features: {
     storyStoreV7: true,
@@ -27,11 +29,13 @@ module.exports = {
       store: path.resolve(__dirname, '../src/store'),
       hooks: path.resolve(__dirname, '../src/hooks'),
     };
-
     return mergeConfig(config, {
       optimizeDeps: {
-        include: ['@storybook/addon-actions/preview.js', '@storybook/addon-backgrounds/preview.js'],
+        include: ['@storybook/addon-actions', '@storybook/addon-backgrounds'],
       },
     });
+  },
+  docs: {
+    autodocs: true,
   },
 };
