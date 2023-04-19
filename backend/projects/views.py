@@ -2,49 +2,71 @@ from rest_framework import viewsets, mixins, status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.parsers import MultiPartParser, FormParser
 
-from .serializers import ProjectSerializer, TagSerializer, ProjectListSerializer, ProjectPostSerializer, ProjectRetrieveSerializer
+from .serializers import (
+    ProjectUpdateSerializer,
+    TagSerializer,
+    ProjectListSerializer,
+    ProjectPostSerializer,
+    ProjectRetrieveSerializer,
+)
 from .models import Project, Tag
 from helpers.get_data_with_user import get_data_with_user
 
+
 class ProjectList(generics.ListAPIView):
-   queryset = Project.objects.all()
-   serializer_class = ProjectListSerializer
-   filter_backends = [DjangoFilterBackend]
-   filterset_fields = ['author']
+    queryset = Project.objects.all()
+    serializer_class = ProjectListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["author"]
 
 
-class ProjectCRUViewSet(mixins.RetrieveModelMixin,
-                        mixins.CreateModelMixin,
-                        mixins.UpdateModelMixin,
-                        viewsets.GenericViewSet):
-  queryset = Project.objects.all()
-  http_method_names = ['get', 'post', 'put']
-  serializer_class = ProjectSerializer
-  permission_classes = [IsAuthenticatedOrReadOnly]
+class ProjectCreateAndUpdateView(mixins.CreateModelMixin,
+                                 mixins.UpdateModelMixin,
+                                 viewsets.GenericViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectUpdateSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    parser_classes = (MultiPartParser, FormParser)
 
-  def retrieve(self, request, pk=None):
-      serializer = ProjectRetrieveSerializer(Project.objects.get(pk=pk), context={'request': request})
+    def get_parsers(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return []
 
-      return Response(serializer.data, status=status.HTTP_200_OK)
+        return super().get_parsers()
 
-  def create(self, request):
-      data = get_data_with_user(request, 'author')
+    def create(self, request):
+        data = get_data_with_user(request, "author")
 
-      serializer = ProjectPostSerializer(data=data)
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
+        serializer = ProjectPostSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, pk=None):
+        serializer = self.serializer_class(
+            data=request.data, instance=self.queryset.get(id=pk)
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-  def update(self, request, pk=None):
-    serializer = self.serializer_class(data=request.data, instance=self.queryset.get(id=pk))
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ProjectRetrieveView(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectRetrieveSerializer
+
+    def retrieve(self, request, pk=None):
+        serializer = ProjectRetrieveSerializer(
+            Project.objects.get(pk=pk), context={"request": request}
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TagCRUDViewSet(viewsets.ModelViewSet):
-  queryset = Tag.objects.all()
-  serializer_class = TagSerializer
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer

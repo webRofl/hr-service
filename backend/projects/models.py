@@ -36,7 +36,7 @@ class Project(models.Model):
   description = models.TextField(default='')
   fully_description = models.TextField(default='')
   salary = models.IntegerField(null=True, blank=True)
-  experience = models.IntegerField(null=False, blank=False)
+  experience = models.IntegerField()
   employment = models.CharField(max_length=2, choices=EMPLOYMENT_CHOICES, default=EMPLOYMENT_CHOICES[0][0])
   tags = models.ManyToManyField(Tag, blank=True)
   reviews = models.ManyToManyField(ProjectReview, blank=True, related_name='+')
