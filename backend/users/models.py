@@ -61,6 +61,7 @@ class EmployeeProfile(BaseProfile):
     skills = models.ManyToManyField(Skill, blank=True)
     work_places = models.ManyToManyField(WorkPlace, blank=True)
     image = models.ImageField(upload_to='users/images', default="users/images/default.png")
+    position = models.CharField(max_length=128)
 
     def save(self, *args, **kwargs):
         self.username = self.user.username
