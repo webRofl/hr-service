@@ -1,11 +1,11 @@
 import { Grid } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextArea } from '@/components/atoms';
 import { Center, DivInput, Rating } from '@/components/common';
 import { ROUTES } from '@/core';
 import { responsesCreate } from '@/store/api/orvalGeneration/responses/responses';
-import { SimpleForm, ModalButton } from '@/components/molecules';
+import { SimpleForm, ModalButton, ImagePickerWithCrop } from '@/components/molecules';
 import { DefaultFormSubmitHandler } from '@/types';
 import { useAuthState, useLocalStorageState } from '@/store';
 import { useNotifications } from '@/hooks';
@@ -16,7 +16,8 @@ interface IProjectHeaderProps {
   title: string;
   expirience: number;
   salary: number | null;
-  img: string;
+  imgLink: string;
+  setImgLink: (value: string) => void;
   employment: string;
   description: string;
   author: string;
@@ -28,7 +29,8 @@ interface IProjectHeaderProps {
 const ProjectHeader: FC<IProjectHeaderProps> = ({
   title,
   salary,
-  img,
+  imgLink,
+  setImgLink,
   expirience,
   employment,
   description,
@@ -97,7 +99,11 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
           </div>
           <div>{employment}</div>
           <DivInput value={description} isEdit={isEdit} name="description" />
-          <SC.ProjectImg src={img} alt="project logo" />
+          {isEdit ? (
+            <ImagePickerWithCrop name="image" aspect={[16, 9]} setImgLinkOutside={setImgLink} />
+          ) : (
+            <SC.ProjectImg src={imgLink} alt="project logo" />
+          )}
           {profileType !== 'employer' && (
             <ModalButton label="Response" variant="contained" color="info" isOpen={isOpenResponse}>
               <SimpleForm

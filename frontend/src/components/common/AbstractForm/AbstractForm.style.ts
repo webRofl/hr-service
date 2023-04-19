@@ -11,6 +11,7 @@ export const FullSizeGrid = styled(Grid)<FullSizeGridProps>`
   height: 100vh;
   align-items: center;
   justify-content: center;
+  ${styleMixins.fullSizeScroll};
   ${({ heightException }) =>
     typeof heightException === 'number'
       ? styleMixins.customSizeScroll(heightException, 'rem')

@@ -10,10 +10,16 @@ interface CropImageProps {
   name: string;
   aspect: [number, number];
   cropShape?: 'rect' | 'round';
+  setImgLinkOutside?: (value: string) => void;
 }
 
-const ImagePickerWithCrop: FC<CropImageProps> = ({ name, aspect, cropShape = 'rect' }) => {
-  const { watch, setValue } = useFormContext();
+const ImagePickerWithCrop: FC<CropImageProps> = ({
+  name,
+  aspect,
+  setImgLinkOutside,
+  cropShape = 'rect',
+}) => {
+  const { watch, setValue, getValues } = useFormContext();
   const { createToast } = useNotifications();
   const [zoom, setZoom] = useState(1);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -28,6 +34,12 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({ name, aspect, cropShape = 're
       URL.revokeObjectURL(`${name}-crop`);
     };
   }, []);
+
+  useEffect(() => {
+    if (setImgLinkOutside && imgLink.length > 0) {
+      setImgLinkOutside(imgLink);
+    }
+  }, [imgLink]);
 
   const handleClickInput = () => {
     if (!nonEditedFile && watch(name)[0]) {

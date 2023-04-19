@@ -41,8 +41,10 @@ class ProjectCreateAndUpdateView(mixins.CreateModelMixin,
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     def update(self, request, pk=None):
+        data = unwrap_formdata_string(request.data)
+        print(data, request.data)
         serializer = ProjectUpdateSerializer(
-            data=request.data, instance=self.queryset.get(id=pk)
+            data=data, instance=self.queryset.get(id=pk)
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()

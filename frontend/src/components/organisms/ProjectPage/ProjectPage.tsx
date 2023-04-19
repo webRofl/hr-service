@@ -3,10 +3,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { ProjectBody, ProjectHeader, ProjectPageControl } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
-import { projectsRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
+import { projectsGetRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
 import { Project } from '@/store/api/orvalGeneration/models';
 import { Reviews } from '@/components/common';
 import { reviewsProjectCreate } from '@/store/api/orvalGeneration/reviews/reviews';
+import { objectUtils } from '@/utils';
 import * as SC from './ProjectPage.style';
 
 const ProjectPage = () => {
@@ -16,10 +17,25 @@ const ProjectPage = () => {
   const [isMyProject, setIsMyProject] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isLoadingSubmitBtn, setIsLoadingSubmitBtn] = useState<boolean>(false);
+  const [imgLink, setImgLink] = useState('');
+
+  const method = useForm<Project>({
+    defaultValues: data,
+  });
+
+  useEffect(() => {
+    if (typeof data?.image === 'string') {
+      setImgLink(data?.image);
+
+      objectUtils.blobUrlToFile(data?.image).then((file) => {
+        method.setValue('image', file);
+      });
+    }
+  }, [data?.image]);
 
   useEffect(() => {
     const fetch = async () => {
-      const project = (await projectsRead(projectId!)).data;
+      const project = (await projectsGetRead(projectId!)).data;
       setData(project);
     };
 
@@ -30,10 +46,6 @@ const ProjectPage = () => {
     setIsMyProject(data?.author === userId);
   }, [data?.author, userId]);
 
-  const method = useForm<Project>({
-    defaultValues: data,
-  });
-
   useEffect(() => {
     method.reset(data);
   }, [data]);
@@ -43,17 +55,18 @@ const ProjectPage = () => {
   };
 
   const successCallback = async () => {
-    const newData = (await projectsRead(projectId!)).data;
+    const newData = (await projectsGetRead(projectId!)).data;
     setData(newData);
   };
 
   const handleSubmitEdit = async (values: Project) => {
     setIsLoadingSubmitBtn(true);
+
     const data = await projectsUpdate(projectId!, values);
     setIsLoadingSubmitBtn(false);
     if (data.status === 200) {
       setIsEdit(false);
-      const newData = (await projectsRead(data.data.id!)).data;
+      const newData = (await projectsGetRead(data.data.id!)).data;
       setData(newData);
       return;
     }
@@ -72,7 +85,8 @@ const ProjectPage = () => {
           title={data?.title ?? ''}
           employment={data?.employment ?? ''}
           salary={data?.salary ?? null}
-          img={data?.image ?? ''}
+          imgLink={imgLink}
+          setImgLink={setImgLink}
           expirience={data?.experience ?? 0}
           description={data?.description ?? ''}
           author={data?.author ?? ''}

@@ -1,11 +1,11 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { AbstractForm } from '@/components/common';
 import { AuthForm } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
 import { Project } from '@/store/api/orvalGeneration/models';
 import { projectsCreate } from '@/store/api/orvalGeneration/projects/projects';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 const CreateProfileForm = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const CreateProfileForm = () => {
       | 'employment'
       | 'demo_link'
       | 'source_link'
+      | 'image'
     >
   >({
     defaultValues: {
@@ -32,6 +33,7 @@ const CreateProfileForm = () => {
       experience: 0,
       employment: 'FT',
       demo_link: '',
+      image: new Blob(),
     },
   });
 
