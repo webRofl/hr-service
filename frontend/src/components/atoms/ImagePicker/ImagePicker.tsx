@@ -1,14 +1,17 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { CSSProperties } from 'styled-components';
 import * as SC from './ImagePicker.style';
 
 interface ImagePickerProps {
   name: string;
   customImageUrl?: string;
+  style?: CSSProperties;
+
   onChange?: () => void;
 }
 
-const ImagePicker: FC<ImagePickerProps> = ({ name, onChange, customImageUrl }) => {
+const ImagePicker: FC<ImagePickerProps> = ({ name, onChange, customImageUrl, style }) => {
   const { register } = useFormContext();
   const [imageUrl, setImageUrl] = useState('');
 
@@ -28,7 +31,7 @@ const ImagePicker: FC<ImagePickerProps> = ({ name, onChange, customImageUrl }) =
   };
 
   return (
-    <SC.Container imgLink={imageUrl}>
+    <SC.Container imgLink={imageUrl} style={style}>
       <SC.Input type="file" {...register(name)} onChange={handleImageChange} alt="image picker" />
     </SC.Container>
   );
