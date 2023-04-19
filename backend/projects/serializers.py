@@ -49,10 +49,13 @@ class ProjectUpdateSerializer(serializers.ModelSerializer):
 
 class ProjectPostSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects)
+    title = serializers.CharField(max_length=100)
+    image = serializers.ImageField()
 
     class Meta:
         model = Project
-        exclude = ["id", "total_votes", "votes_average", "created", "tags", "image"]
+        exclude = ["total_votes", "votes_average", "tags", "experience"]
+        read_only_fields = ["id", "created"]
 
 
 class ProjectRetrieveSerializer(serializers.ModelSerializer):

@@ -13,6 +13,8 @@ from .serializers import (
 )
 from .models import Project, Tag
 from helpers.get_data_with_user import get_data_with_user
+from helpers.unwrap_formdata_string import unwrap_formdata_string
+from helpers.serializer_lifecycle import serializer_lifecycle
 
 
 class ProjectList(generics.ListAPIView):
@@ -26,27 +28,20 @@ class ProjectCreateAndUpdateView(mixins.CreateModelMixin,
                                  mixins.UpdateModelMixin,
                                  viewsets.GenericViewSet):
     queryset = Project.objects.all()
-    serializer_class = ProjectUpdateSerializer
+    serializer_class = ProjectPostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    parser_classes = (MultiPartParser, FormParser)
-
-    def get_parsers(self):
-        if getattr(self, 'swagger_fake_view', False):
-            return []
-
-        return super().get_parsers()
+    parser_classes = [MultiPartParser, FormParser]
 
     def create(self, request):
         data = get_data_with_user(request, "author")
+        data = unwrap_formdata_string(data)
 
-        serializer = ProjectPostSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer = serializer_lifecycle(self.serializer_class, data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     def update(self, request, pk=None):
-        serializer = self.serializer_class(
+        serializer = ProjectUpdateSerializer(
             data=request.data, instance=self.queryset.get(id=pk)
         )
         serializer.is_valid(raise_exception=True)
