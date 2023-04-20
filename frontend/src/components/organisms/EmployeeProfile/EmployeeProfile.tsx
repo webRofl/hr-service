@@ -6,34 +6,36 @@ import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecu
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
-import { usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployeeGetRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
 import * as SC from './Profile.style';
 
 interface EmployeeProfileProps {
-  profileData: Required<EmployeeProfile>;
   userId: string;
   profileId: string;
-
-  setToggleToFetch: (prev: boolean) => void;
 }
 
-const Profile: FC<EmployeeProfileProps> = ({
-  profileData,
-  userId,
-  profileId,
-  setToggleToFetch,
-}) => {
+const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
+  const [profileData, setProfileData] = useState<EmployeeProfile>(null);
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
-  const method = useForm<IProfile>({
+  useEffect(() => {
+    const fetch = async () => {
+      const data = (await usersEmployeeGetRead(profileId ?? userId)).data;
+      setProfileData(data);
+    };
+
+    fetch();
+  }, []);
+
+  const method = useForm<EmployeeProfile>({
     defaultValues: profileData,
   });
 
-  const setProfileEverywhere = (profile: IProfile) => {
-    // setProfileData(profile);
+  const setProfileEverywhere = (profile: EmployeeProfile) => {
+    setProfileData(profile);
     method.reset(profile);
   };
 
@@ -53,15 +55,22 @@ const Profile: FC<EmployeeProfileProps> = ({
     return setIsEdit((prev) => !prev);
   };
 
-  const submitHandler = (values: IProfile) => {
-    usersEmployeeUpdate(userId, values).then(() => setToggleToFetch((prev: boolean) => !prev));
+  const submitHandler = (values: EmployeeProfile) => {
+    if (!values?.salary) {
+      values.salary = 0;
+    }
+
+    usersEmployeeUpdate(userId, values).then((data) => {
+      setIsEdit(false);
+      setProfileEverywhere(data?.data);
+    });
   };
 
   const reviewSuccessCallback = async () => {
-    // const data = await usersEmployeeRead(profileId ?? userId);
-    // if (data.status === 200) {
-    //   setProfileEverywhere(data.data);
-    // }
+    const data = await usersEmployeeGetRead(profileId ?? userId);
+    if (data.status === 200) {
+      setProfileEverywhere(data.data);
+    }
   };
 
   if (!profileData || profileData?.user === '') {
@@ -80,7 +89,7 @@ const Profile: FC<EmployeeProfileProps> = ({
             <ProfileLogo
               votesAverage={profileData.votes_average}
               image={profileData.image ?? ''}
-              position="Full-Stack dev"
+              position={profileData.position}
               area={profileData.city ?? ''}
               name={profileData.name ?? ''}
               secondName={profileData.second_name ?? ''}
@@ -115,7 +124,7 @@ const Profile: FC<EmployeeProfileProps> = ({
         <Reviews
           placeName="profile"
           placeId={profileId}
-          reviews={profileData.reviews}
+          reviews={profileData.reviews ?? []}
           dataLoadCallback={reviewsProfileCreate}
           successCallback={reviewSuccessCallback}
         />

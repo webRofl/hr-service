@@ -4,8 +4,8 @@ import React, { FC, useEffect } from 'react';
 import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { AuthForm } from '@/components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/hooks';
-import { useLocalStorageState } from '@/store';
+import { useAuth, useSetProfile } from '@/hooks';
+import { useLocalStorageState, useProfileState } from '@/store';
 import { loginSchema, registerSchema } from './Auth.schema';
 
 interface IAuthProps {
@@ -15,6 +15,7 @@ interface IAuthProps {
 const Auth: FC<IAuthProps> = ({ isLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { fetchAndSetProfile } = useSetProfile();
   const { login, register } = useAuth();
   const { setIsNeedToCreateProfile } = useLocalStorageState(({ setIsNeedToCreateProfile }) => ({
     setIsNeedToCreateProfile,
@@ -45,6 +46,7 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
 
   const onSuccessSubmitHandler = () => {
     if (isLogin) {
+      fetchAndSetProfile();
       navigate('/projects');
       return;
     }

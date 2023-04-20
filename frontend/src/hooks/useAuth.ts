@@ -63,12 +63,16 @@ const useAuth = (): IUseAuthReturn => {
     try {
       disableAuthHeader();
 
-      const loginData = (await authLoginCreate(data)).data;
+      const loginDataRequest = await authLoginCreate(data);
+      const loginData = loginDataRequest.data;
+
       axios.defaults.headers.common.Authorization = loginData.access;
       setRefreshToken(loginData.refresh!);
       setIsAuth(true);
       setUsername(loginData.username!);
       setUserId(loginData.id!);
+
+      return loginDataRequest;
     } catch (e) {
       if (e instanceof AxiosError) {
         const errorMessage = e.response?.data?.errors;

@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import styled from 'styled-components';
 import { styleMixins } from '@/style';
+import { DivInput } from '@/components/common';
 
 export const Container = styled(Grid)`
   position: relative;
@@ -13,7 +14,7 @@ export const Container = styled(Grid)`
   font-size: 20px;
 `;
 
-export const Title = styled('div')`
+export const Title = styled(DivInput)`
   font-size: 35px;
   font-weight: 600;
 `;
