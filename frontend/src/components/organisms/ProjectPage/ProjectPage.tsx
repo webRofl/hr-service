@@ -8,6 +8,7 @@ import { Project } from '@/store/api/orvalGeneration/models';
 import { Reviews } from '@/components/common';
 import { reviewsProjectCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { objectUtils } from '@/utils';
+import { RichTextEditor } from '@/components/atoms';
 import * as SC from './ProjectPage.style';
 
 const ProjectPage = () => {
@@ -94,7 +95,7 @@ const ProjectPage = () => {
           projectVotesCount={data?.total_votes ?? 0}
           isEdit={isEdit}
         />
-        <ProjectBody content={data?.fully_description || ''} isEdit={isEdit} />
+        <ProjectBody name="fully_description" isEdit={isEdit} />
         <Reviews
           reviews={data?.reviews || []}
           placeId={projectId!}

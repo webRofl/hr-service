@@ -1,6 +1,6 @@
-import { styleMixins } from '@/style';
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import styled from 'styled-components';
+import { styleMixins } from '@/style';
 
 export const Container = styled(Grid)`
   padding-right: 2rem;
@@ -8,6 +8,7 @@ export const Container = styled(Grid)`
   padding-top: 2rem;
   padding-bottom: 2rem;
   position: relative;
+  ${styleMixins.fullSizeScroll};
 `;
 
 export const GridItem = styled('div')`

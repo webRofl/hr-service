@@ -7,8 +7,9 @@ import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/review
 import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
 import { usersEmployeeGetRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { RichTextEditor } from '@/components/atoms';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
-import * as SC from './Profile.style';
+import * as SC from './EmployeeProfile.style';
 
 interface EmployeeProfileProps {
   userId: string;
@@ -21,15 +22,6 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   const [profileData, setProfileData] = useState<EmployeeProfile>(null);
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = (await usersEmployeeGetRead(profileId ?? userId)).data;
-      setProfileData(data);
-    };
-
-    fetch();
-  }, []);
-
   const method = useForm<EmployeeProfile>({
     defaultValues: profileData,
   });
@@ -40,10 +32,13 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   };
 
   useEffect(() => {
-    if (!Object.keys(method.getValues()).keys && profileData) {
-      method.reset(profileData);
-    }
-  }, [profileData, method]);
+    const fetch = async () => {
+      const data = (await usersEmployeeGetRead(profileId ?? userId)).data;
+      setProfileEverywhere(data);
+    };
+
+    fetch();
+  }, []);
 
   useEffect(() => {
     if (profileId === userId) {
@@ -111,6 +106,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
                 'reviews',
                 'id',
                 'work_places',
+                // 'description',
               ])}
               isEdit={isEdit}
             />
@@ -120,6 +116,9 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
           <SC.GridItem>
             <ProfileSkills skills={profileData.skills} />
           </SC.GridItem>
+        </Grid>
+        <Grid item lg={12} md={12}>
+          <RichTextEditor name="description" isEdit={isEdit} />
         </Grid>
         <Reviews
           placeName="profile"

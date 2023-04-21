@@ -6,6 +6,7 @@ import { Center, DivInput, Reviews } from '@/components/common';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { EmployerProfileHeader, ProjectPageControl } from '@/components/molecules';
 import { usersEmployerGetRead, usersEmployerUpdate } from '@/store/api/orvalGeneration/users/users';
+import { RichTextEditor } from '@/components/atoms';
 import * as SC from './EmployerProfile.style';
 
 interface EmployerProfileProps {
@@ -68,7 +69,8 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
           isEdit={isEdit}
         />
         <Grid lg={12} md={12}>
-          <DivInput name="description" isEdit={isEdit} value={data.description} />
+          {/* <DivInput name="description" isEdit={isEdit} value={data.description} /> */}
+          <RichTextEditor isEdit={isEdit} name="description" defaultValue={data.description} />
         </Grid>
         <Reviews
           placeName="profile"

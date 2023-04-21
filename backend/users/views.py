@@ -109,8 +109,6 @@ class EmployerProfilePostView(mixins.CreateModelMixin,
         if not is_owner(request):
             return Response({}, status=status.HTTP_403_FORBIDDEN)
 
-        print(request.data)
-
         data = get_data_with_user(request)
         data = unwrap_formdata_string(data)
 

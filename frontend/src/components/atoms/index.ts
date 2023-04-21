@@ -5,3 +5,4 @@ export { default as Review } from './Review/Review';
 export { default as WritableReview } from './WritableReview/WritableReview';
 export { default as TextArea } from './TextArea/TextArea';
 export { default as ImagePicker } from './ImagePicker/ImagePicker';
+export { default as RichTextEditor } from './RichTextEditor/RichTextEditor';

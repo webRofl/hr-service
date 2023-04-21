@@ -2,13 +2,14 @@
 import { AbstractObject } from '@/types';
 
 const pickOrExclude = (obj: AbstractObject, keys: string[], isPick: boolean) => {
+  const objCopy = { ...obj };
   const res: AbstractObject = {};
 
-  Object.keys(obj).forEach((key) => {
+  Object.keys(objCopy).forEach((key) => {
     if (keys.includes(key)) {
-      if (isPick) res[key] = obj[key];
+      if (isPick) res[key] = objCopy[key];
     } else if (!isPick) {
-      res[key] = obj[key];
+      res[key] = objCopy[key];
     }
   });
 
