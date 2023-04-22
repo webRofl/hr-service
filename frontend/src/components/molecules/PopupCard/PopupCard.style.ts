@@ -13,6 +13,10 @@ export const Container = styled('div')`
   &:hover {
     box-shadow: 0px 8px 24px rgb(69, 69, 80);
   }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    width: 100%;
+  }
 `;
 
 export const Title = styled('div')`
@@ -53,6 +57,10 @@ export const ModalContent = styled('div')`
   border-radius: 8px;
   padding: 1rem;
   font-size: 20px;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    min-width: 80%;
+  }
 `;
 
 export const ModalTitle = styled(Title)`

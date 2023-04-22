@@ -3,8 +3,8 @@ import { Link as RRDLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ContainerProps {
-  leftStyle: number;
-  isDisplay: boolean;
+  leftstyle: number;
+  isdisplay: boolean;
 }
 
 export const Container = styled(Stack)<ContainerProps>`
@@ -12,8 +12,8 @@ export const Container = styled(Stack)<ContainerProps>`
   border-radius: 8px;
   background-color: ${({ theme }) => theme.black.main};
   padding: 1rem 0.5rem;
-  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
-  left: ${({ leftStyle }) => `${leftStyle + 8}px` ?? 0};
+  display: ${({ isdisplay }) => (isdisplay ? 'flex' : 'none')};
+  left: ${({ leftstyle }) => `${leftstyle + 8}px` ?? 0};
   min-width: 80px;
 
   a {

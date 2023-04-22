@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-import { Box } from '@mui/material';
 import { CSSProperties } from 'react';
 
 export const LoginText: CSSProperties = {

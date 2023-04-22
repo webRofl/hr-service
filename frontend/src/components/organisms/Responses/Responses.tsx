@@ -27,7 +27,7 @@ const Responses = () => {
     navigate(ROUTES.PROJECTS);
   }
 
-  if (!responses.length) {
+  if (!responses?.length) {
     return <Center>No such responses.</Center>;
   }
 

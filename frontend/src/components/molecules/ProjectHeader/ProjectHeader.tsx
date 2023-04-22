@@ -72,9 +72,14 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
 
   return (
     <>
-      <SC.RelativeGrid item lg={8} md={8}>
+      <SC.RelativeGrid item md={8} xs={12}>
         <SC.BriefInfo>
           <DivInput value={title} commonStyle={SC.title} isEdit={isEdit} name="title" />
+          {isEdit ? (
+            <ImagePickerWithCrop name="image" aspect={[16, 9]} setImgLinkOutside={setImgLink} />
+          ) : (
+            <SC.ProjectImg src={imgLink} alt="project logo" />
+          )}
           <SC.Salary>
             <DivInput
               value={salary ? `${salary.toLocaleString('ru')} ₽` : 'Salary is not specified'}
@@ -99,11 +104,6 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
           </div>
           <div>{employment}</div>
           <DivInput value={description} isEdit={isEdit} name="description" />
-          {isEdit ? (
-            <ImagePickerWithCrop name="image" aspect={[16, 9]} setImgLinkOutside={setImgLink} />
-          ) : (
-            <SC.ProjectImg src={imgLink} alt="project logo" />
-          )}
           {profileType !== 'employer' && (
             <ModalButton label="Response" variant="contained" color="info" isOpen={isOpenResponse}>
               <SimpleForm
@@ -116,7 +116,7 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
           )}
         </SC.BriefInfo>
       </SC.RelativeGrid>
-      <Grid item lg={4} md={4}>
+      <Grid item md={4} xs={12}>
         <SC.AuthorBlock>
           <SC.Img src={data?.data?.image} alt="profile logo" />
           <div>{data?.data?.name}</div>

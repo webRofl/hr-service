@@ -79,7 +79,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
         container
         spacing={2}
         onSubmit={method.handleSubmit(submitHandler)}>
-        <Grid item lg={4} md={4}>
+        <Grid item md={4} xs={12}>
           <SC.GridItem>
             <ProfileLogo
               votesAverage={profileData.votes_average}
@@ -94,7 +94,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
             />
           </SC.GridItem>
         </Grid>
-        <Grid item lg={8} md={8}>
+        <Grid item md={8} xs={12}>
           <SC.GridItem>
             <ProfileMainData
               data={objectUtils.exclude(profileData, [
@@ -112,14 +112,12 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
             />
           </SC.GridItem>
         </Grid>
-        <Grid item lg={9} md={7}>
+        <Grid>
           <SC.GridItem>
             <ProfileSkills skills={profileData.skills} />
           </SC.GridItem>
         </Grid>
-        <Grid item lg={12} md={12}>
-          <RichTextEditor name="description" isEdit={isEdit} />
-        </Grid>
+        <RichTextEditor name="description" isEdit={isEdit} />
         <Reviews
           placeName="profile"
           placeId={profileId}

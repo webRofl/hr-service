@@ -9,7 +9,7 @@ interface ProjectBodyProps {
 
 const ProjectBody: FC<ProjectBodyProps> = ({ name, isEdit }) => {
   return (
-    <SC.Grid item lg={12} md={12}>
+    <SC.Grid item xs={12}>
       <RichTextEditor name={name} isEdit={isEdit} />
     </SC.Grid>
   );

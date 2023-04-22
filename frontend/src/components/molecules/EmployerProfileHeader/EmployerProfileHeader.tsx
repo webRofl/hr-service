@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DivInput, Rating } from '@/components/common';
+import { Button } from '@/components/atoms';
 import * as SC from './EmployerProfileHeader.style';
 import ImagePickerWithCrop from '../ImagePickerWithCrop/ImagePickerWithCrop';
 
@@ -12,6 +14,7 @@ interface EmployerProfileHeaderProps {
   totalVotes: number;
   votesAverage: number;
   isEdit: boolean;
+  userId: string;
 }
 
 const EmployerProfileHeader: FC<EmployerProfileHeaderProps> = ({
@@ -23,16 +26,29 @@ const EmployerProfileHeader: FC<EmployerProfileHeaderProps> = ({
   totalVotes,
   votesAverage,
   isEdit,
+  userId,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClickViewProjects = () => {
+    navigate(`/profile/${userId}/projects`);
+  };
+
   return (
-    <SC.Container lg={12} md={12}>
+    <SC.Container xs={12}>
       <SC.Title name="title" isEdit={isEdit} value={title} />
       <DivInput name="city" isEdit={isEdit} value={city ?? 'city is not set'} />
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <SC.ProjectsCount>
         <span>projects: </span>
         <DivInput name="projects_count" isEdit={isEdit} value={projectsCount} />
-      </div>
-      {website && <SC.Link href={website}>{website}</SC.Link>}
+      </SC.ProjectsCount>
+      {website ? <SC.Link href={website}>{website}</SC.Link> : ''}
+      <SC.ViewProjects
+        label="View Projects"
+        variant="contained"
+        color="info"
+        onClick={handleClickViewProjects}
+      />
       <SC.Right>
         {isEdit ? (
           <ImagePickerWithCrop name="image" aspect={[16, 9]} />

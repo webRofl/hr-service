@@ -5,6 +5,10 @@ export const Buttons = styled('div')`
   position: fixed;
   bottom: 2rem;
   right: 2rem;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    bottom: calc(3rem + 56px);
+  }
 `;
 
 export const Button = styled(AtomButton)`

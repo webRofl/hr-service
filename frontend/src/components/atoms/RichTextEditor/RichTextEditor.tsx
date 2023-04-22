@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import './style.css';
 import { useFormContext } from 'react-hook-form';
+import { Grid } from '@mui/material';
+import * as SC from './RichTextEditor.style';
 
 const modules = {
   toolbar: [
@@ -34,23 +35,27 @@ interface RichTextEditorProps {
 const RichTextEditor: FC<RichTextEditorProps> = ({ name, isEdit }) => {
   const { getValues, setValue } = useFormContext();
 
-  if (!isEdit) {
-    // eslint-disable-next-line react/no-danger
-    return <div dangerouslySetInnerHTML={{ __html: getValues()[name] }} />;
-  }
-
   const handleChange = (value: string) => {
     setValue(name, value);
   };
 
   return (
-    <ReactQuill
-      theme="snow"
-      value={getValues()[name]}
-      onChange={handleChange}
-      modules={modules}
-      formats={formats}
-    />
+    <Grid xs={12}>
+      {!isEdit ? (
+        <SC.Preview
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: getValues()[name] }}
+        />
+      ) : (
+        <ReactQuill
+          theme="snow"
+          value={getValues()[name]}
+          onChange={handleChange}
+          modules={modules}
+          formats={formats}
+        />
+      )}
+    </Grid>
   );
 };
 

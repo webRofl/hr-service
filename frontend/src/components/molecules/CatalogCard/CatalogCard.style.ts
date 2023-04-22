@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { styleMixins } from '@/style';
 
-export const Container = styled(Link)`
+interface ContainerProps {
+  issmup: boolean;
+}
+
+export const Container = styled(Link)<ContainerProps>`
   box-shadow: ${({ theme }) => theme.boxShadow.main};
   border-radius: 8px;
   width: 100%;
@@ -11,6 +15,8 @@ export const Container = styled(Link)`
   text-decoration: none;
   display: flex;
   color: ${({ theme }) => theme.gray.dark};
+  ${({ issmup }) => !issmup && 'flex-direction: column'};
+
   &:hover {
     box-shadow: ${({ theme }) => theme.boxShadow.dark};
   }
@@ -23,17 +29,18 @@ export const Container = styled(Link)`
 export const InfoContainer = styled('div')`
   padding: 0 1rem;
   position: relative;
+  width: 100%;
 `;
 
-export const Title = styled('h2')`
-  line-height: 10px;
+export const Title = styled('h2')<ContainerProps>`
+  line-height: ${({ issmup }) => (issmup ? '10px' : '2rem')};
   ${styleMixins.firstLetterUp}
 `;
 
 export const Image = styled('img')`
   width: 300px;
-  height: 214px;
   border-radius: 6px;
+  align-self: center;
 `;
 
 export const Description = styled('div')`

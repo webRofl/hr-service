@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useMemo, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SwitchTransition, CSSTransition } from 'react-transition-group';

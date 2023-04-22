@@ -67,9 +67,9 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
           votesAverage={data.votes_average}
           website={data.website}
           isEdit={isEdit}
+          userId={userId}
         />
-        <Grid lg={12} md={12}>
-          {/* <DivInput name="description" isEdit={isEdit} value={data.description} /> */}
+        <Grid xs={12}>
           <RichTextEditor isEdit={isEdit} name="description" defaultValue={data.description} />
         </Grid>
         <Reviews
@@ -84,6 +84,7 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
             isEdit={isEdit}
             handleClickEdit={handleClickEdit}
             isLoadingSubmitBtn={isLoadingBtn}
+            label="Edit Profile"
           />
         )}
       </SC.Container>

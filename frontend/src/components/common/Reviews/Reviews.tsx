@@ -29,7 +29,7 @@ const Reviews: FC<ReviewsProps> = ({
   };
 
   return (
-    <SC.Container item container lg={12} md={12}>
+    <SC.Container item container xs={12}>
       {isAuth && !isWrite && (
         <SC.CreateButton
           label="Write Review"
@@ -48,7 +48,12 @@ const Reviews: FC<ReviewsProps> = ({
         />
       )}
       {reviews.map((r, idx) => (
-        <ReviewComponent isFirst={idx === 0} isAuth={isAuth} {...r} />
+        <ReviewComponent
+          key={`${r.author?.username} ${r?.text}`}
+          isFirst={idx === 0}
+          isAuth={isAuth}
+          {...r}
+        />
       ))}
     </SC.Container>
   );

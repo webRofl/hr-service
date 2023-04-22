@@ -5,18 +5,21 @@ import { useDynamicSVGImport } from '@/hooks';
 interface IIconComponentProps {
   name: string;
   style?: CSSProperties;
+  width?: string;
+  height?: string;
+  fill?: string;
 }
 
-const defaultStyles = {
-  width: 24,
-  height: 24,
-  fill: 'white',
-};
+const IconComponent: FC<IIconComponentProps> = ({ name, style, width, height, fill }) => {
+  const defaultStyles = {
+    width: width ?? 24,
+    height: height ?? width ?? 24,
+    fill: fill ?? 'white',
+  };
 
-const IconComponent: FC<IIconComponentProps> = ({ name, style }) => {
   const { SvgIcon, isLoading, isError } = useDynamicSVGImport(name);
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return null;
 
   if (isError) return <Cover style={{ ...defaultStyles, ...style }} />;
 

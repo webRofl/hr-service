@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable implicit-arrow-linebreak */
-import { CSSObject, Divider, Stack, Theme, styled } from '@mui/material';
+import { CSSObject, Stack, Theme, styled } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-import { IDrawerProps } from './Menu.types';
 
 export const MenuContainer = styled(Stack)`
   height: 100vh;
@@ -47,17 +46,22 @@ export const ocIcon = {
   width: 25,
 };
 
+interface IDrawerProps {
+  drawerwidth: number;
+  isopen: boolean;
+}
+
 export const Drawer = styled(MuiDrawer)<IDrawerProps>((props) => ({
-  width: props.drawerWidth,
+  width: props.drawerwidth,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
   maxHeight: '100vh',
-  ...(props.isOpen && {
-    ...openedMixin(props.theme, props.drawerWidth),
-    '& .MuiDrawer-paper': openedMixin(props.theme, props.drawerWidth),
+  ...(props.isopen && {
+    ...openedMixin(props.theme, props.drawerwidth),
+    '& .MuiDrawer-paper': openedMixin(props.theme, props.drawerwidth),
   }),
-  ...(!props.isOpen && {
+  ...(!props.isopen && {
     ...closedMixin(props.theme),
     '& .MuiDrawer-paper': closedMixin(props.theme),
   }),

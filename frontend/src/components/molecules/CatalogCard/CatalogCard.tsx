@@ -1,6 +1,7 @@
 import { Rating } from '@/components/common';
 import { ICatalogCardDataWithLink } from '@/types';
 import React, { FC } from 'react';
+import { useMediaQueryWithBreakpoint } from '@/hooks';
 import * as SC from './CatalogCard.style';
 
 const CatalogCard: FC<ICatalogCardDataWithLink> = ({
@@ -12,11 +13,13 @@ const CatalogCard: FC<ICatalogCardDataWithLink> = ({
   totalVotes,
   votesRatio,
 }) => {
+  const matches = useMediaQueryWithBreakpoint('sm');
+
   return (
-    <SC.Container to={link}>
+    <SC.Container to={link} issmup={matches}>
       <SC.Image src={imgLink} alt="project logo" />
       <SC.InfoContainer>
-        <SC.Title>{title}</SC.Title>
+        <SC.Title issmup={matches}>{title}</SC.Title>
         <SC.Description>
           {description.length > 180 ? `${description.slice(0, 180)}...` : description}
         </SC.Description>
