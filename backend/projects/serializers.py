@@ -23,7 +23,7 @@ class TagSerializer(serializers.ModelSerializer):
 class ProjectUpdateSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True, required=False)
     reviews = ProjectReviewSerializer(many=True, required=False)
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False)
 
     def update(self, instance, validated_data):
         super(ProjectUpdateSerializer, self).update(instance, validated_data)
@@ -37,7 +37,8 @@ class ProjectUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        exclude = [
+        fields="__all__"
+        read_only_fields = [
             "author",
             "experience",
             "total_votes",

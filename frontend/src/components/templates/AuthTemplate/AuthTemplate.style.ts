@@ -11,8 +11,13 @@ export const Bottom = styled(Stack)`
 export const LinkItem = styled(Link)`
   text-decoration: none;
   color: #3683dc;
+
   &:hover {
     text-decoration: underline;
     color: #5ea1b6;
   }
 `;
+
+export const fullHeight = {
+  height: '100vh',
+};

@@ -25,8 +25,8 @@ const MenuItem: FC<IMenuItemProps> = ({
       isShowLabel={isShowLabel}
       badgeContent={badgeContent}
       badgeColor={badgeColor}
-      isCurrentItem={pathname.slice(1).toLocaleLowerCase() === label.toLowerCase()}
-      isMenuOpen={isMenuOpen}
+      iscurrentitem={pathname.slice(1).toLocaleLowerCase() === label.toLowerCase()}
+      ismenuopen={isMenuOpen}
       projectStyles
       {...optional}
     />

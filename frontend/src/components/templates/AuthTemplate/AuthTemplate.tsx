@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Auth } from 'components/organisms';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthState } from '@/store';
 import { AuthSupport, OAuthContainer } from '@/components/molecules';
 import { AbstractForm } from '@/components/common';
@@ -25,6 +25,7 @@ const AuthTemplate = () => {
 
   return (
     <AbstractForm
+      style={SC.fullHeight}
       renderLeft={<Auth isLogin={isLogin} />}
       renderRight={
         <OAuthContainer title={`${isLogin ? 'Login' : 'Register'} with another provider:`} />

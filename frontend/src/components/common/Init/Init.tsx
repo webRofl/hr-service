@@ -1,12 +1,11 @@
-import { useInitRequests, useInitSettings } from '@/hooks';
 import React, { FC, useEffect } from 'react';
+import { useInitRequests, useInitSettings } from '@/hooks';
 
 const Init: FC = () => {
   const { setSettings } = useInitSettings();
-  const { startFetch } = useInitRequests();
+  useInitRequests();
 
   useEffect(() => {
-    startFetch();
     setSettings();
   }, []);
 

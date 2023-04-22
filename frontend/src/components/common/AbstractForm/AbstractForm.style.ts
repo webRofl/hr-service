@@ -11,6 +11,7 @@ export const FullSizeGrid = styled(Grid)<FullSizeGridProps>`
   height: 100vh;
   align-items: center;
   justify-content: center;
+  ${styleMixins.fullSizeScroll};
   ${({ heightException }) =>
     typeof heightException === 'number'
       ? styleMixins.customSizeScroll(heightException, 'rem')
@@ -58,6 +59,12 @@ export const ComponentContainer = styled(Grid)<ComponentContainerProps>`
   ${({ theme }) => theme.breakpoints.up('sm')} {
     box-shadow: 0 0 5px #ddd;
   }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+  }
 `;
 
 export const ContentGrid = styled(Grid)`
@@ -67,6 +74,11 @@ export const ContentGrid = styled(Grid)`
 
   ${({ theme }) => theme.breakpoints.up('sm')} {
     max-width: 45rem;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 `;
 

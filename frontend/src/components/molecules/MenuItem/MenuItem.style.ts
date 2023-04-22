@@ -28,13 +28,13 @@ export const text = {
 };
 
 interface ButtonProps {
-  isMenuOpen: boolean;
-  isCurrentItem: boolean;
+  ismenuopen: boolean;
+  iscurrentitem: boolean;
 }
 
 export const Button = styled(MUIButton)<ButtonProps>`
-  ${({ isMenuOpen }) => isMenuOpen && 'color: white'};
-  ${({ isCurrentItem, isMenuOpen }) =>
+  ${({ ismenuopen }) => ismenuopen && 'color: white'};
+  ${({ iscurrentitem, ismenuopen }) =>
     // eslint-disable-next-line implicit-arrow-linebreak
-    isCurrentItem && isMenuOpen && 'box-shadow: 0px 0px 9px 2px white'};
+    iscurrentitem && ismenuopen && 'box-shadow: 0px 0px 9px 2px white'};
 `;

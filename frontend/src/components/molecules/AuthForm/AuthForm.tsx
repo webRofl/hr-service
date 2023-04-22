@@ -45,7 +45,7 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
     const data = await dataLoadCb(valuesWithValidFiles);
     setIsLoading(false);
     // eslint-disable-next-line no-unsafe-optional-chaining
-    if (!data || Math.floor(data?.status / 100) === 2) {
+    if (Math.floor(data?.status / 100) === 2) {
       onSuccessSubmitHandler();
       return;
     }

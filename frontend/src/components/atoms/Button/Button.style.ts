@@ -4,11 +4,11 @@ import { LoadingButton } from '@mui/lab';
 import styled from 'styled-components';
 
 interface MenuItemBtnProps {
-  projectStyles: boolean;
+  projectstyles: boolean;
 }
 
 export const MenuItemBtn = styled(LoadingButton)<MenuItemBtnProps>`
-  ${({ projectStyles }) => {
+  ${({ projectstyles }) => {
     const styles = `${styleMixins.btnMixin};
                     background-color: inherit;
                     width: 100%;
@@ -17,7 +17,7 @@ export const MenuItemBtn = styled(LoadingButton)<MenuItemBtnProps>`
                       background-color: inherit;
                     }
                     `;
-    return projectStyles ? styles : '';
+    return projectstyles ? styles : '';
   }}
   border: none;
   gap: 0.5rem;

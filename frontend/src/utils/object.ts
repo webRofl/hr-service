@@ -1,13 +1,15 @@
+/* eslint-disable indent */
 import { AbstractObject } from '@/types';
 
 const pickOrExclude = (obj: AbstractObject, keys: string[], isPick: boolean) => {
+  const objCopy = { ...obj };
   const res: AbstractObject = {};
 
-  Object.keys(obj).forEach((key) => {
+  Object.keys(objCopy).forEach((key) => {
     if (keys.includes(key)) {
-      if (isPick) res[key] = obj[key];
+      if (isPick) res[key] = objCopy[key];
     } else if (!isPick) {
-      res[key] = obj[key];
+      res[key] = objCopy[key];
     }
   });
 
@@ -42,4 +44,10 @@ export const convertAllFileListToFile = (obj: AbstractObject) => {
   });
 
   return res;
+};
+
+export const blobUrlToFile = async (blobUrl: string) => {
+  const blob = await (await fetch(blobUrl)).blob();
+  const file = new File([blob], `${blob.name}.${blob.type.split(/\//)[1]}`, { type: blob.type });
+  return file;
 };

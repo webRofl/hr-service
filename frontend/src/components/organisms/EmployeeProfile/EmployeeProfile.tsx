@@ -6,42 +6,39 @@ import { ProfileLogo, ProfileMainData, ProfileSkills } from '@/components/molecu
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
-import { usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { usersEmployeeGetRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
+import { RichTextEditor } from '@/components/atoms';
 import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
-import * as SC from './Profile.style';
+import * as SC from './EmployeeProfile.style';
 
 interface EmployeeProfileProps {
-  profileData: Required<EmployeeProfile>;
   userId: string;
   profileId: string;
-
-  setToggleToFetch: (prev: boolean) => void;
 }
 
-const Profile: FC<EmployeeProfileProps> = ({
-  profileData,
-  userId,
-  profileId,
-  setToggleToFetch,
-}) => {
+const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
+  const [profileData, setProfileData] = useState<EmployeeProfile>(null);
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
-  const method = useForm<IProfile>({
+  const method = useForm<EmployeeProfile>({
     defaultValues: profileData,
   });
 
-  const setProfileEverywhere = (profile: IProfile) => {
-    // setProfileData(profile);
+  const setProfileEverywhere = (profile: EmployeeProfile) => {
+    setProfileData(profile);
     method.reset(profile);
   };
 
   useEffect(() => {
-    if (!Object.keys(method.getValues()).keys && profileData) {
-      method.reset(profileData);
-    }
-  }, [profileData, method]);
+    const fetch = async () => {
+      const data = (await usersEmployeeGetRead(profileId ?? userId)).data;
+      setProfileEverywhere(data);
+    };
+
+    fetch();
+  }, []);
 
   useEffect(() => {
     if (profileId === userId) {
@@ -53,15 +50,22 @@ const Profile: FC<EmployeeProfileProps> = ({
     return setIsEdit((prev) => !prev);
   };
 
-  const submitHandler = (values: IProfile) => {
-    usersEmployeeUpdate(userId, values).then(() => setToggleToFetch((prev: boolean) => !prev));
+  const submitHandler = (values: EmployeeProfile) => {
+    if (!values?.salary) {
+      values.salary = 0;
+    }
+
+    usersEmployeeUpdate(userId, values).then((data) => {
+      setIsEdit(false);
+      setProfileEverywhere(data?.data);
+    });
   };
 
   const reviewSuccessCallback = async () => {
-    // const data = await usersEmployeeRead(profileId ?? userId);
-    // if (data.status === 200) {
-    //   setProfileEverywhere(data.data);
-    // }
+    const data = await usersEmployeeGetRead(profileId ?? userId);
+    if (data.status === 200) {
+      setProfileEverywhere(data.data);
+    }
   };
 
   if (!profileData || profileData?.user === '') {
@@ -75,12 +79,12 @@ const Profile: FC<EmployeeProfileProps> = ({
         container
         spacing={2}
         onSubmit={method.handleSubmit(submitHandler)}>
-        <Grid item lg={4} md={4}>
+        <Grid item md={4} xs={12}>
           <SC.GridItem>
             <ProfileLogo
               votesAverage={profileData.votes_average}
               image={profileData.image ?? ''}
-              position="Full-Stack dev"
+              position={profileData.position}
               area={profileData.city ?? ''}
               name={profileData.name ?? ''}
               secondName={profileData.second_name ?? ''}
@@ -90,7 +94,7 @@ const Profile: FC<EmployeeProfileProps> = ({
             />
           </SC.GridItem>
         </Grid>
-        <Grid item lg={8} md={8}>
+        <Grid item md={8} xs={12}>
           <SC.GridItem>
             <ProfileMainData
               data={objectUtils.exclude(profileData, [
@@ -102,20 +106,22 @@ const Profile: FC<EmployeeProfileProps> = ({
                 'reviews',
                 'id',
                 'work_places',
+                // 'description',
               ])}
               isEdit={isEdit}
             />
           </SC.GridItem>
         </Grid>
-        <Grid item lg={9} md={7}>
+        <Grid>
           <SC.GridItem>
             <ProfileSkills skills={profileData.skills} />
           </SC.GridItem>
         </Grid>
+        <RichTextEditor name="description" isEdit={isEdit} />
         <Reviews
           placeName="profile"
           placeId={profileId}
-          reviews={profileData.reviews}
+          reviews={profileData.reviews ?? []}
           dataLoadCallback={reviewsProfileCreate}
           successCallback={reviewSuccessCallback}
         />

@@ -7,13 +7,14 @@ export const RelativeGrid = styled(Grid)`
   position: relative;
 `;
 
-export const GridItem = styled('div')`
-  ${styleMixins.blockStyle}
-`;
-
-export const BriefInfo = styled(GridItem)`
+export const BriefInfo = styled('div')`
   padding: 1rem 1.5rem;
   padding-top: 0.5rem;
+  ${styleMixins.blockStyle}
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    box-shadow: none;
+  }
 `;
 
 export const title = {
@@ -25,6 +26,11 @@ export const Salary = styled('h4')`
   font-weight: 500;
   font-size: 18px;
   line-height: 1rem;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    line-height: 2rem;
+    margin: 0;
+  }
 `;
 
 export const ProjectRate = styled('div')`
@@ -49,13 +55,18 @@ export const ProjectImg = styled('img')`
   position: absolute;
   right: 1rem;
   top: 1.5rem;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    position: static;
+  }
 `;
 
-export const AuthorBlock = styled(GridItem)`
+export const AuthorBlock = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${styleMixins.blockStyle}
 `;
 
 export const Img = styled('img')`

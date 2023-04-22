@@ -1,6 +1,6 @@
-import { CSSUnits } from '@/core/types';
 import { Modal } from '@mui/material';
 import styled, { css } from 'styled-components';
+import { CSSUnits } from '@/core/types';
 
 export const btnMixin = css`
   background-color: ${({ theme }) => theme.blue.main};
@@ -25,8 +25,12 @@ export const menuItem = css`
 `;
 
 export const fullSizeScroll = css`
-  max-height: calc(100vh - 2rem);
+  height: calc(100vh - 2rem);
   overflow-y: scroll;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    height: calc(100vh - 3rem - 56px);
+  }
 `;
 
 export const customSizeScroll = (value: number, unit: CSSUnits) => css`

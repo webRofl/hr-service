@@ -47,6 +47,9 @@ class EmployeeProfilePostView(mixins.CreateModelMixin,
         data = get_data_with_user(request)
         data = unwrap_formdata_string(data)
 
+        if (data["image"] == 'undefined'):
+            del data['image']
+
         serializer = serializer_lifecycle(EmployeeProfileUpdateSerializer, data, instance=self.queryset.get(user=pk))
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -108,6 +111,9 @@ class EmployerProfilePostView(mixins.CreateModelMixin,
 
         data = get_data_with_user(request)
         data = unwrap_formdata_string(data)
+
+        if (data["image"] == 'undefined' or isinstance(data["image"], str)):
+            del data['image']
 
         serializer = serializer_lifecycle(EmployerProfileUpdateSerializer, data, instance=self.queryset.get(user=pk))
 

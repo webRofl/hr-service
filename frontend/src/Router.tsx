@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import React, { FC } from 'react';
-import { RouterProvider, Routes, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { TemplateWithMenu, AuthTemplate } from 'components/templates';
 import {
   Candidates,

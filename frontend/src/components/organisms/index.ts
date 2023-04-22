@@ -9,3 +9,4 @@ export { default as ProfileProjects } from './ProfileProjects/ProfileProjects';
 export { default as CreateProfileForm } from './CreateProfileForm/CreateProfileForm';
 export { default as CreateProjectForm } from './CreateProjectForm/CreateProjectForm';
 export { default as EmployerProfile } from './EmployerProfile/EmployerProfile';
+export { default as MobileMenu } from './MobileMenu/MobileMenu';

@@ -2,10 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Grid } from '@mui/material';
 import { EmployerProfileRetrieve } from '@/store/api/orvalGeneration/models';
-import { Center, Reviews } from '@/components/common';
+import { Center, DivInput, Reviews } from '@/components/common';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
-import { EmployerProfileHeader } from '@/components/molecules';
-import { usersEmployerGetRead } from '@/store/api/orvalGeneration/users/users';
+import { EmployerProfileHeader, ProjectPageControl } from '@/components/molecules';
+import { usersEmployerGetRead, usersEmployerUpdate } from '@/store/api/orvalGeneration/users/users';
+import { RichTextEditor } from '@/components/atoms';
 import * as SC from './EmployerProfile.style';
 
 interface EmployerProfileProps {
@@ -17,9 +18,16 @@ interface EmployerProfileProps {
 const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, userId }) => {
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [data, setData] = useState<EmployerProfileRetrieve>(profileData);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+
+  const method = useForm<EmployerProfileRetrieve>({
+    defaultValues: {},
+  });
 
   useEffect(() => {
     setData(profileData);
+    method.reset(profileData);
   }, [profileData]);
 
   useEffect(() => {
@@ -28,11 +36,7 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
     }
   }, [profileId, userId]);
 
-  const method = useForm<EmployerProfileRetrieve>({
-    defaultValues: {},
-  });
-
-  const reviewSuccessCb = () => {
+  const updateProfileData = () => {
     usersEmployerGetRead(profileId).then((data) => setData(data.data));
   };
 
@@ -40,9 +44,20 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
     return <Center>No such profile</Center>;
   }
 
+  const handleClickEdit = () => {
+    setIsEdit((prev) => !prev);
+  };
+
+  const submitHandler = async (values) => {
+    const data = (await usersEmployerUpdate(profileId, values)).data;
+    setData(data);
+    setIsEdit(false);
+    updateProfileData();
+  };
+
   return (
     <FormProvider {...method}>
-      <SC.Container>
+      <SC.Container component="form" container onSubmit={method.handleSubmit(submitHandler)}>
         <EmployerProfileHeader
           title={data.company_name}
           city={data.city}
@@ -51,17 +66,27 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
           totalVotes={data.total_votes}
           votesAverage={data.votes_average}
           website={data.website}
+          isEdit={isEdit}
+          userId={userId}
         />
-        <Grid lg={12} md={12}>
-          {data.description}
+        <Grid xs={12}>
+          <RichTextEditor isEdit={isEdit} name="description" defaultValue={data.description} />
         </Grid>
         <Reviews
           placeName="profile"
           placeId={profileId}
           reviews={data.reviews || []}
           dataLoadCallback={reviewsProfileCreate}
-          successCallback={reviewSuccessCb}
+          successCallback={updateProfileData}
         />
+        {isMyProfile && (
+          <ProjectPageControl
+            isEdit={isEdit}
+            handleClickEdit={handleClickEdit}
+            isLoadingSubmitBtn={isLoadingBtn}
+            label="Edit Profile"
+          />
+        )}
       </SC.Container>
     </FormProvider>
   );

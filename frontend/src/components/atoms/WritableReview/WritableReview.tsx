@@ -51,7 +51,7 @@ const WritableReview: FC<WritableReviewProps> = ({
 
   return (
     <FormProvider {...method}>
-      <SC.WritableReview item lg={12} md={12} component="form">
+      <SC.WritableReview item xs={12} component="form">
         <SC.Author>{username}</SC.Author>
         <DivInput isEdit name="reviewText" value="" />
         <SC.Rating value={ratingValue} onChange={handleChangeRating} />

@@ -1,6 +1,8 @@
 import { Grid } from '@mui/material';
 import styled from 'styled-components';
 import { styleMixins } from '@/style';
+import { DivInput } from '@/components/common';
+import { Button } from '@/components/atoms';
 
 export const Container = styled(Grid)`
   position: relative;
@@ -13,7 +15,7 @@ export const Container = styled(Grid)`
   font-size: 20px;
 `;
 
-export const Title = styled('div')`
+export const Title = styled(DivInput)`
   font-size: 35px;
   font-weight: 600;
 `;
@@ -27,6 +29,19 @@ export const Right = styled('div')`
   position: absolute;
   top: 0.2rem;
   right: 0.5rem;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    position: sticky;
+  }
+`;
+
+export const ProjectsCount = styled('div')`
+  display: flex;
+  gap: 1rem;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    gap: 0.5rem;
+  }
 `;
 
 export const RatingBlock = styled('div')`
@@ -40,4 +55,9 @@ export const TotalVotes = styled('span')`
 export const Image = styled('img')`
   border-radius: 6px;
   height: 10rem;
+`;
+
+export const ViewProjects = styled(Button)`
+  display: block;
+  margin-bottom: 1rem;
 `;

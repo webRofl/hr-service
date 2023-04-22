@@ -24,7 +24,7 @@ const Projects: FC = () => {
   }, [data]);
 
   return (
-    <SC.Container style={{ height: 'calc(100vh - 2rem)' }}>
+    <SC.Container>
       <ProjectsDetails />
       {cardList?.length ? (
         <Catalog linkWithoutId={ROUTES.PROJECTS} cardList={cardList} />

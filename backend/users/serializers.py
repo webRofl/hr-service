@@ -52,11 +52,14 @@ class EmployeeProfileListSerializer(serializers.ModelSerializer):
 
 class EmployeeProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False)
+    reviews = ProfileReviewSerializer(many=True, read_only=True)
+    work_places = ProfileWorkPlaceSerializer(many=True, read_only=True)
 
     class Meta:
         model = EmployeeProfile
-        exclude = ('is_active', 'id', 'skills', 'created', 'email', 'username', 'work_places', 'reviews',)
+        read_only_fields = ('is_active', 'id', 'skills', 'created', 'email', 'username', 'work_places', 'reviews',)
+        fields = '__all__'
 
 
 class EmployeeProfilePostSerializer(serializers.ModelSerializer):
@@ -99,8 +102,10 @@ class EmployerProfilePostSerializer(serializers.ModelSerializer):
 
 class EmployerProfileUpdateSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-    image = serializers.ImageField()
+    image = serializers.ImageField(required=False)
+    reviews = ProfileReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = EmployerProfile
-        exclude = ('is_active', 'id', 'created', 'email', 'username', 'reviews',)
+        exclude = ['responses']
+        read_only_fields = ('is_active', 'id', 'created', 'email', 'username', 'reviews',)

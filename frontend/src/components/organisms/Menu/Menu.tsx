@@ -38,7 +38,7 @@ const Menu = () => {
   }, [window.innerWidth, matches]);
 
   return (
-    <SC.Drawer variant="permanent" isOpen={isOpen} drawerWidth={drawerWidth}>
+    <SC.Drawer variant="permanent" isopen={isOpen} drawerwidth={drawerWidth}>
       <SC.DrawerHeader>
         <IconButton color="success" aria-label="open drawer" onClick={toggleDrawerOpen}>
           {isOpen ? <WrapSVG style={SC.ocIcon} /> : <UnwrapSVG style={SC.ocIcon} />}

@@ -19,14 +19,7 @@ const ProfileTemplate: FC<ProfileTemplateProps> = ({ profileType }) => {
   const { profileData, setToggleToFetch } = useProfileFetch(profileId!, user, profileType);
 
   if (profileType === 'employee') {
-    return (
-      <EmployeeProfileComponent
-        profileData={profileData}
-        userId={user}
-        setToggleToFetch={setToggleToFetch}
-        profileId={profileId}
-      />
-    );
+    return <EmployeeProfileComponent userId={user} profileId={profileId} />;
   }
   if (profileType === 'employer') {
     return <EmployerProfile profileData={profileData} profileId={profileId} userId={user} />;

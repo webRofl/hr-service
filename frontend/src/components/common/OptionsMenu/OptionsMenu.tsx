@@ -1,5 +1,5 @@
-import { useClickOutside, useEventListener } from '@/hooks';
 import React, { useState } from 'react';
+import { useClickOutside, useEventListener } from '@/hooks';
 import * as SC from './OptionsMenu.style';
 
 interface OptionMenuProps {
@@ -23,13 +23,17 @@ const OptionMenu = React.forwardRef<HTMLDivElement, OptionMenuProps>(({ stack },
   return (
     <SC.Container
       divider={<SC.Divider variant="fullWidth" />}
-      isDisplay={isOpen}
-      leftStyle={ref?.current?.parentNode?.clientWidth}>
+      isdisplay={isOpen}
+      leftstyle={ref?.current?.parentNode?.clientWidth}>
       {stack.map((item) => {
         if (!item) return null;
 
         const [key, value] = item;
-        return <SC.Link to={value}>{key}</SC.Link>;
+        return (
+          <SC.Link key={key} to={value}>
+            {key}
+          </SC.Link>
+        );
       })}
     </SC.Container>
   );

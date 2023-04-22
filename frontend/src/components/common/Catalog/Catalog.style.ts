@@ -1,3 +1,4 @@
+import { styleMixins } from '@/style';
 import { Grid } from '@mui/material';
 import styled from 'styled-components';
 
@@ -8,8 +9,7 @@ export const CardsContainer = styled(Grid)`
   width: 100%;
   padding-right: 4.5%;
   padding-left: 4.5%;
-  overflow-y: scroll;
-  max-height: calc(100vh - 2rem);
+  ${styleMixins.fullSizeScroll};
 `;
 
 export const PopupCardsContainer = styled(CardsContainer)`

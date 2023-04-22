@@ -19,7 +19,7 @@ const Button: FC<Props> = ({
       loading={isLoading}
       style={style}
       {...muiButtonProps}
-      projectStyles={projectStyles}
+      projectstyles={projectStyles}
       startIcon={
         iconName && (
           <Badge badgeContent={badgeContent} color={badgeColor ?? 'default'}>
