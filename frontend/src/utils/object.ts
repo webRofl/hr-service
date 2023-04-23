@@ -31,14 +31,18 @@ export const isIterable = (obj: unknown) => {
     return false;
   }
 
-  return obj[Symbol.iterator];
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return typeof obj[Symbol.iterator] === 'function';
 };
 
-export const convertAllFileListToFile = (obj: AbstractObject) => {
+export const convertAllFileListToFile = (obj: FileList | File) => {
   const res = { ...obj };
 
   Object.entries(res).forEach(([key, value]) => {
     if (isIterable(value) && value[0] instanceof Blob) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       res[key] = value.item(0);
     }
   });

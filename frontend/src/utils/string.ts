@@ -1,3 +1,5 @@
+import { capitalize } from '@mui/material';
+
 export const snakeCaseToCamelCase = (str: string): string => {
   return str
     .split('')
@@ -9,10 +11,6 @@ export const snakeCaseToCamelCase = (str: string): string => {
       return true;
     })
     .join('');
-};
-
-export const capitalize = (str: string): string => {
-  return str[0].toUpperCase() + str.slice(1);
 };
 
 export const capitalizeAll = (str: string): string => {
