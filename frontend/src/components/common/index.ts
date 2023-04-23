@@ -10,3 +10,4 @@ export { default as AbstractForm } from './AbstractForm/AbstractForm';
 export { default as Init } from './Init/Init';
 export { default as Center } from './Center/Center';
 export { default as StorybookWrapper } from './StorybookWrapper/StorybookWrapper';
+export { default as TestWrapper } from './TestWrapper/TestWrapper';

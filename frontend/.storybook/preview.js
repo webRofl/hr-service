@@ -1,8 +1,21 @@
 import { jsxDecorator } from 'storybook-addon-jsx';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { getTheme } from '../src/style/theme';
 
 const preview = {
   parameters: {
-    decorators: [jsxDecorator],
+    decorators: [
+      jsxDecorator,
+      withThemeFromJSXProvider({
+        GlobalStyles: createGlobalStyle``,
+        themes: {
+          light: getTheme('light'),
+        },
+        defaultTheme: 'light',
+        Provider: ThemeProvider,
+      }),
+    ],
     actions: { argTypesRegex: '^on.*' },
     controls: {
       matchers: {

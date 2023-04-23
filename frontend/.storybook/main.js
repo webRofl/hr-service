@@ -10,6 +10,8 @@ module.exports = {
     '@storybook/addon-mdx-gfm',
     '@storybook/addon-actions',
     'storybook-addon-react-router-v6',
+    '@storybook/addon-styling',
+    '@storybook/addon-ie11',
   ],
   framework: {
     name: '@storybook/react-vite',

@@ -12,7 +12,9 @@ interface TextAreaProps {
 const TextArea: FC<TextAreaProps> = ({ name, styles, defaultValue = '' }) => {
   const { register } = useFormContext();
 
-  return <SC.TextArea {...register(name, { value: defaultValue })} style={styles} />;
+  return (
+    <SC.TextArea data-testid="testid" {...register(name, { value: defaultValue })} style={styles} />
+  );
 };
 
 export default TextArea;

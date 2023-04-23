@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["vite/client", "vite-plugin-svgr/client", "node"],
     "allowJs": true,
@@ -10,8 +10,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "es2022",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -24,8 +24,7 @@
       "assets/*": ["src/assets/*"],
       "utils/*": ["src/utils/*"],
       "store/*": ["src/store/*"],
-      "hooks/*": ["src/hooks/*"],
-      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+      "hooks/*": ["src/hooks/*"]
     }
   },
   "include": ["src"]

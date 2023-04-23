@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
+import { FallbackProps } from 'react-error-boundary';
 
-interface IErrorFallbackProps {
-  error: Error | string;
-  resetErrorBoundary?: () => void;
-}
-
-const ErrorFallback: FC<IErrorFallbackProps> = ({ error, resetErrorBoundary }) => {
+const ErrorFallback: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
