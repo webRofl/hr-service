@@ -6,9 +6,9 @@ import '@testing-library/jest-dom';
 describe('TextArea atom component', () => {
   beforeEach(() => {
     render(
-      <TestWrapper defaultValues={{ text: '' }}>
+      <TestWrapper.WithForm defaultValues={{ text: '' }}>
         <TextArea name="text" />
-      </TestWrapper>,
+      </TestWrapper.WithForm>,
     );
   });
 
