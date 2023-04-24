@@ -10,12 +10,14 @@ class BaseReview(models.Model):
     text = models.TextField(default='')
     rate = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.author.username
 
     class Meta:
         abstract = True
+        ordering = ['-created']
 
 
 class ProjectReview(BaseReview):
