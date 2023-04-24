@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import ProjectReview, ProfileReview
 from .serializers import ProjectReviewPostSerializer, ProfileReviewPostSerializer
 from helpers.get_data_with_user import get_data_with_user
+from helpers.serializer_lifecycle import serializer_lifecycle
 
 class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
     queryset = ProjectReview.objects.all()
@@ -15,9 +16,7 @@ class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = get_data_with_user(request, 'author')
 
-        serializer = self.serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer = serializer_lifecycle(data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -31,9 +30,7 @@ class ProfileReviewCRUDViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = get_data_with_user(request, 'author')
 
-        serializer = self.serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer = serializer_lifecycle(data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
