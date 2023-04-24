@@ -6,14 +6,44 @@ import { AbstractObject } from '@/types';
 import { getTheme } from '@/style';
 
 interface TestWrapperProps {
-  defaultValues?: AbstractObject;
-  defaultRoute?: string;
+  defaultValues: AbstractObject;
+  defaultRoute: string;
 }
 
-const TestWrapper: FC<PropsWithChildren<TestWrapperProps>> = ({
+export const Default: FC<PropsWithChildren> = ({ children }) => {
+  return <ThemeProvider theme={getTheme('light')}>{children}</ThemeProvider>;
+};
+
+export const WithRouter: FC<PropsWithChildren<Pick<TestWrapperProps, 'defaultRoute'>>> = ({
+  defaultRoute,
   children,
-  defaultRoute = '',
-  defaultValues = {},
+}) => {
+  return (
+    <MemoryRouter initialEntries={[defaultRoute]}>
+      <Default>{children}</Default>
+    </MemoryRouter>
+  );
+};
+
+export const WithForm: FC<PropsWithChildren<Pick<TestWrapperProps, 'defaultValues'>>> = ({
+  defaultValues,
+  children,
+}) => {
+  const method = useForm({
+    defaultValues,
+  });
+
+  return (
+    <FormProvider {...method}>
+      <Default>{children}</Default>
+    </FormProvider>
+  );
+};
+
+export const WithAll: FC<PropsWithChildren<TestWrapperProps>> = ({
+  defaultValues,
+  defaultRoute,
+  children,
 }) => {
   const method = useForm({
     defaultValues,
@@ -21,11 +51,9 @@ const TestWrapper: FC<PropsWithChildren<TestWrapperProps>> = ({
 
   return (
     <MemoryRouter initialEntries={[defaultRoute]}>
-      <ThemeProvider theme={getTheme('light')}>
-        <FormProvider {...method}>{children}</FormProvider>
-      </ThemeProvider>
+      <FormProvider {...method}>
+        <Default>{children}</Default>
+      </FormProvider>
     </MemoryRouter>
   );
 };
-
-export default TestWrapper;
