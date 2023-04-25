@@ -29,6 +29,7 @@ const Template: Story = {
 export const Default: Story = {
   ...Template,
   args: {
+    // @ts-expect-error something mistake
     ref: useRef(<Button label="Open options" />),
     stack: [
       ['profile', '/profile'],

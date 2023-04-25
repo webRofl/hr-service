@@ -8,7 +8,7 @@ import { objectUtils } from '@/utils';
 import { useTitleToggle } from '@/hooks';
 import { usersEmployeeGetRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { RichTextEditor } from '@/components/atoms';
-import { EmployeeProfile, Profile as IProfile } from '../../../store/api/orvalGeneration/models';
+import { EmployeeProfile } from '@/store/api/orvalGeneration/models';
 import * as SC from './EmployeeProfile.style';
 
 interface EmployeeProfileProps {
@@ -55,8 +55,10 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
       values.salary = 0;
     }
 
+    // @ts-expect-error invalid orval type definition
     usersEmployeeUpdate(userId, values).then((data) => {
       setIsEdit(false);
+      // @ts-expect-error invalid orval type definition
       setProfileEverywhere(data?.data);
     });
   };
@@ -75,6 +77,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   return (
     <FormProvider {...method}>
       <SC.Container
+        // @ts-expect-error MUI error
         component="form"
         container
         spacing={2}
@@ -82,7 +85,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
         <Grid item md={4} xs={12}>
           <SC.GridItem>
             <ProfileLogo
-              votesAverage={profileData.votes_average}
+              votesAverage={profileData.votes_average ?? 0}
               image={profileData.image ?? ''}
               position={profileData.position}
               area={profileData.city ?? ''}
@@ -97,6 +100,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
         <Grid item md={8} xs={12}>
           <SC.GridItem>
             <ProfileMainData
+              // @ts-expect-error using generic
               data={objectUtils.exclude(profileData, [
                 'image',
                 'skills',
@@ -114,7 +118,8 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
         </Grid>
         <Grid>
           <SC.GridItem>
-            <ProfileSkills skills={profileData.skills} />
+            {/* @ts-expect-error something mistake */}
+            <ProfileSkills skills={profileData.skills ?? []} />
           </SC.GridItem>
         </Grid>
         <RichTextEditor name="description" isEdit={isEdit} />

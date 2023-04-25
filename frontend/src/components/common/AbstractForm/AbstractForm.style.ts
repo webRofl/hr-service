@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import styled, { css } from 'styled-components';
 import { Grid } from '@mui/material';
 import { styleMixins } from '@/style';

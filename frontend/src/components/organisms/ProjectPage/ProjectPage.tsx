@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { ProjectBody, ProjectHeader, ProjectPageControl } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
 import { projectsGetRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
-import { Project } from '@/store/api/orvalGeneration/models';
+import { Project, ProjectRetrieve, ProjectsCreateBody } from '@/store/api/orvalGeneration/models';
 import { Reviews } from '@/components/common';
 import { reviewsProjectCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { objectUtils } from '@/utils';
@@ -14,14 +14,14 @@ import * as SC from './ProjectPage.style';
 const ProjectPage = () => {
   const { projectId } = useParams();
   const { userId } = useLocalStorageState(({ userId }) => ({ userId }));
-  const [data, setData] = useState<Project | null>(null);
+  const [data, setData] = useState<ProjectRetrieve | null>(null);
   const [isMyProject, setIsMyProject] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isLoadingSubmitBtn, setIsLoadingSubmitBtn] = useState<boolean>(false);
   const [imgLink, setImgLink] = useState('');
 
   const method = useForm<Project>({
-    defaultValues: data,
+    defaultValues: data!,
   });
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const ProjectPage = () => {
       setImgLink(data?.image);
 
       objectUtils.blobUrlToFile(data?.image).then((file) => {
+        // @ts-expect-error wrong state image field
         method.setValue('image', file);
       });
     }
@@ -48,7 +49,7 @@ const ProjectPage = () => {
   }, [data?.author, userId]);
 
   useEffect(() => {
-    method.reset(data);
+    method.reset(data!);
   }, [data]);
 
   const handleClickEdit = () => {
@@ -60,9 +61,10 @@ const ProjectPage = () => {
     setData(newData);
   };
 
-  const handleSubmitEdit = async (values: Project) => {
+  const handleSubmitEdit: SubmitHandler<Project> = async (values) => {
     setIsLoadingSubmitBtn(true);
 
+    // @ts-expect-error invalid orval type definition
     const data = await projectsUpdate(projectId!, values);
     setIsLoadingSubmitBtn(false);
     if (data.status === 200) {
@@ -80,6 +82,7 @@ const ProjectPage = () => {
       <SC.Container
         container
         spacing={2}
+        // @ts-expect-error MUI error
         component="form"
         onSubmit={method.handleSubmit(handleSubmitEdit)}>
         <ProjectHeader

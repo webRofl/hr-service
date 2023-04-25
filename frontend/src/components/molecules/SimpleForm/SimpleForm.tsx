@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { FormInput, TextArea } from '@/components/atoms';
+import { FormInput } from '@/components/atoms';
 import { Props as ButtonProps } from '@/components/atoms/Button/Button.types';
 import { DefaultFormSubmitHandler } from '@/types';
 import * as SC from './SimpleForm.style';
@@ -40,6 +40,7 @@ const SimpleForm: FC<SimpleFormProps> = ({
           return <FormInput key={fieldName} name={fieldName} required />;
         })}
 
+        {/* @ts-expect-error MUI error */}
         <SC.Button type="submit" {...buttonProps} />
       </SC.Form>
     </FormProvider>

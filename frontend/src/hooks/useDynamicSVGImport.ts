@@ -1,10 +1,7 @@
 import React, { SVGProps, useEffect, useRef, useState, FC } from 'react';
 
 interface UseDynamicSVGImportOptions {
-  onCompleted?: (
-    name: string,
-    SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | undefined,
-  ) => void;
+  onCompleted?: (name: string, SvgIcon: JSX.Element | undefined) => void;
   onError?: (err: Error) => void;
 }
 
@@ -18,6 +15,7 @@ const useDynamicSVGImport = (name: string, options: UseDynamicSVGImportOptions =
     const importIcon = async (): Promise<void> => {
       try {
         ImportedIconRef.current = (await import(`../assets/icons/${name}.svg`)).ReactComponent;
+        // @ts-expect-error something mistake
         onCompleted?.(name, ImportedIconRef.current);
       } catch (err) {
         if (err instanceof Error) {

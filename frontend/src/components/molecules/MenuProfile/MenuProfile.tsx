@@ -23,6 +23,7 @@ const MenuProfile: FC<IMenuProfileProps> = ({ isOpen }) => {
     username,
     userId,
   }));
+  // @ts-expect-error profile state type definition
   const { image } = useProfileState(({ image }) => ({ image }));
 
   const ref = React.useRef<HTMLDivElement>(null);

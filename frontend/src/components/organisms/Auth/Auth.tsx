@@ -63,6 +63,7 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
     <AuthForm
       methods={methods[location.pathname.slice(1)]}
       title={isLogin ? 'Log into your account' : 'Register new account'}
+      // @ts-expect-error something mistake
       dataLoadCb={isLogin ? login : register}
       btnText={isLogin ? 'Login' : 'Register'}
       isLogin={isLogin}

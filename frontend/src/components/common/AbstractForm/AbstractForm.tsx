@@ -4,9 +4,9 @@ import { CSSProperties } from 'styled-components';
 import * as SC from './AbstractForm.style';
 
 interface AbstractFormProps {
-  renderLeft: FC<unknown>;
-  renderRight: FC<unknown>;
-  renderBottom?: FC<unknown>;
+  renderLeft: JSX.Element;
+  renderRight: JSX.Element;
+  renderBottom?: JSX.Element;
   isBigForm?: boolean;
   heightException?: number | boolean;
   style?: CSSProperties;

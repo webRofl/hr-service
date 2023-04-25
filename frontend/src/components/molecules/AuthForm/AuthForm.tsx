@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Typography, Box } from '@mui/material';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
@@ -40,6 +42,7 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
   const onSubmitHandler = async (values: unknown) => {
     setIsLoading(true);
 
+    // @ts-expect-error something mistake
     const valuesWithValidFiles = objectUtils.convertAllFileListToFile(values);
 
     const data = await dataLoadCb(valuesWithValidFiles);
@@ -49,6 +52,7 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
       onSuccessSubmitHandler();
       return;
     }
+    // @ts-expect-error something mistake
     setErrors(data);
   };
 

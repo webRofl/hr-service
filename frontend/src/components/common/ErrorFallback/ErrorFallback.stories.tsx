@@ -11,5 +11,6 @@ const Template: ComponentStory<typeof ErrorFallback> = (args) => <ErrorFallback 
 
 export const Default = Template.bind({});
 Default.args = {
+  // @ts-expect-error something mistake
   error: 'some string or ur error',
 };

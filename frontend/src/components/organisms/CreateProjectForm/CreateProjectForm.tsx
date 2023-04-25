@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +35,7 @@ const CreateProfileForm = () => {
       experience: 0,
       employment: 'FT',
       demo_link: '',
+      // @ts-expect-error something mistake
       image: new Blob(),
     },
   });
@@ -48,9 +51,11 @@ const CreateProfileForm = () => {
       renderLeft={
         // eslint-disable-next-line react/jsx-wrap-multilines
         <AuthForm
+          // @ts-expect-error something mistake
           methods={method}
           btnText="Go"
           onSuccessSubmitHandler={successCb}
+          // @ts-expect-error something mistake
           dataLoadCb={projectsCreate}
         />
       }

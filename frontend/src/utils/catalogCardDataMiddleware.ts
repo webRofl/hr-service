@@ -1,10 +1,10 @@
-import { Project } from '@/store/api/orvalGeneration/models';
+import { ProjectList } from '@/store/api/orvalGeneration/models';
 import { AbstractObject, CustomCatalogData, ICatalogCardData } from '@/types/common.types';
 import { stringUtils } from '@/utils';
 
 export const catalogCardDataMiddleware = (
-  keys: Required<CustomCatalogData>,
-  values: Project[],
+  keys: CustomCatalogData,
+  values: ProjectList[],
 ): ICatalogCardData[] => {
   return values.map((project) => {
     const res: ICatalogCardData & AbstractObject = {

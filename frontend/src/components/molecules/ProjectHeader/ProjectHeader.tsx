@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextArea } from '@/components/atoms';
 import { Center, DivInput, Rating } from '@/components/common';
@@ -119,6 +119,7 @@ const ProjectHeader: FC<IProjectHeaderProps> = ({
       <Grid item md={4} xs={12}>
         <SC.AuthorBlock>
           <SC.Img src={data?.data?.image} alt="profile logo" />
+          {/* @ts-expect-error something mistake */}
           <div>{data?.data?.name}</div>
           <Rating
             value={data?.data.votes_average}

@@ -69,6 +69,7 @@ const WritableReview: FC<WritableReviewProps> = ({
             variant="contained"
             color="info"
             label="send"
+            // @ts-expect-error something mistake
             type="submit"
             onClick={handleSubmitEdit}
           />

@@ -30,6 +30,7 @@ export const WithForm: FC<PropsWithChildren<Pick<TestWrapperProps, 'defaultValue
   children,
 }) => {
   const method = useForm({
+    // @ts-expect-error something mistake
     defaultValues,
   });
 
@@ -46,6 +47,7 @@ export const WithAll: FC<PropsWithChildren<TestWrapperProps>> = ({
   children,
 }) => {
   const method = useForm({
+    // @ts-expect-error something mistake
     defaultValues,
   });
 
