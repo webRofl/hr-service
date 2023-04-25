@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Grid } from '@mui/material';
 import { EmployerProfileRetrieve } from '@/store/api/orvalGeneration/models';
-import { Center, DivInput, Reviews } from '@/components/common';
+import { Center, Reviews } from '@/components/common';
 import { reviewsProfileCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { EmployerProfileHeader, ProjectPageControl } from '@/components/molecules';
 import { usersEmployerGetRead, usersEmployerUpdate } from '@/store/api/orvalGeneration/users/users';
@@ -10,14 +10,13 @@ import { RichTextEditor } from '@/components/atoms';
 import * as SC from './EmployerProfile.style';
 
 interface EmployerProfileProps {
-  profileData: EmployerProfileRetrieve;
   profileId: string;
   userId: string;
 }
 
-const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, userId }) => {
+const EmployerProfile: FC<EmployerProfileProps> = ({ profileId, userId }) => {
   const [isMyProfile, setIsMyProfile] = useState(false);
-  const [data, setData] = useState<EmployerProfileRetrieve>(profileData);
+  const [data, setData] = useState<EmployerProfileRetrieve>();
   const [isEdit, setIsEdit] = useState(false);
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
@@ -26,9 +25,13 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
   });
 
   useEffect(() => {
-    setData(profileData);
-    method.reset(profileData);
-  }, [profileData]);
+    const fetch = async () => {
+      const data = (await usersEmployerGetRead(profileId)).data;
+      setData(data);
+    };
+
+    fetch();
+  }, [profileId]);
 
   useEffect(() => {
     if (profileId === userId) {
@@ -49,7 +52,9 @@ const EmployerProfile: FC<EmployerProfileProps> = ({ profileData, profileId, use
   };
 
   const submitHandler = async (values) => {
+    setIsLoadingBtn(true);
     const data = (await usersEmployerUpdate(profileId, values)).data;
+    setIsLoadingBtn(false);
     setData(data);
     setIsEdit(false);
     updateProfileData();

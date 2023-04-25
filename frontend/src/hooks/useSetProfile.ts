@@ -22,8 +22,11 @@ const useSetProfile = () => {
         if (data && Object.keys(data?.data).length) {
           setIsNeedToCreateProfile(false);
           setProfile(data?.data);
-          if (data?.data?.responses) {
-            setResponsesQuantity(data?.data?.responses.length);
+          // @ts-expect-error invalid types
+          const responses = data?.data?.responses;
+
+          if (responses) {
+            setResponsesQuantity(responses.length);
           }
         }
       };

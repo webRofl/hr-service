@@ -8,14 +8,12 @@ import { AxiosErrorResponse } from '@/types';
 import { useAuthState, useLocalStorageState } from '@/store';
 import { Login, Registration } from '@/store/api/orvalGeneration/models';
 
-interface IUseAuthReturn {
-  login: (data: Login) => Promise<AxiosErrorResponse>;
-  setHeaders: () => void;
-  register: (data: Registration) => Promise<AxiosErrorResponse>;
-  logout: () => void;
-}
+type LoginType = (data: Login) => Promise<AxiosErrorResponse>;
+type SetHeaders = () => void;
+type RegisterType = (data: Registration) => Promise<AxiosErrorResponse>;
+type LogOut = () => void;
 
-const useAuth = (): IUseAuthReturn => {
+const useAuth = () => {
   const { setUsername, setUserId, refreshToken, setRefreshToken } = useLocalStorageState(
     ({ setUsername, setUserId, refreshToken, setRefreshToken }) => ({
       setUsername,
@@ -35,7 +33,7 @@ const useAuth = (): IUseAuthReturn => {
     axios.defaults.headers.common.Authorization = '';
   };
 
-  const setHeaders = async () => {
+  const setHeaders: SetHeaders = async () => {
     disableAuthHeader();
 
     if (!refreshToken) {
@@ -59,7 +57,7 @@ const useAuth = (): IUseAuthReturn => {
   };
 
   // eslint-disable-next-line consistent-return
-  const login = async (data): Promise<AxiosErrorResponse> => {
+  const login: LoginType = async (data) => {
     try {
       disableAuthHeader();
 
@@ -84,13 +82,13 @@ const useAuth = (): IUseAuthReturn => {
     }
   };
 
-  const logout = () => {
+  const logout: LogOut = () => {
     setUserId('');
     setIsAuth(false);
     setRefreshToken('');
   };
 
-  const register = async (data): Promise<AxiosErrorResponse> => {
+  const register: RegisterType = async (data): Promise<AxiosErrorResponse> => {
     try {
       await authRegisterCreate(data);
       return;

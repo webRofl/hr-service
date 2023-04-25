@@ -43,25 +43,27 @@ export const fullSizeCover = (customHeight = 0, customUnit = 'rem') => css`
   height: fit-content;
 `;
 
-export const ModalContainerAndContent = () => [
-  styled(Modal)`
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  styled('div')`
-    position: relative;
-    background-color: white;
-    min-height: 50%;
-    height: fit-content;
-    width: 50%;
-    border-radius: 8px;
-    padding: 1rem;
-    font-size: 20px;
-  `,
-];
+export const ModalContainerAndContent = () =>
+  // eslint-disable-next-line implicit-arrow-linebreak
+  [
+    styled(Modal)`
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `,
+    styled('div')`
+      position: relative;
+      background-color: white;
+      min-height: 50%;
+      height: fit-content;
+      width: 50%;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 20px;
+    `,
+  ] as const;
 
 export const CrossElement = styled('span')`
   position: absolute;

@@ -10,3 +10,4 @@ export type {
   DefaultFormSubmitHandler,
   CommonColors,
 } from './common.types';
+export type { ProfileState, ProfileStateMethods } from './profile.state.types';

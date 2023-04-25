@@ -16,7 +16,7 @@ const Candidates = () => {
         description: c?.bio || '',
         id: c.user || '',
         imgLink: c.image || '',
-        tags: c?.skills?.map((s) => s.name || '') || [],
+        tags: c?.skills?.map((s) => s) || [],
         totalVotes: 0,
         votesRatio: 0,
       }));

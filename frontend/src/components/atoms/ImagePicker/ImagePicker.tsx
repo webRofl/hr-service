@@ -22,11 +22,12 @@ const ImagePicker: FC<ImagePickerProps> = ({ name, onChange, customImageUrl, sty
   }, []);
 
   useEffect(() => {
-    setImageUrl(customImageUrl);
+    setImageUrl(customImageUrl!);
   }, [customImageUrl]);
 
   const handleImageChange = (e: ChangeEvent) => {
-    setImageUrl(URL.createObjectURL(e.target.files.item(0)));
+    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+    setImageUrl(URL.createObjectURL((e.target as HTMLInputElement).files?.item(0)!));
     if (onChange) onChange();
   };
 

@@ -5,7 +5,7 @@ import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { AuthForm } from '@/components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth, useSetProfile } from '@/hooks';
-import { useLocalStorageState, useProfileState } from '@/store';
+import { useLocalStorageState } from '@/store';
 import { loginSchema, registerSchema } from './Auth.schema';
 
 interface IAuthProps {

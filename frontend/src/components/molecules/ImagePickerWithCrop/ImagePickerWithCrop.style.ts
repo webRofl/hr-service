@@ -1,5 +1,5 @@
-import { styleMixins } from '@/style';
 import styled from 'styled-components';
+import { styleMixins } from '@/style';
 
 interface ImageContainerProps {
   width: number;

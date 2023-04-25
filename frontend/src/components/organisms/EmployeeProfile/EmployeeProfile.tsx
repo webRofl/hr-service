@@ -19,7 +19,7 @@ interface EmployeeProfileProps {
 const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
-  const [profileData, setProfileData] = useState<EmployeeProfile>(null);
+  const [profileData, setProfileData] = useState<EmployeeProfile>();
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
   const method = useForm<EmployeeProfile>({

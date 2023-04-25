@@ -1,32 +1,23 @@
 import { create } from 'zustand';
-import { Profile } from '../api/orvalGeneration/models';
+import { ProfileState, ProfileStateMethods } from '@/types';
 
-interface IProfileMethods {
-  setProfile: (data: Profile) => void;
-  getState: () => Profile;
-}
-
-type IProfile = Profile & IProfileMethods;
-
-const inititalData: Profile = {
+const initialState: ProfileState = {
+  description: '',
   user: '',
 };
 
-const useProfileState = create<IProfile>((set, get) => ({
-  ...inititalData,
-  setProfile: (data: Profile) => {
-    set({ ...data });
+const useProfileState = create<ProfileState & ProfileStateMethods>((set, get) => ({
+  ...initialState,
+  setProfile: (profile: ProfileState) => {
+    set({ ...profile });
   },
-  getState: (): Profile => {
-    const res: Profile = {
-      user: '',
-    };
-    const allState = get();
+  getState: () => {
+    const res = { ...initialState };
+    const state = get();
 
-    Object.keys(allState).forEach((key) => {
-      if ((allState as any)[key] instanceof Function !== true) {
-        (res as any)[key] = (allState as any)[key];
-      }
+    Object.typedKeys(state).forEach((key) => {
+      if (typeof state[key] === 'function') return;
+      (res as any)[key] = state[key];
     });
 
     return res;
