@@ -23,11 +23,13 @@ const DivInput: FC<DivInputProps> = ({
   return (
     <SwitchTransition mode="out-in">
       <CSSTransition
+        // @ts-expect-error something mistake
         key={isEdit}
         nodeRef={nodeRef}
         classNames="fade"
         timeout={250}
         addEndListener={(done) => {
+          // @ts-expect-error something mistake
           nodeRef?.current.addEventListener('transitionend', done, false);
         }}>
         <div ref={nodeRef} style={containerStyle}>

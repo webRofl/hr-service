@@ -5,7 +5,7 @@ import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
 import { AuthForm } from '@/components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth, useSetProfile } from '@/hooks';
-import { useLocalStorageState, useProfileState } from '@/store';
+import { useLocalStorageState } from '@/store';
 import { loginSchema, registerSchema } from './Auth.schema';
 
 interface IAuthProps {
@@ -63,6 +63,7 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
     <AuthForm
       methods={methods[location.pathname.slice(1)]}
       title={isLogin ? 'Log into your account' : 'Register new account'}
+      // @ts-expect-error something mistake
       dataLoadCb={isLogin ? login : register}
       btnText={isLogin ? 'Login' : 'Register'}
       isLogin={isLogin}

@@ -1,7 +1,7 @@
 import { InsertProperties } from '@/core/types';
 import { CommonColors } from '@/types';
 import { ButtonTypeMap } from '@mui/material';
-import { CSSProperties } from 'react';
+import { CSSProperties, MouseEventHandler } from 'react';
 
 interface CustomProps {
   label: string;
@@ -13,7 +13,7 @@ interface CustomProps {
   badgeContent?: string | number;
   badgeColor?: CommonColors;
 
-  onClick?: (event: MouseEvent) => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 type MUIButtonProps = ButtonTypeMap<CustomProps>;

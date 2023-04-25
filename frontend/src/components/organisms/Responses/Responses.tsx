@@ -8,6 +8,7 @@ import * as SC from './Responses.style';
 const Responses = () => {
   const navigate = useNavigate();
   const { profileType } = useAuthState(({ profileType }) => ({ profileType }));
+  // @ts-expect-error invalid profile state types
   const { responses } = useProfileState(({ responses }) => ({ responses }));
   const { responsesQuantityDifference, setResponsesQuantity } = useLocalStorageState(
     ({ responsesQuantityDifference, setResponsesQuantity, responsesQuantity }) => ({

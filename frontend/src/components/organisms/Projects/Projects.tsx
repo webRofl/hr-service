@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Catalog, Center } from '@/components/common';
-import { CustomCatalogData, GlobalENV, ICatalogCardData } from '@/types';
+import { CustomCatalogData, ICatalogCardData } from '@/types';
 import { catalogCardDataMiddleware } from '@/utils';
 import { ROUTES } from '@/core';
 import { useProjectsListList } from '@/store/api/orvalGeneration/projects/projects';

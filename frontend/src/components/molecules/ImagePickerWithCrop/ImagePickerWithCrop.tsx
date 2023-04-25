@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState, useCallback } from 'react';
-import Cropper from 'react-easy-crop';
+import Cropper, { Area } from 'react-easy-crop';
 import { useFormContext } from 'react-hook-form';
 import { ImagePicker } from '@/components/atoms';
 import { useNotifications } from '@/hooks';
@@ -19,11 +19,11 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
   setImgLinkOutside,
   cropShape = 'rect',
 }) => {
-  const { watch, setValue, getValues } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const { createToast } = useNotifications();
   const [zoom, setZoom] = useState(1);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [imgLink, setImgLink] = useState('');
   const [isImgHover, setIsImgHover] = useState(false);
@@ -51,7 +51,7 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
     setIsOpen(!isOpen);
   };
 
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
@@ -61,7 +61,7 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
 
   const handleClose = async () => {
     try {
-      const [imageLink, croppedImg] = await getCroppedImg(imgLink, croppedAreaPixels, 0);
+      const [imageLink, croppedImg] = await getCroppedImg(imgLink, croppedAreaPixels!, 0);
       setImgLink(imageLink);
       setValue(name, croppedImg);
       setIsOpen(false);
@@ -89,18 +89,20 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
       </SC.ImageContainer>
       <SC.ModalContainer open={isOpen}>
         <SC.ModalContent>
-          <Cropper
-            image={imgLink}
-            crop={crop}
-            zoom={zoom}
-            aspect={aspect[0] / aspect[1]}
-            cropShape={cropShape}
-            showGrid={false}
-            onZoomChange={setZoom}
-            onCropChange={setCrop}
-            onCropComplete={onCropComplete}
-          />
-          <SC.ModalCross onClick={handleClose}>x</SC.ModalCross>
+          <>
+            <Cropper
+              image={imgLink}
+              crop={crop}
+              zoom={zoom}
+              aspect={aspect[0] / aspect[1]}
+              cropShape={cropShape}
+              showGrid={false}
+              onZoomChange={setZoom}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+            />
+            <SC.ModalCross onClick={handleClose}>x</SC.ModalCross>
+          </>
         </SC.ModalContent>
       </SC.ModalContainer>
     </>

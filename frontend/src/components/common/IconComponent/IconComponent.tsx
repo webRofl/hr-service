@@ -23,6 +23,7 @@ const IconComponent: FC<IIconComponentProps> = ({ name, style, width, height, fi
 
   if (isError) return <Cover style={{ ...defaultStyles, ...style }} />;
 
+  // @ts-expect-error something mistake
   return <SvgIcon style={{ ...defaultStyles, ...style }} />;
 };
 

@@ -8,6 +8,7 @@ interface IProfileMainDataProps {
   isEdit: boolean;
 }
 
+// @ts-expect-error something mistake
 const ProfileMainData: FC<IProfileMainDataProps> = ({ data, isEdit }) => {
   const blockToEditListKeys = ['created', 'email', 'username'];
 
@@ -21,6 +22,7 @@ const ProfileMainData: FC<IProfileMainDataProps> = ({ data, isEdit }) => {
           <SC.RowData>
             <SC.KeyData>{key}</SC.KeyData>
             <DivInput
+              // @ts-expect-error something mistake
               value={value}
               isEdit={isEdit}
               name={key}

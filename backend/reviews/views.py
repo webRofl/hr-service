@@ -16,7 +16,7 @@ class ProjectReviewCRUDViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = get_data_with_user(request, 'author')
 
-        serializer = serializer_lifecycle(data)
+        serializer = serializer_lifecycle(ProjectReviewPostSerializer, data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -30,7 +30,7 @@ class ProfileReviewCRUDViewSet(viewsets.ModelViewSet):
     def create(self, request):
         data = get_data_with_user(request, 'author')
 
-        serializer = serializer_lifecycle(data)
+        serializer = serializer_lifecycle(ProfileReviewPostSerializer, data)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

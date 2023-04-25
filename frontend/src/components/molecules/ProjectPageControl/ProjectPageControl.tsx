@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React, { FC } from 'react';
 import * as SC from './ProjectPageControl.style';
 

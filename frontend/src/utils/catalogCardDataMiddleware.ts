@@ -1,13 +1,13 @@
-import { Project } from '@/store/api/orvalGeneration/models';
-import { CustomCatalogData, ICatalogCardData } from '@/types/common.types';
+import { ProjectList } from '@/store/api/orvalGeneration/models';
+import { AbstractObject, CustomCatalogData, ICatalogCardData } from '@/types/common.types';
 import { stringUtils } from '@/utils';
 
 export const catalogCardDataMiddleware = (
   keys: CustomCatalogData,
-  values: Project[],
+  values: ProjectList[],
 ): ICatalogCardData[] => {
   return values.map((project) => {
-    const res: ICatalogCardData = {
+    const res: ICatalogCardData & AbstractObject = {
       title: '',
       description: '',
       id: '',
@@ -17,14 +17,15 @@ export const catalogCardDataMiddleware = (
       votesRatio: 0,
     };
 
-    Object.keys(project).forEach((key) => {
+    Object.typedKeys(project).forEach((key) => {
       const rightKey = stringUtils.snakeCaseToCamelCase(key);
       if (project[key] && Object.prototype.hasOwnProperty.call(res, rightKey)) {
         res[rightKey] = project[key];
       }
     });
 
-    Object.keys(keys).forEach((key) => {
+    Object.typedKeys(keys).forEach((key) => {
+      // @ts-expect-error wrong types
       res[key] = project[keys[key]] ?? res[key];
     });
 

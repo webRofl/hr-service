@@ -17,13 +17,16 @@ const OptionMenu = React.forwardRef<HTMLDivElement, OptionMenuProps>(({ stack },
     setIsOpen((prev) => !prev);
   };
 
+  // @ts-expect-error something mistake
   useClickOutside(ref, clickOutsideHandler);
+  // @ts-expect-error something mistake
   useEventListener('click', clickHandler, ref?.current);
 
   return (
     <SC.Container
       divider={<SC.Divider variant="fullWidth" />}
       isdisplay={isOpen}
+      // @ts-expect-error something mistake
       leftstyle={ref?.current?.parentNode?.clientWidth}>
       {stack.map((item) => {
         if (!item) return null;

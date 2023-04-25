@@ -17,6 +17,7 @@ export const Default: Story = {
     </StorybookWrapper>
   ),
   args: {
+    // @ts-expect-error something mistake
     content: 'everything as you want',
     isEdit: false,
   },

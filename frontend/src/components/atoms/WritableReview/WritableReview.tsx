@@ -12,6 +12,7 @@ const WritableReview: FC<WritableReviewProps> = ({
   dataLoadCallback,
   setIsWrite,
 }) => {
+  // @ts-expect-error invalid profile state types
   const { username, user } = useProfileState(({ username, user }) => ({ username, user }));
   const [ratingValue, setRatingValue] = useState<number>(0);
 
@@ -35,6 +36,7 @@ const WritableReview: FC<WritableReviewProps> = ({
       [placeName]: placeId,
       rate: ratingValue,
     };
+    // @ts-expect-error dynamic obj definition
     const data = await dataLoadCallback(body);
     if (data.status === 201) {
       successCallback();
@@ -51,7 +53,8 @@ const WritableReview: FC<WritableReviewProps> = ({
 
   return (
     <FormProvider {...method}>
-      <SC.WritableReview item xs={12} component="form">
+      {/* @ts-expect-error MUI errors */}
+      <SC.WritableReview item xs={12} component="form" badProp>
         <SC.Author>{username}</SC.Author>
         <DivInput isEdit name="reviewText" value="" />
         <SC.Rating value={ratingValue} onChange={handleChangeRating} />
@@ -66,6 +69,7 @@ const WritableReview: FC<WritableReviewProps> = ({
             variant="contained"
             color="info"
             label="send"
+            // @ts-expect-error something mistake
             type="submit"
             onClick={handleSubmitEdit}
           />

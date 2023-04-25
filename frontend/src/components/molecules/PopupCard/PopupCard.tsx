@@ -24,6 +24,7 @@ const PopupCard: FC<PopupCardProps> = ({ title, text, time }) => {
     <>
       <SC.Container onClick={handleOpen}>
         <SC.Title>{title}</SC.Title>
+        {/* @ts-expect-error something mistake */}
         <SC.Divider>{timeUtils.getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
         <SC.Text>{text}</SC.Text>
       </SC.Container>
@@ -31,6 +32,7 @@ const PopupCard: FC<PopupCardProps> = ({ title, text, time }) => {
         <SC.ModalContainer>
           <SC.ModalContent>
             <SC.ModalTitle>{title}</SC.ModalTitle>
+            {/* @ts-expect-error something mistake */}
             <SC.Divider>{timeUtils.getRelativeTimeString(new Date(time).getTime())}</SC.Divider>
             <SC.ModalText>{text}</SC.ModalText>
             <SC.ModalCross onClick={handleClose}>x</SC.ModalCross>

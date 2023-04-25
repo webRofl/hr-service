@@ -1,4 +1,7 @@
-export const createImage = (url: string) =>
+import { Area } from 'react-easy-crop';
+
+export const createImage = (url: string): Promise<HTMLImageElement> =>
+  // eslint-disable-next-line implicit-arrow-linebreak
   new Promise((resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image));
@@ -29,16 +32,16 @@ export function rotateSize(width: number, height: number, rotation: number) {
  */
 export default async function getCroppedImg(
   imageSrc: string,
-  pixelCrop: unknown,
+  pixelCrop: Area,
   rotation = 0,
   flip = { horizontal: false, vertical: false },
-) {
+): Promise<[string, File]> {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
   if (!ctx) {
-    return null;
+    throw new Error('Canvas 2d context is not defined');
   }
 
   const rotRad = getRadianAngle(rotation);
@@ -74,12 +77,14 @@ export default async function getCroppedImg(
   // return canvas.toDataURL('image/jpeg');
 
   // As a file
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     canvas.toBlob((file) => {
-      resolve([
-        URL.createObjectURL(file),
-        new File([file], `${imageSrc}-getCroppedImg.png`, { type: 'image/png' }),
-      ]);
+      if (file instanceof Blob) {
+        resolve([
+          URL.createObjectURL(file),
+          new File([file], `${imageSrc}-getCroppedImg.png`, { type: 'image/png' }),
+        ]);
+      }
     });
   });
 }

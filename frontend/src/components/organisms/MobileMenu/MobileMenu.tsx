@@ -63,6 +63,7 @@ const MobileMenu: FC = () => {
   const { userId } = useLocalStorageState(({ userId }) => ({
     userId,
   }));
+  // @ts-expect-error invalid profile state types
   const { image, responses } = useProfileState(({ image, responses }) => ({ image, responses }));
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {

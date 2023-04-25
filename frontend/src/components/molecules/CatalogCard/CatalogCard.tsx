@@ -1,6 +1,6 @@
+import React, { FC } from 'react';
 import { Rating } from '@/components/common';
 import { ICatalogCardDataWithLink } from '@/types';
-import React, { FC } from 'react';
 import { useMediaQueryWithBreakpoint } from '@/hooks';
 import * as SC from './CatalogCard.style';
 

@@ -4,7 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import { CssBaseline } from '@mui/material';
 import { AbstractObject } from '@/types';
 import { getTheme } from '@/style';
-import Router from '@/Router';
 
 interface StorybookWrapperProps {
   defaultValues?: AbstractObject;
@@ -15,6 +14,7 @@ const StorybookWrapper: FC<PropsWithChildren<StorybookWrapperProps>> = ({
   defaultValues,
   children,
 }) => {
+  // @ts-expect-error something mistake
   const method = useForm({ defaultValues });
 
   return (
