@@ -72,6 +72,15 @@ generateAPI() {
   docker compose exec node yarn generateAPI
 }
 
+build_frontend() {
+    cd frontend
+    yarn build
+}
+
+start_local() {
+    docker compose --profile dev up
+}
+
 case $COMMAND in
     init)
         init
@@ -108,6 +117,12 @@ case $COMMAND in
         ;;
     generate_dump)
         generate_dump
+        ;;
+    build_frontend)
+        build_frontend
+        ;;
+    start_local)
+        start_local
         ;;
     *)
         echo 'No action specified!'
