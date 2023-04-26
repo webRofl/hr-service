@@ -5,20 +5,17 @@ services:
     build:
       context: ./bin/django/
       dockerfile: Dockerfile.prod
-    volumes:
-      - static_volume:/opt/app/static
-      - media_volume:/opt/app/media
-    command: gunicorn home.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - db
   nginx:
-    build: ./bin/nginx
+    container_name: hr-ngnix
+    build: ./bin/nginx/
     volumes:
-      - static_volume:/opt/static
-      - media_volume:/opt/app/media
+      - ./frontend/dist/:/opt/app/frontend/dist/
+      - ./backend/static/:/opt/app/backend/static/
+      - ./backend/media/:/opt/app/backend/media/
     ports:
-      - 4000:80
+      - 80:80
     depends_on:
       - django
-
-volumes:
-  static_volume:
-  media_volume:
+    restart: always

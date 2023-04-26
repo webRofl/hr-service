@@ -37,6 +37,7 @@ services:
   django:
     build: ./bin/django/
     container_name: hr-django
+    command: python manage.py runserver 0.0.0.0:${DJANGO_PORT}
     volumes:
       - ./backend:/opt/app/
     expose:
@@ -47,6 +48,8 @@ services:
       - db
       - redis
   node:
+    profiles:
+      - dev
     build: ./bin/node
     container_name: hr-node
     volumes:

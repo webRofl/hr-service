@@ -5,7 +5,6 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
   django:
-    command: python manage.py runserver 0.0.0.0:${DJANGO_PORT}
     ports:
       - ${DJANGO_PORT}:${DJANGO_PORT}
     depends_on:
