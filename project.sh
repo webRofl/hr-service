@@ -78,7 +78,16 @@ build_frontend() {
 }
 
 start_local() {
+    cp .env.local .env
+    echo '. . . ENV COPY DONE'
     docker compose --profile dev up
+}
+
+start_prod() {
+    cp .env.prod .env
+    echo '. . . ENV COPY DONE'
+    build_frontend
+    docker compose up
 }
 
 case $COMMAND in
@@ -123,6 +132,9 @@ case $COMMAND in
         ;;
     start_local)
         start_local
+        ;;
+    start_prod)
+        start_prod
         ;;
     *)
         echo 'No action specified!'
