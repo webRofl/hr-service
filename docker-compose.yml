@@ -50,6 +50,7 @@ services:
   node:
     profiles:
       - dev
+      - test
     build: ./bin/node
     container_name: hr-node
     volumes:

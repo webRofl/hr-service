@@ -1,11 +1,24 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 
 const ErrorFallback: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
+  const errorDetails = useMemo(() => {
+    return {
+      message: error.message,
+      stack: error.stack,
+    };
+  }, [error]);
+
   return (
     <div role="alert">
       <p>Something went wrong:</p>
-      <pre>{error instanceof Error ? error.message : error}</pre>
+      {Object.entries(errorDetails).map(([key, value]) => {
+        return (
+          <pre>
+            {key}: {value}
+          </pre>
+        );
+      })}
       <button type="button" onClick={resetErrorBoundary}>
         Try again
       </button>

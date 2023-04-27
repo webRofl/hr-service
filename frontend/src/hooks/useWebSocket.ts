@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { GlobalENV } from '@/types';
 import { useAuthState, useLocalStorageState, useProfileState } from '@/store';
 import { usersEmployerGetRead } from '@/store/api/orvalGeneration/users/users';
 import useNotifications from './useNotifications';
@@ -33,10 +32,8 @@ const useWebSocket = () => {
     }
 
     if (accessToken) {
-      const socket = new WebSocket(`${GlobalENV.FQDN_BACKEND_WS}notifications`, [
-        'Token',
-        accessToken!,
-      ]);
+      // change link if change env
+      const socket = new WebSocket('ws://localhost/api/v1/notifications', ['Token', accessToken!]);
 
       socket.onmessage = onMessage;
 

@@ -1,6 +1,5 @@
+import React, { FC, MouseEventHandler } from 'react';
 import { IconComponent, Rating } from '@/components/common';
-import { GlobalENV } from '@/types';
-import React, { FC, MouseEventHandler, useEffect } from 'react';
 import * as SC from './ProfileLogo.style';
 
 interface IProfileLogoProps {
