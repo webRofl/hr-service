@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django_resized import ResizedImageField
 
 from authentication.models import User
 from reviews.models import ProjectReview
@@ -40,7 +41,7 @@ class Project(models.Model):
   employment = models.CharField(max_length=2, choices=EMPLOYMENT_CHOICES, default=EMPLOYMENT_CHOICES[0][0])
   tags = models.ManyToManyField(Tag, blank=True)
   reviews = models.ManyToManyField(ProjectReview, blank=True, related_name='+')
-  image = models.ImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images')
+  image = ResizedImageField(null=True, blank=True, default='projects/images/default.png', upload_to='projects/images', force_format='WEBP', quality=75)
   total_votes = models.IntegerField(default=0)
   votes_average = models.FloatField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
   demo_link = models.CharField(max_length=500, null=True, blank=True)

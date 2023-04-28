@@ -4,7 +4,7 @@
 
 FROM python:3.8.3-alpine as builder
 
-RUN mkrdir /opt/app/
+RUN mkdir /opt/app/
 WORKDIR /opt/app/
 
 ENV PYTHONDONTWRITEBYTECODE 1

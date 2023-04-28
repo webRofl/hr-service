@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django_resized import ResizedImageField
 
 from authentication.models import User
 from projects.models import Project
@@ -43,7 +44,7 @@ class WorkPlace(models.Model):
     description = models.TextField()
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, upload_to='users/images')
+    image = ResizedImageField(null=True, blank=True, upload_to='users/images', force_format='WEBP', quality=75)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
@@ -60,7 +61,7 @@ class EmployeeProfile(BaseProfile):
     salary = models.IntegerField(null=True, blank=True)
     skills = models.ManyToManyField(Skill, blank=True)
     work_places = models.ManyToManyField(WorkPlace, blank=True)
-    image = models.ImageField(upload_to='users/images', default="users/images/default.png")
+    image = ResizedImageField(upload_to='users/images', default="users/images/default.png", force_format='WEBP', quality=75)
     position = models.CharField(max_length=128)
     description = models.TextField()
 
@@ -74,7 +75,7 @@ class EmployeeProfile(BaseProfile):
 class EmployerProfile(BaseProfile):
     projects_count = models.PositiveSmallIntegerField(default=0)
     website = models.CharField(max_length=100, blank=True, null=True)
-    image = models.ImageField(upload_to='users/images', blank=True, null=True)
+    image = ResizedImageField(upload_to='users/images', blank=True, null=True, force_format='WEBP', quality=75)
     company_name = models.CharField(max_length=255)
     description = models.TextField()
     responses = models.ManyToManyField(Response, blank=True)
