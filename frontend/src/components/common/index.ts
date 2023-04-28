@@ -11,3 +11,4 @@ export { default as Init } from './Init/Init';
 export { default as Center } from './Center/Center';
 export { default as StorybookWrapper } from './StorybookWrapper/StorybookWrapper';
 export * as TestWrapper from './TestWrapper/TestWrapper';
+export { default as Preloader } from './Preloader/Preloader';

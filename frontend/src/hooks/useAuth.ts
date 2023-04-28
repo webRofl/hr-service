@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { debounce } from 'ts-debounce';
 import {
   authLoginCreate,
   authRefreshCreate,
@@ -9,7 +10,6 @@ import { useAuthState, useLocalStorageState } from '@/store';
 import { Login, Registration } from '@/store/api/orvalGeneration/models';
 
 type LoginType = (data: Login) => Promise<AxiosErrorResponse>;
-type SetHeaders = () => void;
 type RegisterType = (data: Registration) => Promise<AxiosErrorResponse>;
 type LogOut = () => void;
 
@@ -33,7 +33,7 @@ const useAuth = () => {
     axios.defaults.headers.common.Authorization = '';
   };
 
-  const setHeaders: SetHeaders = async () => {
+  const setHeaders = debounce(async () => {
     disableAuthHeader();
 
     if (!refreshToken) {
@@ -54,7 +54,7 @@ const useAuth = () => {
         console.log(e.message);
       }
     }
-  };
+  }, 100);
 
   // eslint-disable-next-line consistent-return
   const login: LoginType = async (data) => {

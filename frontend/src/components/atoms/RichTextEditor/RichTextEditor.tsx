@@ -40,7 +40,7 @@ const RichTextEditor: FC<RichTextEditorProps> = ({ name, isEdit }) => {
   };
 
   return (
-    <Grid xs={12}>
+    <Grid item xs={12}>
       {!isEdit ? (
         <SC.Preview
           data-testid="preview"

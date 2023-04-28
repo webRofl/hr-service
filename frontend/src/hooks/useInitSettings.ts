@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react';
-import { debounce } from 'ts-debounce';
-import { GlobalENV } from '@/types';
+import axios from 'axios';
 import useAuth from './useAuth';
 
 const useInitSettings = () => {
   const { setHeaders } = useAuth();
-  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>();
 
-  useEffect(() => {
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [intervalId]);
+  const setDefaultAxios = () => {
+    // change link if change env
+    axios.defaults.baseURL = 'http://localhost/api/v1/';
 
-  const intervalUpdateToken = () => {
-    const intervalFunc = debounce(() => {
-      setHeaders();
-    }, 1000 * 60 * 5); // GlobalENV.JWT_ACCESS_TTL
+    axios.interceptors.response.use(null, (error) => {
+      if (error.response.status === 403) {
+        setHeaders();
+      }
 
-    const id = setInterval(intervalFunc, 1000 * 60 * GlobalENV.JWT_ACCESS_TTL);
-
-    setIntervalId(id);
+      return Promise.reject(error);
+    });
   };
 
   const setSettings = () => {
     setHeaders();
-    intervalUpdateToken();
+    setDefaultAxios();
   };
 
   return {

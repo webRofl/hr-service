@@ -1,20 +1,37 @@
-/* eslint-disable react/no-children-prop */
-import React, { FC } from 'react';
+/* eslint-disable implicit-arrow-linebreak */
+import React, { FC, Suspense, lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { TemplateWithMenu, AuthTemplate } from 'components/templates';
-import {
-  Candidates,
-  CreateProjectForm,
-  ProfileProjects,
-  ProjectPage,
-  Projects,
-} from './components/organisms';
-import { Redirect } from './components/common';
-// eslint-disable-next-line max-len
-import CreateProfileTemplate from './components/templates/CreateProfileTemplate/CreateProfileTemplate';
-import ProfileTemplate from './components/templates/ProfileTemplate/ProfileTemplate';
-import { ROUTES } from './core';
-import Responses from './components/organisms/Responses/Responses';
+import { Preloader, Redirect } from '@/components/common';
+import { ROUTES } from '@/core';
+
+const Auth = lazy(() => import('@/components/pages').then(({ Auth }) => ({ default: Auth })));
+const Candidates = lazy(() =>
+  import('@/components/pages').then(({ Candidates }) => ({ default: Candidates })),
+);
+const CreateProfile = lazy(() =>
+  import('@/components/pages').then(({ CreateProfile }) => ({ default: CreateProfile })),
+);
+const CreateProject = lazy(() =>
+  import('@/components/pages').then(({ CreateProject }) => ({ default: CreateProject })),
+);
+const EmployeeProfile = lazy(() =>
+  import('@/components/pages').then(({ EmployeeProfile }) => ({ default: EmployeeProfile })),
+);
+const EmployerProfile = lazy(() =>
+  import('@/components/pages').then(({ EmployerProfile }) => ({ default: EmployerProfile })),
+);
+const ProfileProjects = lazy(() =>
+  import('@/components/pages').then(({ ProfileProjects }) => ({ default: ProfileProjects })),
+);
+const ProjectPage = lazy(() =>
+  import('@/components/pages').then(({ ProjectPage }) => ({ default: ProjectPage })),
+);
+const Projects = lazy(() =>
+  import('@/components/pages').then(({ Projects }) => ({ default: Projects })),
+);
+const Responses = lazy(() =>
+  import('@/components/pages').then(({ Responses }) => ({ default: Responses })),
+);
 
 const Router: FC = () => {
   const router = createBrowserRouter([
@@ -24,51 +41,55 @@ const Router: FC = () => {
     },
     {
       path: ROUTES.LOGIN,
-      element: <AuthTemplate />,
+      element: <Auth />,
     },
     {
       path: ROUTES.REGISTER,
-      element: <AuthTemplate />,
+      element: <Auth />,
     },
     {
       path: ROUTES.PROJECTS,
-      element: <TemplateWithMenu children={<Projects />} />,
+      element: <Projects />,
     },
     {
       path: ROUTES.PROJECT_ID,
-      element: <TemplateWithMenu children={<ProjectPage />} />,
+      element: <ProjectPage />,
     },
     {
       path: ROUTES.PROFILE_CREATE,
-      element: <CreateProfileTemplate />,
+      element: <CreateProfile />,
     },
     {
       path: ROUTES.CANDIDATES,
-      element: <TemplateWithMenu children={<Candidates />} />,
+      element: <Candidates />,
     },
     {
       path: ROUTES.EMPLOYEE_PROFILE_WITH_ID,
-      element: <TemplateWithMenu children={<ProfileTemplate profileType="employee" />} />,
+      element: <EmployeeProfile />,
     },
     {
       path: ROUTES.EMPLOYER_PROFILE_WITH_ID,
-      element: <TemplateWithMenu children={<ProfileTemplate profileType="employer" />} />,
+      element: <EmployerProfile />,
     },
     {
       path: ROUTES.PROJECT_CREATE,
-      element: <TemplateWithMenu children={<CreateProjectForm />} />,
+      element: <CreateProject />,
     },
     {
       path: ROUTES.PROFILE_PROJECTS_WITH_ID,
-      element: <TemplateWithMenu children={<ProfileProjects />} />,
+      element: <ProfileProjects />,
     },
     {
       path: ROUTES.RESPONSES,
-      element: <TemplateWithMenu children={<Responses />} />,
+      element: <Responses />,
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<Preloader />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 };
 
 export default Router;
