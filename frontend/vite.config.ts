@@ -5,11 +5,27 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 import svgrPlugin from 'vite-plugin-svgr';
 import dns from 'dns';
 import path from 'path';
+import viteCompression from 'vite-plugin-compression';
+// import { dependencies } from './package.json';
 
 dns.setDefaultResultOrder('verbatim');
 
+// const renderChunks = (deps: Record<string, string>) => {
+//   const chunks = {};
+//   Object.keys(deps).forEach((key) => {
+//     if (['react', 'react-router-dom', 'react-dom'].includes(key)) return;
+//     chunks[key] = [key];
+//   });
+//   return chunks;
+// };
+
 export default defineConfig({
-  plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
+  plugins: [
+    react(),
+    viteTsconfigPaths(),
+    svgrPlugin(),
+    viteCompression({ algorithm: 'gzip', deleteOriginFile: true }),
+  ],
   server: {
     port: 3000,
   },
@@ -24,4 +40,15 @@ export default defineConfig({
       hooks: path.resolve(__dirname, './src/hooks'),
     },
   },
+  // build: {
+  //   sourcemap: false,
+  //   rollupOptions: {
+  //     external: ['fsevents'],
+  //     output: {
+  //       manualChunks: {
+  //         ...renderChunks(dependencies),
+  //       },
+  //     },
+  //   },
+  // },
 });
