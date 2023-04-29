@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { debounce } from 'ts-debounce';
 import {
   authLoginCreate,
@@ -10,7 +10,9 @@ import { useAuthState, useLocalStorageState } from '@/store';
 import { Login, Registration } from '@/store/api/orvalGeneration/models';
 
 type LoginType = (data: Login) => Promise<AxiosErrorResponse>;
-type RegisterType = (data: Registration) => Promise<AxiosErrorResponse>;
+type RegisterType = (
+  data: Registration,
+) => AxiosResponse<Registration> | Promise<AxiosErrorResponse>;
 type LogOut = () => void;
 
 const useAuth = () => {
@@ -22,12 +24,13 @@ const useAuth = () => {
       setRefreshToken,
     }),
   );
-  const { setIsAuth, setAccessToken } = useAuthState(({ setIsAuth, setAccessToken }) => ({
-    setIsAuth,
-    setAccessToken,
-    refreshToken,
-    setRefreshToken,
-  }));
+  const { setIsAuth, setAccessToken, setProfileType } = useAuthState(
+    ({ setIsAuth, setAccessToken, setProfileType }) => ({
+      setIsAuth,
+      setAccessToken,
+      setProfileType,
+    }),
+  );
 
   const disableAuthHeader = () => {
     axios.defaults.headers.common.Authorization = '';
@@ -86,12 +89,14 @@ const useAuth = () => {
     setUserId('');
     setIsAuth(false);
     setRefreshToken('');
+    setProfileType(null);
   };
 
-  const register: RegisterType = async (data): Promise<AxiosErrorResponse> => {
+  // eslint-disable-next-line consistent-return
+  const register: RegisterType = async (data) => {
     try {
-      await authRegisterCreate(data);
-      return;
+      const regData = await authRegisterCreate(data);
+      return regData;
     } catch (e) {
       if (e instanceof AxiosError) {
         const errorMessages = e.response?.data?.errors;

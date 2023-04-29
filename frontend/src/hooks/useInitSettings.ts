@@ -6,7 +6,7 @@ const useInitSettings = () => {
 
   const setDefaultAxios = () => {
     // change link if change env
-    axios.defaults.baseURL = 'http://localhost/api/v1/';
+    axios.defaults.baseURL = 'http://localhost:8000/api/v1/';
 
     axios.interceptors.response.use(null, (error) => {
       if (error.response.status === 403) {

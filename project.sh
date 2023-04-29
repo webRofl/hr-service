@@ -87,7 +87,7 @@ start_prod() {
     cp .env.prod .env
     echo '. . . ENV COPY DONE'
     build_frontend
-    docker compose up
+    cd ../ && docker compose up
 }
 
 case $COMMAND in
