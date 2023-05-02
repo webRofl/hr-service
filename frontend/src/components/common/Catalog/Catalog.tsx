@@ -1,11 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { CatalogCard, PopupCard } from '@/components/molecules';
 import * as SC from './Catalog.style';
 import { ICatalogProps, IPopupCatalogProps } from './Catalog.type';
 
 export const Catalog: FC<ICatalogProps> = ({ cardList, linkWithoutId }) => {
-  // useEffect(() => { console.log('RENDER') }, []);
-
   return (
     <SC.CardsContainer>
       {cardList.map((card) => (

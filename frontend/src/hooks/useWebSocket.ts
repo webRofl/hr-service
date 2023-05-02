@@ -33,7 +33,10 @@ const useWebSocket = () => {
 
     if (accessToken) {
       // change link if change env
-      const socket = new WebSocket('ws://localhost/api/v1/notifications', ['Token', accessToken!]);
+      const socket = new WebSocket('ws://localhost:8000/api/v1/notifications', [
+        'Token',
+        accessToken!,
+      ]);
 
       socket.onmessage = onMessage;
 

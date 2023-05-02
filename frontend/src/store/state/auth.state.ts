@@ -11,7 +11,7 @@ interface AuthStoreState {
 interface AuthStoreMethods {
   setIsAuth: (isAuth: boolean) => void;
   setUserId: (userId: string) => void;
-  setProfileType: (profileType: ProfileType) => void;
+  setProfileType: (profileType: ProfileType | null) => void;
   setAccessToken: (token: string) => void;
 }
 

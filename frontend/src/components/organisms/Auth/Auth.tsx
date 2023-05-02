@@ -2,8 +2,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { FC, useEffect } from 'react';
 import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
-import { AuthForm } from '@/components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { AuthForm } from '@/components/molecules';
 import { useAuth, useSetProfile } from '@/hooks';
 import { useLocalStorageState } from '@/store';
 import { loginSchema, registerSchema } from './Auth.schema';
@@ -44,9 +44,9 @@ const Auth: FC<IAuthProps> = ({ isLogin }) => {
     methods[location.pathname.slice(1)].reset();
   }, [location.pathname]);
 
-  const onSuccessSubmitHandler = () => {
+  const onSuccessSubmitHandler = async (id?: string) => {
     if (isLogin) {
-      fetchAndSetProfile();
+      await fetchAndSetProfile(id);
       navigate('/projects');
       return;
     }

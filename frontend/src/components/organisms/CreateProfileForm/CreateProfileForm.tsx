@@ -8,6 +8,7 @@ import { AuthForm } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
 import { usersEmployeeCreate, usersEmployerCreate } from '@/store/api/orvalGeneration/users/users';
 import { ProfileType, ROUTES } from '@/core';
+import { useSetProfile } from '@/hooks';
 import { DefaultValues, ExtractProfiles } from './CreateProfileForm.types';
 import * as SC from './CreateProfileForm.style';
 
@@ -16,6 +17,7 @@ const CreateProfileForm = () => {
   const { setIsNeedToCreateProfile } = useLocalStorageState(({ setIsNeedToCreateProfile }) => ({
     setIsNeedToCreateProfile,
   }));
+  const { fetchAndSetProfile } = useSetProfile();
   const [profileType, setProfileType] = useState<ProfileType>('employee');
 
   const setDefaultValues = (profileType: ProfileType): DefaultValues<typeof profileType> => {
@@ -41,7 +43,7 @@ const CreateProfileForm = () => {
       github: '',
       linkedin: '',
       youtube: '',
-      salary: undefined,
+      salary: null,
     };
   };
 
@@ -53,7 +55,8 @@ const CreateProfileForm = () => {
     method.reset(setDefaultValues(profileType));
   }, [profileType]);
 
-  const successCb = () => {
+  const successCb = (id?: string) => {
+    fetchAndSetProfile(id);
     setIsNeedToCreateProfile(false);
     navigate(ROUTES.MAIN);
   };

@@ -15,37 +15,37 @@ const useSetProfile = () => {
     setResponsesQuantity,
   }));
 
-  const fetchAndSetProfile = () => {
-    const fetchProfile = async (userId: string) => {
-      const dataValidate = async (readFunc: ProfileReadFn) => {
-        const data = await readFunc(userId);
-        if (data && Object.keys(data?.data).length) {
-          setIsNeedToCreateProfile(false);
-          setProfile(data?.data);
-          // @ts-expect-error invalid types
-          const responses = data?.data?.responses;
+  const fetchAndSetProfile = async (userIdExternal?: string) => {
+    const userIdInternal = userId || userIdExternal;
 
-          if (responses) {
-            setResponsesQuantity(responses.length);
-          }
-        }
-      };
+    if (!userIdInternal) {
+      throw new Error('User id is not defined!');
+    }
 
-      try {
-        await dataValidate(usersEmployeeGetRead);
-        setProfileType('employee');
-      } catch {
-        try {
-          await dataValidate(usersEmployerGetRead);
-          setProfileType('employer');
-        } catch {
-          // setIsNeedToCreateProfile(true);
+    const dataValidate = async (readFunc: ProfileReadFn) => {
+      const data = await readFunc(userIdInternal);
+      if (data && Object.keys(data?.data).length) {
+        setIsNeedToCreateProfile(false);
+        setProfile(data?.data);
+        // @ts-expect-error invalid types
+        const responses = data?.data?.responses;
+
+        if (responses) {
+          setResponsesQuantity(responses.length);
         }
       }
     };
 
-    if (userId) {
-      fetchProfile(userId);
+    try {
+      await dataValidate(usersEmployeeGetRead);
+      setProfileType('employee');
+    } catch {
+      try {
+        await dataValidate(usersEmployerGetRead);
+        setProfileType('employer');
+      } catch {
+        // setIsNeedToCreateProfile(true);
+      }
     }
   };
 

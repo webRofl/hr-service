@@ -14,7 +14,7 @@ import * as SC from './AuthForm.style';
 import ImagePickerWithCrop from '../ImagePickerWithCrop/ImagePickerWithCrop';
 
 interface IAuthFormProps {
-  onSuccessSubmitHandler: () => void;
+  onSuccessSubmitHandler: () => void | Promise<void>;
   methods: UseFormReturn<FieldValues, unknown>;
   dataLoadCb: (values: unknown) => Promise<AxiosResponse>;
   btnText: string;
@@ -45,15 +45,26 @@ const AuthForm: FC<PropsWithChildren<IAuthFormProps>> = ({
     // @ts-expect-error something mistake
     const valuesWithValidFiles = objectUtils.convertAllFileListToFile(values);
 
-    const data = await dataLoadCb(valuesWithValidFiles);
-    setIsLoading(false);
-    // eslint-disable-next-line no-unsafe-optional-chaining
-    if (Math.floor(data?.status / 100) === 2) {
-      onSuccessSubmitHandler();
-      return;
+    try {
+      const data = await dataLoadCb(valuesWithValidFiles);
+      setIsLoading(false);
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      if (Math.floor(data?.status / 100) === 2) {
+        onSuccessSubmitHandler(data?.data?.id);
+        return;
+      }
+      // @ts-expect-error something mistake
+      setErrors(data);
+    } catch (e) {
+      setIsLoading(false);
+      if (e instanceof Error) {
+        if (typeof e.message === 'string') {
+          setErrors([e.message]);
+          return;
+        }
+        setErrors(Object.values(e.message));
+      }
     }
-    // @ts-expect-error something mistake
-    setErrors(data);
   };
 
   return (
