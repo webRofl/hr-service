@@ -83,6 +83,12 @@ start_local() {
     docker compose --profile dev up
 }
 
+start_test() {
+    cp .env.test .env
+    echo '. . . ENV COPY DONE'
+    docker compose up
+}
+
 start_prod() {
     cp .env.prod .env
     echo '. . . ENV COPY DONE'
@@ -135,6 +141,9 @@ case $COMMAND in
         ;;
     start_prod)
         start_prod
+        ;;
+    start_test)
+        start_test
         ;;
     *)
         echo 'No action specified!'
