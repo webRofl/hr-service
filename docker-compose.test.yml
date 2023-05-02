@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: hr-ngnix
+    build:
+      context: ./bin/nginx
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./frontend/dist/:/opt/app/frontend/dist/
+      - ./backend/static/:/opt/app/backend/static/
+      - ./backend/media/:/opt/app/backend/media/
+    ports:
+      - 80:80
+    depends_on:
+      - django
+    restart: always
