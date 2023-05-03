@@ -3,35 +3,31 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  init:
+  frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
-    - name: Get repository code
+    - name: Checkout code
       uses: actions/checkout@v3
     - name: Create .env file
       run: ./project.sh cp .env.prod .env
-    - name: Init app
-      run: ./project.sh init
-  frontend:
-    runs-on: ubuntu-latest
-    needs: [init]
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Docker compose up
-      run: docker compose up -d
     - name: Generate endpoints
-      run: ./project.sh generateAPI
+      run: yarn generateAPI
     - name: Lint
-      run: ./project.sh lint_frontend
+      run: yarn lint
     - name: Build
-      run: ./project.sh build_frontend
+      run: yarn build
   backend:
     runs-on: ubuntu-latest
-    needs: [init]
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Create .env file
+      run: ./project.sh cp .env.prod .env
+    - name: Build containers
+      run: ./project.sh init_back_ci
     - name: Docker compose up
       run: docker compose up -d
     - name: Collect static
