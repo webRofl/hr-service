@@ -55,6 +55,10 @@ $ git clone https://github.com/webRofl/hr-platform.git
 
 ### Инициализация проекта
 
+Инициализация включает в себя build всех контейнеров, кроме nginx.
+<br />
+Nginx build происходит на этапе [опциональных настроек](#опциональные-настройки).
+
 ```
 $ ./project.sh init
 ```
@@ -64,6 +68,8 @@ $ ./project.sh init
  - - -
 
 <br />
+
+Проект требует установленного [docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) и [docker compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04) на локальной машине.
 
 ### Автоматический
 
@@ -100,8 +106,16 @@ $ docker compose --profile dev up
 
 Подразумевает развертывание с конфигурацией прода, но с локальной БД и только на 80 порту.
 
+Запускает build проекта с последующем локальном развертыванием
+
 ```
  $ ./project.sh start_test
+```
+
+Чтобы запустить только развертывание
+
+```
+ $ docker compose up
 ```
 
 Проект в тестовом режиме развернется на 80 порту localhost.

@@ -4,11 +4,10 @@ import { useParams } from 'react-router-dom';
 import { ProjectBody, ProjectHeader, ProjectPageControl } from '@/components/molecules';
 import { useLocalStorageState } from '@/store';
 import { projectsGetRead, projectsUpdate } from '@/store/api/orvalGeneration/projects/projects';
-import { Project, ProjectRetrieve, ProjectsCreateBody } from '@/store/api/orvalGeneration/models';
+import { Project, ProjectRetrieve } from '@/store/api/orvalGeneration/models';
 import { Reviews } from '@/components/common';
 import { reviewsProjectCreate } from '@/store/api/orvalGeneration/reviews/reviews';
 import { objectUtils } from '@/utils';
-import { RichTextEditor } from '@/components/atoms';
 import * as SC from './ProjectPage.style';
 
 const ProjectPage = () => {

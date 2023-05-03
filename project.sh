@@ -86,7 +86,8 @@ start_local() {
 start_test() {
     cp .env.test .env
     echo '. . . ENV COPY DONE'
-    docker compose up
+    build_frontend
+    cd ../ && docker compose up
 }
 
 start_prod() {
