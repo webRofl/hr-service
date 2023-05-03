@@ -15,8 +15,12 @@ jobs:
       run: cd ../ && cp .env.test .env && cd ./frontend
     - name: Install yarn
       run: npm i -G yarn
+    - name: Install dependencies
+      run: yarn install
     - name: Generate endpoints
       run: yarn generateAPI
+    - name: Test
+      run: yarn test
     - name: Lint
       run: yarn lint
     - name: Build
