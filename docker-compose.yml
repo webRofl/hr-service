@@ -21,8 +21,8 @@ x-env-global: &env-global
 
 services:
   db:
-    build: ./bin/db/
     container_name: hr-postgres
+    image: postgres
     expose: 
       - 5432
     restart: unless-stopped
