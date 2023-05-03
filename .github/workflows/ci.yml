@@ -12,7 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Create .env file
-      run: cd ../ && ./project.sh cp .env.prod .env && cd ./frontend
+      run: cd ../ && cp .env.test .env && cd ./frontend
+    - name: Install yarn
+      run: npm i -G yarn
     - name: Generate endpoints
       run: yarn generateAPI
     - name: Lint
@@ -25,7 +27,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Create .env file
-      run: cp .env.prod .env
+      run: cp .env.test .env
     - name: Build containers
       run: ./project.sh init_back_ci
     - name: Docker compose up
