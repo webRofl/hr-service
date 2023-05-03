@@ -22,6 +22,8 @@ jobs:
         node-version: 16
     - name: Install dependencies
       run: yarn install
+    - name: Generate endpoints
+      run: yarn generateAPI
     - name: Build
       run: yarn build
   backend:
