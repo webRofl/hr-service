@@ -19,11 +19,13 @@ jobs:
     - name: Yarn setup
       uses: DerYeger/yarn-setup-action@master
       with:
-        node-version: 16
+        node-version: 16.16.0
     - name: Install dependencies
       run: yarn install
     - name: Generate endpoints
       run: yarn generateAPI
+    - name: Lint
+      run: yarn lint
     - name: Build
       run: yarn build
   backend:
