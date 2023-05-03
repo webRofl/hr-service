@@ -8,8 +8,6 @@ jobs:
     steps:
     - name: Get repository code
       uses: actions/checkout@v3
-    - name: Create .env file
-      run: ./project.sh cp .env.prod .env
     - name: Init app
       run: ./project.sh init
   frontend:
@@ -18,8 +16,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Create .env file
+      run: ./project.sh cp .env.prod .env
     - name: Docker compose up
-      run: docker compose up -d
+      run: docker compose --profile dev up -d
     - name: Generate endpoints
       run: ./project.sh generateAPI
     - name: Lint
@@ -32,6 +32,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    - name: Create .env file
+      run: ./project.sh cp .env.prod .env
     - name: Docker compose up
       run: docker compose up -d
     - name: Collect static
