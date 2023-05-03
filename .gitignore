@@ -131,5 +131,4 @@ packages/react-devtools-timeline/dist
 backend/static/
 backend/media/
 frontend/**/orvalGeneration
-frontend/**/swagger.json
 bin/nginx/data

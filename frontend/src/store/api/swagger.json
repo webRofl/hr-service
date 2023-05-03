@@ -1,0 +1,2506 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "HR Service API",
+    "version": "v1"
+  },
+  "host": "localhost:8000",
+  "schemes": ["http"],
+  "basePath": "/api/v1",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "Basic": []
+    }
+  ],
+  "paths": {
+    "/auth/login/": {
+      "post": {
+        "operationId": "auth_login_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "parameters": []
+    },
+    "/auth/refresh/": {
+      "post": {
+        "operationId": "auth_refresh_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Refresh"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Refresh"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "parameters": []
+    },
+    "/auth/register/": {
+      "post": {
+        "operationId": "auth_register_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Registration"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Registration"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "parameters": []
+    },
+    "/auth/user/": {
+      "get": {
+        "operationId": "auth_user_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "put": {
+        "operationId": "auth_user_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "patch": {
+        "operationId": "auth_user_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "tags": ["auth"]
+      },
+      "parameters": []
+    },
+    "/projects/": {
+      "post": {
+        "operationId": "projects_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "fully_description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "salary",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "x-nullable": true
+          },
+          {
+            "name": "employment",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": ["FT", "PT", "PR"]
+          },
+          {
+            "name": "demo_link",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 500,
+            "x-nullable": true
+          },
+          {
+            "name": "source_link",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 500,
+            "x-nullable": true
+          },
+          {
+            "name": "reviews",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProjectPost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["projects"]
+      },
+      "parameters": []
+    },
+    "/projects/get/{id}/": {
+      "get": {
+        "operationId": "projects_get_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProjectRetrieve"
+            }
+          }
+        },
+        "tags": ["projects"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this project.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/projects/list/": {
+      "get": {
+        "operationId": "projects_list_list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProjectList"
+              }
+            }
+          }
+        },
+        "tags": ["projects"]
+      },
+      "parameters": []
+    },
+    "/projects/{id}/": {
+      "put": {
+        "operationId": "projects_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "fully_description",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "salary",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "x-nullable": true
+          },
+          {
+            "name": "employment",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "enum": ["FT", "PT", "PR"]
+          },
+          {
+            "name": "demo_link",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 500,
+            "x-nullable": true
+          },
+          {
+            "name": "source_link",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 500,
+            "x-nullable": true
+          },
+          {
+            "name": "reviews",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProjectPost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["projects"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this project.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/responses/": {
+      "get": {
+        "operationId": "responses_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResponsePost"
+              }
+            }
+          }
+        },
+        "tags": ["responses"]
+      },
+      "post": {
+        "operationId": "responses_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResponsePost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResponsePost"
+            }
+          }
+        },
+        "tags": ["responses"]
+      },
+      "parameters": []
+    },
+    "/responses/{id}/": {
+      "get": {
+        "operationId": "responses_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ResponsePost"
+            }
+          }
+        },
+        "tags": ["responses"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this response.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/reviews/profile/": {
+      "post": {
+        "operationId": "reviews_profile_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProfileReviewPost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProfileReviewPost"
+            }
+          }
+        },
+        "tags": ["reviews"]
+      },
+      "parameters": []
+    },
+    "/reviews/project/": {
+      "post": {
+        "operationId": "reviews_project_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProjectReviewPost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProjectReviewPost"
+            }
+          }
+        },
+        "tags": ["reviews"]
+      },
+      "parameters": []
+    },
+    "/tags/": {
+      "get": {
+        "operationId": "tags_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Tag"
+              }
+            }
+          }
+        },
+        "tags": ["tags"]
+      },
+      "post": {
+        "operationId": "tags_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        },
+        "tags": ["tags"]
+      },
+      "parameters": []
+    },
+    "/tags/{id}/": {
+      "get": {
+        "operationId": "tags_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        },
+        "tags": ["tags"]
+      },
+      "put": {
+        "operationId": "tags_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        },
+        "tags": ["tags"]
+      },
+      "patch": {
+        "operationId": "tags_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        },
+        "tags": ["tags"]
+      },
+      "delete": {
+        "operationId": "tags_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": ["tags"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this tag.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/users/employee/": {
+      "post": {
+        "operationId": "users_employee_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "email",
+            "maxLength": 50
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "total_votes",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648
+          },
+          {
+            "name": "votes_average",
+            "in": "formData",
+            "required": false,
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "x-nullable": true
+          },
+          {
+            "name": "bio",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "name": "is_active",
+            "in": "formData",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "second_name",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "github",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "linkedin",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "youtube",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "salary",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "x-nullable": true
+          },
+          {
+            "name": "position",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "user",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "reviews",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployeeProfilePost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["users"]
+      },
+      "parameters": []
+    },
+    "/users/employee/get/{id}/": {
+      "get": {
+        "operationId": "users_employee_get_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployeeProfile"
+            }
+          }
+        },
+        "tags": ["users"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this employee profile.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/users/employee/list/": {
+      "get": {
+        "operationId": "users_employee_list_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EmployeeProfileList"
+              }
+            }
+          }
+        },
+        "tags": ["users"]
+      },
+      "parameters": []
+    },
+    "/users/employee/{id}/": {
+      "put": {
+        "operationId": "users_employee_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "email",
+            "maxLength": 50
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "total_votes",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648
+          },
+          {
+            "name": "votes_average",
+            "in": "formData",
+            "required": false,
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "x-nullable": true
+          },
+          {
+            "name": "bio",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "name": "is_active",
+            "in": "formData",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "second_name",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "github",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "linkedin",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "youtube",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "salary",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "x-nullable": true
+          },
+          {
+            "name": "position",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "user",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "reviews",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployeeProfilePost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["users"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this employee profile.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/users/employer/": {
+      "post": {
+        "operationId": "users_employer_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "email",
+            "maxLength": 50
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "x-nullable": true
+          },
+          {
+            "name": "bio",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "name": "is_active",
+            "in": "formData",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "website",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "company_name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "user",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "responses",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployerProfilePost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["users"]
+      },
+      "parameters": []
+    },
+    "/users/employer/get/{id}/": {
+      "get": {
+        "operationId": "users_employer_get_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployerProfileRetrieve"
+            }
+          }
+        },
+        "tags": ["users"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this employer profile.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    },
+    "/users/employer/{id}/": {
+      "put": {
+        "operationId": "users_employer_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "email",
+            "maxLength": 50
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 50,
+            "x-nullable": true
+          },
+          {
+            "name": "bio",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "x-nullable": true
+          },
+          {
+            "name": "is_active",
+            "in": "formData",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "website",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "maxLength": 100,
+            "x-nullable": true
+          },
+          {
+            "name": "company_name",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "user",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "responses",
+            "in": "formData",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/EmployerProfilePost"
+            }
+          }
+        },
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "tags": ["users"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A UUID string identifying this employer profile.",
+          "required": true,
+          "type": "string",
+          "format": "uuid"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Login": {
+      "required": ["email", "password"],
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "readOnly": true,
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "access": {
+          "title": "Access",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        },
+        "refresh": {
+          "title": "Refresh",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        },
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        }
+      }
+    },
+    "Refresh": {
+      "required": ["refresh_token"],
+      "type": "object",
+      "properties": {
+        "refresh_token": {
+          "title": "Refresh token",
+          "type": "string",
+          "minLength": 1
+        },
+        "access": {
+          "title": "Access",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        },
+        "refresh": {
+          "title": "Refresh",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        }
+      }
+    },
+    "Registration": {
+      "required": ["email", "username", "password"],
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 254,
+          "minLength": 1
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 8
+        }
+      }
+    },
+    "User": {
+      "required": ["email", "username", "password"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 254,
+          "minLength": 1
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 8
+        }
+      }
+    },
+    "ProjectPost": {
+      "required": ["author", "title"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "fully_description": {
+          "title": "Fully description",
+          "type": "string",
+          "minLength": 1
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "employment": {
+          "title": "Employment",
+          "type": "string",
+          "enum": ["FT", "PT", "PR"]
+        },
+        "demo_link": {
+          "title": "Demo link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "source_link": {
+          "title": "Source link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "AuthorReview": {
+      "required": ["username", "id"],
+      "type": "object",
+      "properties": {
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ProjectReview": {
+      "required": ["author", "rate", "project"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "$ref": "#/definitions/AuthorReview"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "minLength": 1
+        },
+        "rate": {
+          "title": "Rate",
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "project": {
+          "title": "Project",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "ProjectRetrieve": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "uniqueItems": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectReview"
+          },
+          "readOnly": true
+        },
+        "title": {
+          "title": "Title",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "fully_description": {
+          "title": "Fully description",
+          "type": "string",
+          "minLength": 1
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "experience": {
+          "title": "Experience",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "employment": {
+          "title": "Employment",
+          "type": "string",
+          "enum": ["FT", "PT", "PR"]
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "demo_link": {
+          "title": "Demo link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "source_link": {
+          "title": "Source link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "ProjectList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "readOnly": true,
+          "minLength": 1
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "readOnly": true
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "readOnly": true
+        },
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "uniqueItems": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true
+        },
+        "title": {
+          "title": "Title",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "fully_description": {
+          "title": "Fully description",
+          "type": "string",
+          "minLength": 1
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "experience": {
+          "title": "Experience",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "employment": {
+          "title": "Employment",
+          "type": "string",
+          "enum": ["FT", "PT", "PR"]
+        },
+        "demo_link": {
+          "title": "Demo link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "source_link": {
+          "title": "Source link",
+          "type": "string",
+          "maxLength": 500,
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "ResponsePost": {
+      "required": ["author", "target", "text"],
+      "type": "object",
+      "properties": {
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "minLength": 1
+        },
+        "is_viewed": {
+          "title": "Is viewed",
+          "type": "boolean"
+        }
+      }
+    },
+    "ProfileReviewPost": {
+      "required": ["author", "profile", "text", "rate"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid"
+        },
+        "profile": {
+          "title": "Profile",
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "maxLength": 512,
+          "minLength": 1
+        },
+        "rate": {
+          "title": "Rate",
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0
+        }
+      }
+    },
+    "ProjectReviewPost": {
+      "required": ["author", "project", "text", "rate"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "title": "Author",
+          "type": "string",
+          "format": "uuid"
+        },
+        "project": {
+          "title": "Project",
+          "type": "string",
+          "format": "uuid"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "maxLength": 512,
+          "minLength": 1
+        },
+        "rate": {
+          "title": "Rate",
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0
+        }
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1
+        }
+      }
+    },
+    "EmployeeProfilePost": {
+      "required": ["position", "description", "user"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 50
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 50,
+          "x-nullable": true
+        },
+        "bio": {
+          "title": "Bio",
+          "type": "string",
+          "x-nullable": true
+        },
+        "is_active": {
+          "title": "Is active",
+          "type": "boolean"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "second_name": {
+          "title": "Second name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "github": {
+          "title": "Github",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "linkedin": {
+          "title": "Linkedin",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "youtube": {
+          "title": "Youtube",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "position": {
+          "title": "Position",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "title": "User",
+          "type": "string",
+          "format": "uuid"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        }
+      }
+    },
+    "ProfileReview": {
+      "required": ["author", "rate", "profile"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "$ref": "#/definitions/AuthorReview"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "minLength": 1
+        },
+        "rate": {
+          "title": "Rate",
+          "type": "integer",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "profile": {
+          "title": "Profile",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "ProfileWorkPlace": {
+      "required": ["city", "title", "description", "start_date"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "title": {
+          "title": "Title",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "start_date": {
+          "title": "Start date",
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_date": {
+          "title": "End date",
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true,
+          "x-nullable": true,
+          "format": "uri"
+        }
+      }
+    },
+    "EmployeeProfile": {
+      "required": ["position", "description", "user"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Skill"
+          },
+          "readOnly": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProfileReview"
+          },
+          "readOnly": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true
+        },
+        "work_places": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProfileWorkPlace"
+          },
+          "readOnly": true
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 50
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 50,
+          "x-nullable": true
+        },
+        "bio": {
+          "title": "Bio",
+          "type": "string",
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "second_name": {
+          "title": "Second name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "github": {
+          "title": "Github",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "linkedin": {
+          "title": "Linkedin",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "youtube": {
+          "title": "Youtube",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "experience": {
+          "title": "Experience",
+          "type": "integer",
+          "maximum": 32767,
+          "minimum": -32768
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "position": {
+          "title": "Position",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "title": "User",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "EmployeeProfileList": {
+      "required": ["position", "description", "user"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 50
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 50,
+          "x-nullable": true
+        },
+        "bio": {
+          "title": "Bio",
+          "type": "string",
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "second_name": {
+          "title": "Second name",
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "github": {
+          "title": "Github",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "linkedin": {
+          "title": "Linkedin",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "youtube": {
+          "title": "Youtube",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "experience": {
+          "title": "Experience",
+          "type": "integer",
+          "maximum": 32767,
+          "minimum": -32768
+        },
+        "salary": {
+          "title": "Salary",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "position": {
+          "title": "Position",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "title": "User",
+          "type": "string",
+          "format": "uuid"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "EmployerProfilePost": {
+      "required": ["company_name", "description", "user"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 50
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 50,
+          "x-nullable": true
+        },
+        "bio": {
+          "title": "Bio",
+          "type": "string",
+          "x-nullable": true
+        },
+        "is_active": {
+          "title": "Is active",
+          "type": "boolean"
+        },
+        "website": {
+          "title": "Website",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "company_name": {
+          "title": "Company name",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "title": "User",
+          "type": "string",
+          "format": "uuid"
+        },
+        "responses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "ProfileResponse": {
+      "required": ["author", "text", "target"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "author": {
+          "$ref": "#/definitions/AuthorReview"
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "text": {
+          "title": "Text",
+          "type": "string",
+          "minLength": 1
+        },
+        "is_viewed": {
+          "title": "Is viewed",
+          "type": "boolean"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "EmployerProfileRetrieve": {
+      "required": ["company_name", "description", "user"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string",
+          "format": "uuid",
+          "readOnly": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProfileReview"
+          },
+          "readOnly": true
+        },
+        "image": {
+          "title": "Image",
+          "type": "string",
+          "readOnly": true
+        },
+        "projects_count": {
+          "title": "Projects count",
+          "type": "integer",
+          "readOnly": true
+        },
+        "responses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProfileResponse"
+          },
+          "readOnly": true
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "maxLength": 50
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 50
+        },
+        "total_votes": {
+          "title": "Total votes",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "votes_average": {
+          "title": "Votes average",
+          "type": "number",
+          "maximum": 5,
+          "minimum": 0
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "maxLength": 50,
+          "x-nullable": true
+        },
+        "bio": {
+          "title": "Bio",
+          "type": "string",
+          "x-nullable": true
+        },
+        "created": {
+          "title": "Created",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "website": {
+          "title": "Website",
+          "type": "string",
+          "maxLength": 100,
+          "x-nullable": true
+        },
+        "company_name": {
+          "title": "Company name",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "title": "User",
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    }
+  }
+}
