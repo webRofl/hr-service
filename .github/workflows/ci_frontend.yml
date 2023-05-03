@@ -10,10 +10,10 @@ jobs:
     - name: Get repository code
       uses: actions/checkout@v3
     - name: Cache deps
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: node-modules-${{ hashFiles('**/yarn-lock.json') }}
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: node-modules-${{ hashFiles('**/yarn-lock.json') }}
     - name: Yarn setup
       uses: DerYeger/yarn-setup-action@master
         with:
@@ -30,6 +30,6 @@ jobs:
       - name: Setup Python v3.8
         uses: actions/setup-python@v4
         with:
-           python-version: 3.8
+          python-version: 3.8
       - name: Install requirements
         run: pip install -r **/requirements.txt
