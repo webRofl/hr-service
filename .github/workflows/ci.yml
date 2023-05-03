@@ -5,6 +5,9 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
     - name: Get repository code
       uses: actions/checkout@v3
@@ -12,7 +15,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.npm
-        key: node-modules-${{ hashFiles('**/yarn-lock.json') }}
+        key: node-modules-${{ hashFiles('yarn-lock.json') }}
     - name: Yarn setup
       uses: DerYeger/yarn-setup-action@master
       with:
@@ -31,4 +34,4 @@ jobs:
         with:
           python-version: 3.8
       - name: Install requirements
-        run: pip install -r **/requirements.txt
+        run: pip install -r ./bin/django/requirements.txt
