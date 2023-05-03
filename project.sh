@@ -26,7 +26,7 @@ dublicate_file() {
         rm $COPYFILE
     fi
 
-    cp $MAINFILE $COPYFILE 
+    cp $MAINFILE $COPYFILE
 }
 
 dublicate_front_dependency_files() {
@@ -34,37 +34,43 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
-build_front() {
-  dublicate_front_dependency_files
-  docker compose build node
-  rm ./bin/node/package.json && rm ./bin/node/yarn.lock
+build_front_container() {
+    dublicate_front_dependency_files
+    docker compose build node
+    rm ./bin/node/package.json && rm ./bin/node/yarn.lock
 }
 
 build_back() {
-  docker compose build django
-  migrate
-  collectstatic
+    docker compose build django
+    migrate
+    collectstatic
 }
 
 build_db() {
-  docker compose build db
-  docker compose up -d db
+    docker compose build db
+    docker compose up -d db
 }
 
 build_redis() {
-  docker compose build redis
+    docker compose build redis
 }
 
 init() {
-  build_db
-  build_back
-  build_front
-  build_redis
+    build_db
+    build_back
+    build_front_container
+    build_redis
+}
+
+init_back_ci() {
+    build_db
+    build_back
+    build_redis
 }
 
 generateAPI() {
-  start
-  docker compose exec node yarn generateAPI
+    start
+    docker compose exec node yarn generateAPI
 }
 
 build_frontend() {
@@ -97,49 +103,55 @@ lint_frontend() {
 }
 
 case $COMMAND in
-    init)
-        init
-        ;;
-    start)
-        start
-        ;;
-    restart)
-        restart
-        ;;
-    lint_frontend)
-        lint_frontend
-        ;;
-    local_hard_reset)
-        local_hard_reset
-        ;;
-    dublicate_front_dependency_files)
-        dublicate_front_dependency_files
-        ;;
-    migrate)
-        migrate
-        ;;
-    collectstatic)
-        collectstatic
-        ;;
-    generateAPI)
-        generateAPI
-        ;;
-    local_init)
-        local_init
-        ;;
-    build_frontend)
-        build_frontend
-        ;;
-    start_local)
-        start_local
-        ;;
-    start_prod)
-        start_prod
-        ;;
-    start_test)
-        start_test
-        ;;
-    *)
-        echo 'No action specified!'
-        ;;
+init)
+    init
+    ;;
+init_back_ci)
+    init_back_ci
+    ;;
+start)
+    start
+    ;;
+restart)
+    restart
+    ;;
+lint_frontend)
+    lint_frontend
+    ;;
+local_hard_reset)
+    local_hard_reset
+    ;;
+dublicate_front_dependency_files)
+    dublicate_front_dependency_files
+    ;;
+migrate)
+    migrate
+    ;;
+collectstatic)
+    collectstatic
+    ;;
+generateAPI)
+    generateAPI
+    ;;
+local_init)
+    local_init
+    ;;
+build_front_container)
+    build_front_container
+    ;;
+build_frontend)
+    build_frontend
+    ;;
+start_local)
+    start_local
+    ;;
+start_prod)
+    start_prod
+    ;;
+start_test)
+    start_test
+    ;;
+*)
+    echo 'No action specified!'
+    ;;
 esac
