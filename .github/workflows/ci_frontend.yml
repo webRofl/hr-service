@@ -1,10 +1,8 @@
 name: CI
 on:
   pull_request:
-    types: [closed]
     branches: [master]
 jobs:
-  if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
   frontend:
     runs-on: ubuntu-latest
     steps:
