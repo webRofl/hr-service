@@ -14,7 +14,7 @@ const ErrorFallback: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
       <p>Something went wrong:</p>
       {Object.entries(errorDetails).map(([key, value]) => {
         return (
-          <pre>
+          <pre data-testid="error-fallback-testid">
             {key}: {value}
           </pre>
         );

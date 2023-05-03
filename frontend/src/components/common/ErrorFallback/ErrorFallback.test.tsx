@@ -6,5 +6,5 @@ test('OAuth atom component', () => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   render(<ErrorFallback error={new Error('my self made error')} resetErrorBoundary={() => {}} />);
 
-  expect(screen.getByText('my self made error')).toBeInTheDocument();
+  expect(screen.getAllByTestId('error-fallback-testid')[0]).toContainHTML('my self made error');
 });
