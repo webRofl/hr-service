@@ -97,6 +97,10 @@ start_prod() {
     cd ../ && docker compose up
 }
 
+lint_frontend() {
+    docker compose run -exec --rm node yarn lint
+}
+
 case $COMMAND in
     init)
         init
@@ -107,8 +111,8 @@ case $COMMAND in
     restart)
         restart
         ;;
-    lint)
-        lint
+    lint_frontend)
+        lint_frontend
         ;;
     local_hard_reset)
         local_hard_reset

@@ -3,39 +3,32 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  frontend:
+  init:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
     - name: Get repository code
       uses: actions/checkout@v3
-    - name: Cache deps
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: node-modules-${{ hashFiles('yarn-lock.json') }}
-    - name: Yarn setup
-      uses: DerYeger/yarn-setup-action@master
-      with:
-        node-version: 16.16.0
-    - name: Install dependencies
-      run: yarn install
+    - name: Init app
+      run: ./project.sh init
+  frontend:
+    runs-on: ubuntu-latest
+    needs: [init]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
     - name: Generate endpoints
-      run: yarn generateAPI
+      run: ./project.sh generateAPI
     - name: Lint
-      run: yarn lint
+      run: ./project.sh lint_frontend
     - name: Build
-      run: yarn build
+      run: ./project.sh build_frontend
   backend:
     runs-on: ubuntu-latest
+    needs: [init]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Python v3.8
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-      - name: Install requirements
-        run: pip install -r ./bin/django/requirements.txt
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Collect static
+      run: ./project.sh collectstatic
+    - name: Make migrations and migrate
+      run: ./project.sh migrate
