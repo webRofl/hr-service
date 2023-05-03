@@ -34,14 +34,6 @@ dublicate_front_dependency_files() {
     dublicate_file ./frontend/yarn.lock ./bin/node/yarn.lock
 }
 
-generate_dump() {
-  docker compose exec db pg_dump postgres > ./bin/db/dump1.sql --username=postgres_user
-}
-
-set_dump() {
-  docker compose exec db psql -U postgres_user -d postgres -f /dump.sql
-}
-
 build_front() {
   dublicate_front_dependency_files
   docker compose build node
@@ -57,14 +49,17 @@ build_back() {
 build_db() {
   docker compose build db
   docker compose up -d db
-  # sleep 5
-  # set_dump
+}
+
+build_redis() {
+  docker compose build redis
 }
 
 init() {
   build_db
   build_back
   build_front
+  build_redis
 }
 
 generateAPI() {
@@ -131,12 +126,6 @@ case $COMMAND in
         ;;
     local_init)
         local_init
-        ;;
-    set_dump)
-        set_dump
-        ;;
-    generate_dump)
-        generate_dump
         ;;
     build_frontend)
         build_frontend
