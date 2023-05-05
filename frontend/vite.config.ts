@@ -24,7 +24,11 @@ export default defineConfig({
     react(),
     viteTsconfigPaths(),
     svgrPlugin(),
-    viteCompression({ algorithm: 'gzip', deleteOriginFile: true }),
+    viteCompression({
+      algorithm: 'gzip',
+      deleteOriginFile: true,
+      filter: (file) => !file.match(/index.html/),
+    }),
   ],
   server: {
     port: 3000,

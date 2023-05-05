@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import styled, { css } from 'styled-components';
+import styled, { CSSProperties, css } from 'styled-components';
 
 const btnsMixin = css`
   min-width: 2.5rem;
@@ -16,11 +16,12 @@ export const Container = styled('div')`
   position: relative;
 `;
 
-export const Logo = styled('img')`
-  width: 14rem;
-  box-shadow: 0px 7px 9px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-`;
+export const logo: CSSProperties = {
+  width: '14rem',
+  height: '14rem',
+  boxShadow: '0px 7px 9px 0px rgba(0, 0, 0, 0.2)',
+  borderRadius: '50%',
+};
 
 export const Name = styled('div')`
   font-size: 1.6rem;

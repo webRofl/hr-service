@@ -4,18 +4,21 @@ import { useFormContext } from 'react-hook-form';
 import { ImagePicker } from '@/components/atoms';
 import { useNotifications } from '@/hooks';
 import { getCroppedImg } from '@/utils';
+import { CSSProperties } from 'styled-components';
 import * as SC from './ImagePickerWithCrop.style';
 
 interface CropImageProps {
   name: string;
   aspect: [number, number];
   cropShape?: 'rect' | 'round';
+  style?: CSSProperties;
   setImgLinkOutside?: (value: string) => void;
 }
 
 const ImagePickerWithCrop: FC<CropImageProps> = ({
   name,
   aspect,
+  style,
   setImgLinkOutside,
   cropShape = 'rect',
 }) => {
@@ -77,6 +80,7 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
       <SC.ImageContainer
         width={aspect[0]}
         height={aspect[1]}
+        style={style}
         onMouseEnter={handleHoverInput}
         onMouseLeave={handleHoverInput}>
         <ImagePicker name={name} customImageUrl={imgLink} />
@@ -91,6 +95,7 @@ const ImagePickerWithCrop: FC<CropImageProps> = ({
         <SC.ModalContent>
           <>
             <Cropper
+              style={{ mediaStyle: style }}
               image={imgLink}
               crop={crop}
               zoom={zoom}

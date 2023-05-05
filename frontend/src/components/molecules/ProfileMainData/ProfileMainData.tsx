@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
+import React, { FC } from 'react';
 import { DivInput } from '@/components/common';
 import { Profile } from '@/store/api/orvalGeneration/models';
-import React, { FC } from 'react';
+import { stringUtils } from '@/utils';
 import * as SC from './ProfileMainData.style';
 
 interface IProfileMainDataProps {
@@ -15,12 +17,18 @@ const ProfileMainData: FC<IProfileMainDataProps> = ({ data, isEdit }) => {
   const displayData = () => {
     const entriesArray = Object.entries(data);
     return entriesArray.map(([key, value]) => {
-      if (blockToEditListKeys.includes(key)) return null;
+      if (
+        blockToEditListKeys.includes(key)
+        || key === 'description'
+        || ((value === 'null' || value === null) && !isEdit)
+      ) {
+        return null;
+      }
 
       return (
         <>
           <SC.RowData>
-            <SC.KeyData>{key}</SC.KeyData>
+            <SC.KeyData>{stringUtils.prettyString(key)}</SC.KeyData>
             <DivInput
               // @ts-expect-error something mistake
               value={value}
