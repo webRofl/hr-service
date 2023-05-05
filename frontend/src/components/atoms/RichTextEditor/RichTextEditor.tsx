@@ -45,7 +45,7 @@ const RichTextEditor: FC<RichTextEditorProps> = ({ name, isEdit }) => {
         <SC.Preview
           data-testid="preview"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: getValues()[name] }}
+          dangerouslySetInnerHTML={{ __html: getValues()[name] ?? '' }}
         />
       ) : (
         <ReactQuill

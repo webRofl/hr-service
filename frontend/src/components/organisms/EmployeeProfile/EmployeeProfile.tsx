@@ -9,6 +9,7 @@ import { useTitleToggle } from '@/hooks';
 import { usersEmployeeGetRead, usersEmployeeUpdate } from '@/store/api/orvalGeneration/users/users';
 import { RichTextEditor } from '@/components/atoms';
 import { EmployeeProfile } from '@/store/api/orvalGeneration/models';
+import { useProfileState } from '@/store';
 import * as SC from './EmployeeProfile.style';
 
 interface EmployeeProfileProps {
@@ -20,6 +21,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [profileData, setProfileData] = useState<EmployeeProfile>();
+  const { setProfile } = useProfileState();
   useTitleToggle(`${profileData?.name} ${profileData?.second_name}`);
 
   const method = useForm<EmployeeProfile>({
@@ -28,6 +30,7 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
 
   const setProfileEverywhere = (profile: EmployeeProfile) => {
     setProfileData(profile);
+    setProfile(profile);
     method.reset(profile);
   };
 
@@ -50,17 +53,16 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
     return setIsEdit((prev) => !prev);
   };
 
-  const submitHandler = (values: EmployeeProfile) => {
+  const submitHandler = async (values: EmployeeProfile) => {
     if (!values?.salary) {
       values.salary = 0;
     }
 
     // @ts-expect-error invalid orval type definition
-    usersEmployeeUpdate(userId, values).then((data) => {
-      setIsEdit(false);
-      // @ts-expect-error invalid orval type definition
-      setProfileEverywhere(data?.data);
-    });
+    await usersEmployeeUpdate(userId, values);
+    setIsEdit(false);
+    const data = (await usersEmployeeGetRead(userId)).data;
+    setProfileEverywhere(data);
   };
 
   const reviewSuccessCallback = async () => {

@@ -39,6 +39,7 @@ export const Title = styled('h2')<ContainerProps>`
 
 export const Image = styled('img')`
   width: 300px;
+  height: 14rem;
   border-radius: 6px;
   align-self: center;
 `;

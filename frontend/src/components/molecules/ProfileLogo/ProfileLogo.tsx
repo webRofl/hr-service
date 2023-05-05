@@ -1,5 +1,6 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { IconComponent, Rating } from '@/components/common';
+import { ImagePickerWithCrop } from '@/components/molecules';
 import * as SC from './ProfileLogo.style';
 
 interface IProfileLogoProps {
@@ -34,7 +35,11 @@ const ProfileLogo: FC<IProfileLogoProps> = ({
         </SC.EditBtn>
       )}
       <Rating value={votesAverage} readOnly tip="leave me a couple of reviews bottom" />
-      <SC.Logo src={image} alt={area} />
+      {isEdit ? (
+        <ImagePickerWithCrop name="image" aspect={[1, 1]} style={SC.logo} />
+      ) : (
+        <img src={image} alt={area} style={SC.logo} />
+      )}
       <SC.Name>
         {name} {secondName}
       </SC.Name>

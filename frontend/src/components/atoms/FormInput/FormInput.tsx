@@ -23,8 +23,6 @@ const FormInput: FC<IFormInputProps> = ({ name, styles, ...otherProps }) => {
     setIsShowValue((prev) => !prev);
   };
 
-  const prettyName = stringUtils.capitalizeAll(name.replaceAll('_', ' '));
-
   return (
     <Controller
       control={control}
@@ -35,9 +33,9 @@ const FormInput: FC<IFormInputProps> = ({ name, styles, ...otherProps }) => {
           {...field}
           {...otherProps}
           style={styles}
-          label={prettyName}
+          label={stringUtils.prettyString(name)}
           type={isShowValue ? 'text' : name}
-          placeholder={`Type your ${prettyName}`}
+          placeholder={`Type your ${stringUtils.prettyString(name)}`}
           variant="outlined"
           sx={{ mb: '1.5rem' }}
           error={!!errors[name]}

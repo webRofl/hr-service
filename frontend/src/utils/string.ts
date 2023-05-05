@@ -16,3 +16,7 @@ export const snakeCaseToCamelCase = (str: string): string => {
 export const capitalizeAll = (str: string): string => {
   return str.trim().split(' ').map(capitalize).join(' ');
 };
+
+export const prettyString = (str: string): string => {
+  return capitalizeAll(str.replaceAll('_', ' '));
+};
