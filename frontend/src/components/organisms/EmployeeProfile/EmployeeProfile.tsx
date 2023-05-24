@@ -30,14 +30,16 @@ const Profile: FC<EmployeeProfileProps> = ({ userId, profileId }) => {
 
   const setProfileEverywhere = (profile: EmployeeProfile) => {
     setProfileData(profile);
-    setProfile(profile);
-    method.reset(profile);
+    if (isMyProfile) {
+      setProfile(profile);
+      method.reset(profile);
+    }
   };
 
   useEffect(() => {
     const fetch = async () => {
       const data = (await usersEmployeeGetRead(profileId ?? userId)).data;
-      setProfileEverywhere(data);
+      setProfileData(data);
     };
 
     fetch();
